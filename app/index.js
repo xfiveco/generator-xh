@@ -23,32 +23,42 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.log(this.yeoman);
 
     // replace it with a short and sweet description of your generator
-    this.log(chalk.magenta('You\'re using the fantastic Xh generator.'));
+    this.log(chalk.magenta('Welcome to generator for scaffolding XHTMLized front-end projects.'));
 
     var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
+      name: 'projectName',
+      message: 'Please enter the project name:',
     }];
 
     this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
+      this.projectName = props.projectName;
 
       done();
     }.bind(this));
   },
 
   app: function () {
-    this.mkdir('app');
-    this.mkdir('app/templates');
+    // Create directories
+    this.mkdir('src');
+    this.mkdir('src/scss');
+    this.mkdir('src/includes');
+    this.mkdir('src/js');
 
-    this.copy('_package.json', 'package.json');
-    this.copy('_bower.json', 'bower.json');
+    this.mkdir('dist');
+    this.mkdir('dist/css');
+    this.mkdir('dist/js');
+    this.mkdir('dist/img');
+
+    this.template('_package.json', 'package.json');
+    this.template('_bower.json', 'bower.json');
+    this.template('Gruntfile.js', 'Gruntfile.js');
   },
 
   projectfiles: function () {
+    this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
+    this.copy('gitattributes', '.gitattributes');
+    this.copy('gitignore', '.gitignore');
     this.copy('jshintrc', '.jshintrc');
   }
 });

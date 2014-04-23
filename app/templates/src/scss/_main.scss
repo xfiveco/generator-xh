@@ -1,0 +1,21 @@
+/* ==========================================================================
+
+    Project: Project Template Test
+    Author: XHTMLized.com
+    Last updated: @@timestamp
+@@toc
+
+   ========================================================================== */
+
+@import "../bower_components/normalize-scss/normalize";
+
+/* ==========================================================================
+   Custom Styling
+   ========================================================================== */
+
+@import "variables";
+@import "mixins";
+@import "common";
+<% if (isWP) { %>
+@import "wordpress";
+<% } %>

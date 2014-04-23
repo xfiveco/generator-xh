@@ -30,12 +30,12 @@ var XhGenerator = yeoman.generators.Base.extend({
       message: 'Please enter the project name:'
       }, {
         type: 'list',
-        name: 'cssOption',
+        name: 'cssPreprocessor',
         message: 'Which CSS preprocessor would you like to use?',
         choices: ['SCSS', 'LESS']
       }, {
         type: 'confirm',
-        name: 'wp',
+        name: 'isWP',
         message: 'Is this WordPress project?',
         default: false
       }
@@ -43,17 +43,34 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
-      this.cssOption = props.cssOption;
-      this.wp = props.wp;
+      this.cssPreprocessor = props.cssPreprocessor;
+      this.isWP = props.isWP;
 
       done();
     }.bind(this));
   },
 
-  directories: function () {
-    // Create directories
+  // Create project structure
+  structure: function () {
     this.mkdir('src');
-    this.mkdir('src/scss');
+
+    // SASS
+    if (this.cssPreprocessor === 'SCSS') {
+      this.mkdir('src/scss');
+      this.template('src/scss/_main.scss', 'src/scss/main.scss');
+      this.copy('src/scss/_variables.scss', 'src/scss/_variables.scss');
+      this.copy('src/scss/_mixins.scss', 'src/scss/_mixins.scss');
+      this.copy('src/scss/_common.scss', 'src/scss/_common.scss');
+      if (this.isWP) {
+        this.copy('src/scss/_wordpress.scss', 'src/scss/_wordpress.scss');
+      }
+    }
+
+    // LESS
+    if (this.cssPreprocessor === 'LESS') {
+      this.mkdir('src/less');
+    }
+
     this.mkdir('src/includes');
     this.mkdir('src/js');
 
@@ -63,6 +80,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('dist/img');
   },
 
+  // Copy files
   files: function () {
     this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
@@ -71,6 +89,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.copy('jshintrc', '.jshintrc');
   },
 
+  // Process templates
   templates: function () {
     this.template('_package.json', 'package.json');
     this.template('_bower.json', 'bower.json');

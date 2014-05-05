@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    // Paths
+    // Configs
     xh: {
       src: 'src',
       dist: 'dist'
@@ -80,6 +80,7 @@ module.exports = function(grunt) {
     },
 
     // CSS
+    <% if (cssPreprocessor === 'SCSS') { %>
     sass: {
       dist: {
         options: {
@@ -90,7 +91,17 @@ module.exports = function(grunt) {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'
         }
       }
-    },
+    }, <% } %><% if (cssPreprocessor === 'LESS') { %>
+    less: {
+      dist: {
+        options: {
+          path: 'src/bower_components/'
+        },
+        files: {
+          '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/less/main.less'
+        }
+      }
+    },<% } %>
 
     cssbeautifier: {
       files: ['<%%= xh.dist %>/css/*.css'],
@@ -131,7 +142,7 @@ module.exports = function(grunt) {
           to: function () {
 
             if (!grunt.file.exists('csstoc.json')) {
-                return '';
+              return '';
             }
 
             var toc_file = grunt.file.readJSON('csstoc.json')
@@ -153,7 +164,7 @@ module.exports = function(grunt) {
                   if (results.hasOwnProperty(key)) {
 
                     match = results[key]['match'];
-                    match = match.replace(/"|'|@import|;|.scss/gi, "").trim();
+                    match = match.replace(/"|'|@import|;|.scss|.less/gi, "").trim();
                     match = match.split('/').pop();
                     match = capitalize(match);
 
@@ -167,12 +178,17 @@ module.exports = function(grunt) {
             }
             return toc;
           }
-        },
+        },<% if (cssPreprocessor === 'LESS') { %>
+        {
+          from: /\}/g,
+          to: '}\n'
+        },<% } { %>
         // Add empty line after section & subsection comment
         {
           from: /=== \*\//g,
           to: '=== */\n'
-        }]
+        }
+        ]
       },
 
       js: {
@@ -188,8 +204,9 @@ module.exports = function(grunt) {
     // Create list of @imports
     search: {
       imports: {
-        files: {
-            src: ['<%%= xh.src %>/scss/main.scss']
+        files: {<% if (cssPreprocessor === 'SCSS') { %> 
+            src: ['<%%= xh.src %>/scss/main.scss']<% } %><% if (cssPreprocessor === 'LESS') { %> 
+            src: ['<%%= xh.src %>/less/main.less']<% } %> 
         },
         options: {
           searchString: /@import[ \("']*([^;]+)[;\)"']*/g,
@@ -200,14 +217,21 @@ module.exports = function(grunt) {
     },
 
     // Watch
-    watch: {
+    watch: {<% if (cssPreprocessor === 'SCSS') { %> 
       scss: {
         files: ['<%%= xh.src %>/scss/*.scss'],
         tasks: ['sass', 'cssbeautifier', 'search', 'replace:css'],
         options: {
           livereload: true
         }
-      },
+      },<% } %><% if (cssPreprocessor === 'LESS') { %>
+      less: {
+        files: ['<%%= xh.src %>/less/*.less'],
+        tasks: ['less', 'cssbeautifier', 'search', 'replace:css'],
+        options: {
+          livereload: true
+        }
+      },<% } %>
 
       html: {
         files: ['<%%= xh.src %>/*.html', '<%%= xh.src %>/includes/*.html'],
@@ -245,7 +269,9 @@ module.exports = function(grunt) {
     'clean',
 
     // CSS
-    'sass',
+    <% if (cssPreprocessor === 'SCSS') { %> 
+    'sass',<% } %><% if (cssPreprocessor === 'LESS') { %> 
+    'less',<% } %>
     'cssbeautifier',
 
     // JS

@@ -1,0 +1,20 @@
+/* ==========================================================================
+
+    Project: <%= projectName %>
+    Author: XHTMLized.com
+    Last updated: @@timestamp
+@@toc
+
+   ========================================================================== */
+
+@import (less) "../bower_components/normalize.css/normalize.css";
+
+/* ==========================================================================
+   Custom Styling
+   ========================================================================== */
+
+@import "variables";
+@import "common";
+<% if (isWP) { %>
+@import "wordpress";
+<% } %>

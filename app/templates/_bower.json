@@ -10,10 +10,10 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~1.11.0"
+    "jquery": "~1.11.0",<% if (useModernizr) { %>
+    "modernizr": "~2.8.1",<% } %><% if (cssPreprocessor === 'SCSS') { %>
+    "normalize-scss": "~3.0.0"<% } %><% if (cssPreprocessor === 'LESS') { %>
+    "normalize.css": "~3.0.1"<% } %>
   },
-  "devDependencies": {
-    "normalize-scss": "~3.0.0",
-    "modernizr": "~2.7.2"
-  }
+  "devDependencies": {}
 }

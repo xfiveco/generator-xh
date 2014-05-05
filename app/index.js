@@ -35,6 +35,12 @@ var XhGenerator = yeoman.generators.Base.extend({
         choices: ['SCSS', 'LESS']
       }, {
         type: 'confirm',
+        name: 'useModernizr',
+        message: 'Do you want to include Modernizr?',
+        default: false
+      }
+      , {
+        type: 'confirm',
         name: 'isWP',
         message: 'Is this WordPress project?',
         default: false
@@ -44,6 +50,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
       this.cssPreprocessor = props.cssPreprocessor;
+      this.useModernizr = props.useModernizr;
       this.isWP = props.isWP;
 
       done();
@@ -51,8 +58,41 @@ var XhGenerator = yeoman.generators.Base.extend({
   },
 
   // Create project structure
-  structure: function () {
+  generate: function () {
+
+    // Configurations files
+    this.copy('bowerrc', '.bowerrc');
+    this.copy('editorconfig', '.editorconfig');
+    this.copy('gitattributes', '.gitattributes');
+    this.copy('gitignore', '.gitignore');
+    this.copy('jshintrc', '.jshintrc');
+
+    // Application files
+    this.template('_package.json', 'package.json');
+    this.template('_bower.json', 'bower.json');
+    this.template('Gruntfile.js', 'Gruntfile.js');
+
+    // Project index
+    this.template('_index.html', 'index.html');
+
+    // Directory structure
     this.mkdir('src');
+    this.mkdir('src/includes');
+    this.mkdir('src/js');
+
+    this.mkdir('dist');
+    this.mkdir('dist/css');
+    this.mkdir('dist/js');
+    this.mkdir('dist/img');
+  
+    // HTML
+    this.copy('src/_home.html', 'src/home.html');
+    this.copy('src/_wp.html', 'src/wp.html');
+    this.template('src/includes/_head.html', 'src/includes/head.html');
+    this.copy('src/includes/_header.html', 'src/includes/header.html');
+    this.copy('src/includes/_sidebar.html', 'src/includes/sidebar.html');
+    this.copy('src/includes/_scripts.html', 'src/includes/scripts.html');
+    this.copy('src/includes/_footer.html', 'src/includes/footer.html');
 
     // SASS
     if (this.cssPreprocessor === 'SCSS') {
@@ -69,31 +109,17 @@ var XhGenerator = yeoman.generators.Base.extend({
     // LESS
     if (this.cssPreprocessor === 'LESS') {
       this.mkdir('src/less');
+      this.template('src/less/_main.less', 'src/less/main.less');
+      this.copy('src/less/_variables.less', 'src/less/variables.less');
+      this.copy('src/less/_mixins.less', 'src/less/mixins.less');
+      this.copy('src/less/_common.less', 'src/less/common.less');
+      if (this.isWP) {
+        this.copy('src/less/_wordpress.less', 'src/less/wordpress.less');
+      }
     }
 
-    this.mkdir('src/includes');
-    this.mkdir('src/js');
-
-    this.mkdir('dist');
-    this.mkdir('dist/css');
-    this.mkdir('dist/js');
-    this.mkdir('dist/img');
-  },
-
-  // Copy files
-  files: function () {
-    this.copy('bowerrc', '.bowerrc');
-    this.copy('editorconfig', '.editorconfig');
-    this.copy('gitattributes', '.gitattributes');
-    this.copy('gitignore', '.gitignore');
-    this.copy('jshintrc', '.jshintrc');
-  },
-
-  // Process templates
-  templates: function () {
-    this.template('_package.json', 'package.json');
-    this.template('_bower.json', 'bower.json');
-    this.template('Gruntfile.js', 'Gruntfile.js');
+    // JS
+    this.template('src/js/_main.js', 'src/js/main.js');
   }
 });
 

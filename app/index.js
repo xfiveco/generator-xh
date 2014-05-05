@@ -86,7 +86,6 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('dist/img');
   
     // HTML
-    this.copy('src/_home.html', 'src/home.html');
     this.copy('src/_wp.html', 'src/wp.html');
     this.template('src/includes/_head.html', 'src/includes/head.html');
     this.copy('src/includes/_header.html', 'src/includes/header.html');

@@ -1,7 +1,17 @@
 {
   "name": "generator-xh",
   "version": "0.0.1",
-  "description": "Yeoman generator",
+  "description": "A Yeoman generator for scaffolding front-end projects.",
+  "keywords": [
+    "yeoman-generator",
+    "xhtmlized",
+    "frontend",
+    "html5",
+    "sass",
+    "less"
+    "modernizr",
+    "bootstrap"
+  ],
   "license": "MIT",
   "main": "app/index.js",
   "repository": "xhtmlized/generator-xh",

@@ -26,13 +26,19 @@ var XhGenerator = yeoman.generators.Base.extend({
     console.log(chalk.blue(' ***********************************************************') + '\n');
 
     var prompts = [{
-      name: 'projectName',
-      message: 'Please enter the project name:'
+        name: 'projectName',
+        message: 'Please enter the project name:'
+      }, {
+        type: 'confirm',
+        name: 'useBranding',
+        message: 'Should XHTMLized branding be used?',
+        default: true
       }, {
         type: 'list',
         name: 'cssPreprocessor',
         message: 'Which CSS preprocessor would you like to use?',
-        choices: ['SCSS', 'LESS']
+        choices: ['SCSS', 'LESS'],
+        default: 'SCSS'
       }, {
         type: 'confirm',
         name: 'isWP',
@@ -60,6 +66,7 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
+      this.useBranding = props.useBranding;
       this.cssPreprocessor = props.cssPreprocessor;
       this.isWP = props.isWP;
       this.features = props.features;
@@ -73,6 +80,12 @@ var XhGenerator = yeoman.generators.Base.extend({
       this.useBootstrap = hasFeature('useBootstrap');
       this.useModernizr = hasFeature('useModernizr');
       this.useCSS3Pie = hasFeature('useCSS3Pie');
+
+      if (this.useBranding) {
+        this.projectAuthor = 'XHTMLized';
+      } else {
+        this.projectAuthor = '';
+      }
 
       this.props = props;
 
@@ -112,6 +125,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('dist/css');
     this.mkdir('dist/js');
     this.mkdir('dist/img');
+    this.mkdir('dist/img/common');
     this.mkdir('dist/_xprecise');
   
     // HTML

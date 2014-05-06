@@ -49,7 +49,7 @@ var XhGenerator = yeoman.generators.Base.extend({
         name: 'features',
         message: 'Select additional features:',
         choices: [{
-            name: 'Bootstrap 3.x',
+            name: 'Bootstrap',
             value: 'useBootstrap',
             checked: false
         }, {

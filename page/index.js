@@ -20,12 +20,12 @@ var PageGenerator = yeoman.generators.NamedBase.extend({
   addHTML: function () {
     var filename = this.slug + '.html';
     var filepath = 'src/' + filename;
-  	var projectIndex = this.readFileAsString('index.html');
-  	var pageLink = '<li><i class="fa fa-file-o"></i><a href="dist/' + filename + '"><strong>' + 
-  		this.name + '</strong> ' + filename + '</a><i class="fa fa-check"></i></li>\n' +
-  		'<!-- @@pageList -->';
+    var projectIndex = this.readFileAsString('index.html');
+    var pageLink = '<li><i class="fa fa-file-o"></i><a href="dist/' + filename + '"><strong>' + 
+      this.name + '</strong> ' + filename + '</a><i class="fa fa-check"></i></li>\n' +
+      '<!-- @@pageList -->';
 
-  	this.template('_page.html', filepath);
+    this.template('_page.html', filepath);
     projectIndex = projectIndex.replace('<!-- @@pageList -->', pageLink);
     this.write('index.html', projectIndex);
   },

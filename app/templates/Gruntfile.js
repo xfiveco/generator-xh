@@ -39,7 +39,7 @@ module.exports = function(grunt) {
         dest: '<%%= xh.dist %>',
         root: '<%%= xh.src %>',
         flow: {
-          steps: {'js': ['concat'] },
+          steps: {'js': ['concat'], 'css': ['concat'] },
           post: {}
         }
       }
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
     },<% } %>
 
     cssbeautifier: {
-      files: ['<%%= xh.dist %>/css/*.css'],
+      files: ['<%%= xh.dist %>/css/*.css', '!<%%= xh.dist %>/css/libraries.min.css'],
     },
 
     // JS

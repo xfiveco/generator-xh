@@ -182,7 +182,7 @@ module.exports = function(grunt) {
         {
           from: /\}/g,
           to: '}\n'
-        },<% } { %>
+        },<% } %>
         // Add empty line after section & subsection comment
         {
           from: /=== \*\//g,

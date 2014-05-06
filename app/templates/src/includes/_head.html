@@ -8,8 +8,8 @@
   <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, '');</script>
+  <script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, '');</script><% if (useModernizr) { %>
   <!-- build:js js/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
-  <!-- endbuild -->
+  <!-- endbuild --><% } %>
 </head>

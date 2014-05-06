@@ -14,7 +14,6 @@
    ========================================================================== */
 
 @import "variables";
-@import "common";
-<% if (isWP) { %>
-@import "wordpress";
-<% } %>
+@import "mixins";
+@import "common";<% if (isWP) { %>
+@import "wordpress";<% } %>

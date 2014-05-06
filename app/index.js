@@ -38,8 +38,12 @@ var XhGenerator = yeoman.generators.Base.extend({
         name: 'useModernizr',
         message: 'Do you want to include Modernizr?',
         default: false
-      }
-      , {
+      }, {
+        type: 'confirm',
+        name: 'useCSS3Pie',
+        message: 'Do you want to include CSS3 Pie?',
+        default: false
+      }, {
         type: 'confirm',
         name: 'isWP',
         message: 'Is this WordPress project?',
@@ -51,6 +55,7 @@ var XhGenerator = yeoman.generators.Base.extend({
       this.projectName = props.projectName;
       this.cssPreprocessor = props.cssPreprocessor;
       this.useModernizr = props.useModernizr;
+      this.useCSS3Pie = props.useCSS3Pie;
       this.isWP = props.isWP;
 
       done();
@@ -84,6 +89,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('dist/css');
     this.mkdir('dist/js');
     this.mkdir('dist/img');
+    this.mkdir('dist/_xprecise');
   
     // HTML
     this.copy('src/_wp.html', 'src/wp.html');
@@ -119,6 +125,9 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     // JS
     this.template('src/js/_main.js', 'src/js/main.js');
+    if (this.useCSS3Pie) {
+      this.copy('src/js/_PIE.htc', 'dist/js/PIE.htc'); 
+    }
   }
 });
 

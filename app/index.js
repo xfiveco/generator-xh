@@ -35,35 +35,58 @@ var XhGenerator = yeoman.generators.Base.extend({
         choices: ['SCSS', 'LESS']
       }, {
         type: 'confirm',
-        name: 'useModernizr',
-        message: 'Do you want to include Modernizr?',
-        default: false
-      }, {
-        type: 'confirm',
-        name: 'useCSS3Pie',
-        message: 'Do you want to include CSS3 Pie?',
-        default: false
-      }, {
-        type: 'confirm',
         name: 'isWP',
         message: 'Is this WordPress project?',
         default: false
+      }, {
+        type: 'checkbox',
+        name: 'features',
+        message: 'Select additional features:',
+        choices: [{
+            name: 'Bootstrap 3.x',
+            value: 'useBootstrap',
+            checked: false
+        }, {
+            name: 'Modernizr',
+            value: 'useModernizr',
+            checked: false
+        }, {
+            name: 'CSS3 Pie',
+            value: 'useCSS3Pie',
+            checked: false
+        }]
       }
     ];
 
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
       this.cssPreprocessor = props.cssPreprocessor;
-      this.useModernizr = props.useModernizr;
-      this.useCSS3Pie = props.useCSS3Pie;
       this.isWP = props.isWP;
+      this.features = props.features;
+
+      var features = this.features;
+      
+      function hasFeature(feat) {
+        return features.indexOf(feat) !== -1;
+      }
+
+      this.useBootstrap = hasFeature('useBootstrap');
+      this.useModernizr = hasFeature('useModernizr');
+      this.useCSS3Pie = hasFeature('useCSS3Pie');
+
+      this.props = props;
 
       done();
+
     }.bind(this));
   },
 
   // Create project structure
   generate: function () {
+
+    // Create config file
+    this.config.set('config', this.props);
+    this.config.save();
 
     // Configurations files
     this.copy('bowerrc', '.bowerrc');

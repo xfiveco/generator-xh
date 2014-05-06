@@ -70,6 +70,7 @@ Various Grunt libraries are used to automate the following tasks:
         yo xh
 
 9. Run the *page* sub generator task to add a page to the project
+
         yo xh:page "Page name"
 
 ## Development

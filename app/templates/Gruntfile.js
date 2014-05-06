@@ -85,6 +85,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           style: 'expanded',
+          sourcemap: true,
           loadPath: 'src/bower_components/'
         },
         files: {

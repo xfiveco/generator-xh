@@ -109,7 +109,7 @@ module.exports = function(grunt) {
         src: '<%%= xh.dist %>/css/main.css',
         dest: '<%%= xh.dist %>/css/main.css'
       }
-    }, 
+    },
 
     cssbeautifier: {
       files: ['<%%= xh.dist %>/css/*.css', '!<%%= xh.dist %>/css/libraries.min.css'],
@@ -134,6 +134,14 @@ module.exports = function(grunt) {
         src: ['<%%= xh.dist %>/js/main.js'],
       }
     },
+    <% if (useModernizr) { %>
+    uglify: {
+      modernizr: {
+        files: {
+          'src/bower_components/modernizr/modernizr.min.js': ['src/bower_components/modernizr/modernizr.js']
+        }
+      }
+    },<% } %>
 
     // Remplacements in main.css and main.js
     replace: {
@@ -212,9 +220,9 @@ module.exports = function(grunt) {
     // Create list of @imports
     search: {
       imports: {
-        files: {<% if (cssPreprocessor === 'SCSS') { %> 
-            src: ['<%%= xh.src %>/scss/main.scss']<% } %><% if (cssPreprocessor === 'LESS') { %> 
-            src: ['<%%= xh.src %>/less/main.less']<% } %> 
+        files: {<% if (cssPreprocessor === 'SCSS') { %>
+            src: ['<%%= xh.src %>/scss/main.scss']<% } %><% if (cssPreprocessor === 'LESS') { %>
+            src: ['<%%= xh.src %>/less/main.less']<% } %>
         },
         options: {
           searchString: /@import[ \("']*([^;]+)[;\)"']*/g,
@@ -225,7 +233,7 @@ module.exports = function(grunt) {
     },
 
     // Watch
-    watch: {<% if (cssPreprocessor === 'SCSS') { %> 
+    watch: {<% if (cssPreprocessor === 'SCSS') { %>
       scss: {
         files: ['<%%= xh.src %>/scss/*.scss'],
         tasks: ['sass', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'],
@@ -277,8 +285,8 @@ module.exports = function(grunt) {
     'clean',
 
     // CSS
-    <% if (cssPreprocessor === 'SCSS') { %> 
-    'sass',<% } %><% if (cssPreprocessor === 'LESS') { %> 
+    <% if (cssPreprocessor === 'SCSS') { %>
+    'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
     'less',<% } %>
     'autoprefixer',
     'cssbeautifier',

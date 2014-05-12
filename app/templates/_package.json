@@ -21,5 +21,8 @@
     "grunt-text-replace": "^0.3.11",
     "grunt-search": "^0.1.4",
     "grunt-autoprefixer": "^0.7.3"
-  }
+  }<% if (useModernizr) { %>,
+  "scripts": {
+    "postinstall": "grunt uglify:modernizr"
+  }<% } %>
 }

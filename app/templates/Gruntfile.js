@@ -104,6 +104,13 @@ module.exports = function(grunt) {
       }
     },<% } %>
 
+    autoprefixer: {
+      main: {
+        src: '<%%= xh.dist %>/css/main.css',
+        dest: '<%%= xh.dist %>/css/main.css'
+      }
+    }, 
+
     cssbeautifier: {
       files: ['<%%= xh.dist %>/css/*.css', '!<%%= xh.dist %>/css/libraries.min.css'],
     },
@@ -221,14 +228,14 @@ module.exports = function(grunt) {
     watch: {<% if (cssPreprocessor === 'SCSS') { %> 
       scss: {
         files: ['<%%= xh.src %>/scss/*.scss'],
-        tasks: ['sass', 'cssbeautifier', 'search', 'replace:css'],
+        tasks: ['sass', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'],
         options: {
           livereload: true
         }
       },<% } %><% if (cssPreprocessor === 'LESS') { %>
       less: {
         files: ['<%%= xh.src %>/less/*.less'],
-        tasks: ['less', 'cssbeautifier', 'search', 'replace:css'],
+        tasks: ['less', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'],
         options: {
           livereload: true
         }
@@ -273,6 +280,7 @@ module.exports = function(grunt) {
     <% if (cssPreprocessor === 'SCSS') { %> 
     'sass',<% } %><% if (cssPreprocessor === 'LESS') { %> 
     'less',<% } %>
+    'autoprefixer',
     'cssbeautifier',
 
     // JS

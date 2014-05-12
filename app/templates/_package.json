@@ -19,6 +19,7 @@
     "jit-grunt": "^0.3.2",
     "time-grunt": "^0.3.1",
     "grunt-text-replace": "^0.3.11",
-    "grunt-search": "^0.1.4"
+    "grunt-search": "^0.1.4",
+    "grunt-autoprefixer": "^0.7.3"
   }
 }

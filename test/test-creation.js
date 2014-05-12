@@ -25,9 +25,15 @@ describe('xh generator', function () {
     ];
 
     helpers.mockPrompt(this.app, {
-      'someOption': true
+      projectName: 'testing',
+      useBranding: true,
+      cssPreprocessor: 'SCSS',
+      isWP: true,
+      features: []
     });
+
     this.app.options['skip-install'] = true;
+
     this.app.run({}, function () {
       helpers.assertFile(expected);
       done();

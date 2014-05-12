@@ -6,8 +6,8 @@
 @@toc
 
    ========================================================================== */
-
-@import "../bower_components/normalize-scss/normalize";
+<% if (!useBootstrap) { %>
+@import "../bower_components/normalize-scss/normalize";<% } %>
 
 /* ==========================================================================
    Custom Styling

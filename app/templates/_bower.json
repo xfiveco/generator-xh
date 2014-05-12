@@ -9,12 +9,12 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "jquery": "~1.11.1",<% if (useModernizr) { %>
+  "dependencies": {<% if (useModernizr) { %>
     "modernizr": "~2.8.1",<% } %><% if (useBootstrap) { %>
-    "bootstrap": "~3.1.1",<% } %><% if (cssPreprocessor === 'SCSS') { %>
-    "normalize-scss": "~3.0.0"<% } %><% if (cssPreprocessor === 'LESS') { %>
-    "normalize.css": "~3.0.1"<% } %>
+    "bootstrap": "~3.1.1",<% } %><% if (cssPreprocessor === 'SCSS' && !useBootstrap) { %>
+    "normalize-scss": "~3.0.0",<% } %><% if (cssPreprocessor === 'LESS' && !useBootstrap) { %>
+    "normalize.css": "~3.0.1",<% } %>
+    "jquery": "~1.11.1"
   },
   "devDependencies": {}
 }

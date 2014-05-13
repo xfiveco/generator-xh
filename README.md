@@ -1,6 +1,8 @@
 XH Generator
 ============
 
+Testing Travis
+
 [Yeoman](http://yeoman.io) generator for scaffolding front-end projects.
 
 ## Scaffolding options
@@ -16,7 +18,7 @@ XH Generator
 * Additional features
   * Bootstrap
   * Modernizr
-  * CSS3 Pie 
+  * CSS3 Pie
 
 ## Project structure
 
@@ -52,7 +54,7 @@ Various Grunt libraries are used to automate the following tasks:
 4. Install Grunt from the command line (skip if you have it installed already)
 
         npm install -g grunt-cli
-        
+
 5. Install Bower from the command line (skip if you have it installed already)
 
         npm install -g bower
@@ -63,7 +65,7 @@ Various Grunt libraries are used to automate the following tasks:
 
 7. Install XH Generator (skip if you have it installed already):
 
-        npm install -g generator-xh 
+        npm install -g generator-xh
 
 8. Run the generator
 

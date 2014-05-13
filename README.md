@@ -1,7 +1,5 @@
-XH Generator
+XH Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh.svg?branch=master)](https://travis-ci.org/xhtmlized/generator-xh)
 ============
-
-Testing Travis
 
 [Yeoman](http://yeoman.io) generator for scaffolding front-end projects.
 

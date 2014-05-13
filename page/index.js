@@ -21,7 +21,7 @@ var PageGenerator = yeoman.generators.NamedBase.extend({
     var filename = this.slug + '.html';
     var filepath = 'src/' + filename;
     var projectIndex = this.readFileAsString('index.html');
-    var pageLink = '<li><i class="fa fa-file-o"></i><a href="dist/' + filename + '"><strong>' + 
+    var pageLink = '<li><i class="fa fa-file-o"></i><a href="dist/' + filename + '"><strong>' +
       this.name + '</strong> ' + filename + '</a><i class="fa fa-check"></i></li>\n' +
       '<!-- @@pageList -->';
 
@@ -40,15 +40,15 @@ var PageGenerator = yeoman.generators.NamedBase.extend({
       filename = 'src/scss/_' + this.slug + '.scss';
       mainCssFile = 'src/scss/main.scss';
     } else if (this.cssPreprocessor === "LESS") {
-      filename = 'src/less/' + this.slug + '.less';  
+      filename = 'src/less/' + this.slug + '.less';
       mainCssFile = 'src/less/main.less';
     } else {
       return;
     }
-    
+
     this.template('_page.css', filename);
 
-    mainCssString = this.readFileAsString(mainCssFile);    
+    mainCssString = this.readFileAsString(mainCssFile);
     mainCssString += '\n@import "' + this.slug + '";';
     this.write(mainCssFile, mainCssString);
 

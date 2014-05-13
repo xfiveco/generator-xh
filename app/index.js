@@ -72,7 +72,7 @@ var XhGenerator = yeoman.generators.Base.extend({
       this.features = props.features;
 
       var features = this.features;
-      
+
       function hasFeature(feat) {
         return features.indexOf(feat) !== -1;
       }
@@ -127,12 +127,12 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('dist/img');
     this.mkdir('dist/img/common');
     this.mkdir('dist/_xprecise');
-  
+
     // HTML
     if (this.isWP) {
       this.copy('src/_wp.html', 'src/wp.html');
     }
-    
+
     this.template('src/includes/_head.html', 'src/includes/head.html');
     this.copy('src/includes/_header.html', 'src/includes/header.html');
     this.copy('src/includes/_sidebar.html', 'src/includes/sidebar.html');
@@ -166,7 +166,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     // JS
     this.template('src/js/_main.js', 'src/js/main.js');
     if (this.useCSS3Pie) {
-      this.copy('src/js/_PIE.htc', 'dist/js/PIE.htc'); 
+      this.copy('src/js/_PIE.htc', 'dist/js/PIE.htc');
     }
   }
 });

@@ -20,10 +20,10 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     // Welcome user
     console.log('');
-    console.log(chalk.blue(' ***********************************************************') + '\n');
-    console.log(chalk.blue('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
+    console.log(chalk.cyan(' ***********************************************************') + '\n');
+    console.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
     console.log(chalk.white('  A Yeoman generator for scaffolding front-end projects') + '\n');
-    console.log(chalk.blue(' ***********************************************************') + '\n');
+    console.log(chalk.cyan(' ***********************************************************') + '\n');
 
     var prompts = [{
         name: 'projectName',

@@ -221,7 +221,7 @@ In general, it’s not recommended that you work directly with files in the `dis
 
 HTML and CSS files are prettified for consistent formatting and a table of contents from imported SCSS or Less stylesheets is generated at the beginning of `main.css` for better overview.
 
-## Writing styles
+### Writing styles
 
 XH Generator supports SCSS or Less. The following source files are generated in `src/scss` or `src/less` folders:
 

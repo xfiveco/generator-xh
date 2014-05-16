@@ -119,25 +119,25 @@ The meaning of files and folders are as follows:
 - **dist** - production / preview files are automatically generated here, this is where you check your work in a browser. 
 - **node_modules** - Node.js modules for various Grunt tasks, usually you don’t have to do anything about this folder
 - **src** - source files, development is done here
- - **bower_components** - 3rd party libraries managed via Bower
- - **includes** - HTML partials like head.html, scripts.html, etc.
+ - **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
+ - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
  - **scss / less** - SCSS or Less files
-   - _main.scss_ / _main.less_ - main file where other stylesheets are imported
+   - `main.scss` / `main.less` - main file where other stylesheets are imported
    - `_variables.scss` / `variables.less` - variables file
    - `_mixins.scss` / `mixins.less` - mixins file
    - `_common.scss` / `common.less` - common styles with some minimal default styling
-   - `_wp.scss` / `wp.less` -  WordPress styles for images and captions (in WP projects)
+   - `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
  - **js** 
    - `main.js` is a main JS file in project
  - `home.html`, etc. - HTML files composed from HTML partials
-- _.bowerrc_ - configuration file for Bower
-- _.editorconfig_ - EditorConfig configuration file to achieve consistent coding style
-- `.gitattributes` - Git configuration file to force Unix line ending in all text files
+- `.bowerrc` - configuration file for Bower
+- `.editorconfig` - [EditorConfig](http://editorconfig.org/) configuration file to achieve consistent coding style
+- `.gitattributes` - [Git](http://git-scm.com/) configuration file to force Unix line ending in all text files
 - `.gitignore` - default Git ignore files and folders
-- `.jshitrc` - JSHint configuration
+- `.jshitrc` - [JSHint](http://www.jshint.com/) configuration
 - `.yo-rc.json` - Yeoman generator configuration file
 - `bower.json` - Bower dependencies in the project
-- `Gruntfile.js` - Grunt file with various automation tasks defined in it
+- `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
 - `index.html` - project index with project pages listed
 - `package.json` - npm packages dependencies
 
@@ -216,32 +216,32 @@ grunt
 
 ### Working with files in the dist folder
 
-In general, it’s not recommended that you work directly with files in the dist folder except images in dist/img folder. The files in dist folder are automatically generated from the source files in src folder. However, once you hand over the project to your client, they can work directly with plain HTML and CSS files if they wish.
+In general, it’s not recommended that you work directly with files in the dist folder except images in `dist/img` folder. The files in `dist` folder are automatically generated from the source files in `src` folder. However, once you hand over the project to your client, they can work directly with plain HTML and CSS files if they wish.
 
-HTML and CSS files are prettified for consistent formatting and a table of contents from imported SCSS or Less stylesheets is generated at the beginning of main.css for better overview.
+HTML and CSS files are prettified for consistent formatting and a table of contents from imported SCSS or Less stylesheets is generated at the beginning of `main.css` for better overview.
 
 ## Writing styles
 
-XH Generator supports SCSS or Less. The following source files are generated in src/scss or src/less folders:
+XH Generator supports SCSS or Less. The following source files are generated in `src/scss` or `src/less` folders:
 
-- main.scss / main.less - main file where other stylesheets are imported
-- _variables.scss / variables.less - variables file
-- _mixins.scss / mixins.less - mixins file
-- _common.scss / common.less - minimal common styling
-- _wp.scss / wp.less -  WordPress styles for images and captions (in WP projects)
-- _home.scss / home.less, _about.scss / about.less, etc. - individual pages
+- `main.scss` / `main.less` - main file where other stylesheets are imported
+- `_variables.scss` / `variables.less` - variables file
+- `_mixins.scss` / `mixins.less` - mixins file
+- `_common.scss` / `common.less` - minimal common styling
+- `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+- `_home.scss` / `home.less`, `_about.scss` / `about.less`, etc. - individual pages
 
 The following approach is recommended when creating styles:
 
-1. Use main.scss or main.less only for importing other stylesheets. Do not write styles directly to these files!
-2. Use variables and mixins to store your variables and mixins.
-3. Use common.scss or common.less for element's styling which is shared across 2 or more pages. Typically those are main layout, headers, footers, sidebars, pagers, buttons, etc.
-4. If you want, you can separate common elements to more stylesheets like buttons.scss, forms.scss, etc. and import them in main.scss (or main.less)
+1. Use `main.scss` or `main.less` only for importing other stylesheets. Do not write styles directly to these files!
+2. Use variables and mixins files to store your variables and mixins.
+3. Use `common.scss` or `common.less` for element's styling which is shared across 2 or more pages. Typically those are main layout, headers, footers, sidebars, pagers, buttons, etc.
+4. If you want, you can separate common elements to more stylesheets like buttons.scss, forms.scss, etc. and import them in `main.scss` (or `main.less`)
 5. Use individual pages stylesheets for storing styles which are unique for certain page. This will ease collaboration among more developers.
 
 ### Adding 3rd party dependency via Bower
 
-Let’s say you want to add Colorbox to your project. The following example shows how you can add it as a Bower package and merge its JS file into common plugins.js file.
+Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to your project. The following example shows how you can add it as a Bower package and merge its JS file into common plugins.js file.
 
 1) First, install it via Bower
 
@@ -249,7 +249,7 @@ Let’s say you want to add Colorbox to your project. The following example show
 bower install jquery-colorbox --save-dev
 ```
 
-2) Then link it in src/includes/scripts.html. This will ensure that the library will be added to plugins.js file
+2) Then link it in `src/includes/scripts.html`. This will ensure that the library will be added to plugins.js file
 
 ```html
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -260,22 +260,22 @@ bower install jquery-colorbox --save-dev
 <script src="js/main.js"></script>
 ```
 
-3) Download Colorbox archive and copy images from example1/images folder to dist/img/colorbox folder.
+3) Download [Colorbox archive](https://github.com/jackmoore/colorbox/archive/master.zip) and copy images from `example1/images` folder to `dist/img/colorbox` folder.
 
-4) Get colorbox.css from the archive, rename it to colorbox.scss and store it in src/scss folder
+4) Get `colorbox.css` from the archive, rename it to `colorbox.scss` and store it in `src/scss` folder
 
-5) Import colorbox.scss in main.scss
+5) Import `colorbox.scss` in `main.scss`
 
 ```css
 @import "colorbox";
 ```
 
-6) Replace all instances of images/ in colorbox.scss with ../img/colorbox/
+6) Replace all instances of `images/` in `colorbox.scss` with `../img/colorbox/`
 
 7) Run the `grunt` task or `grunt watch`
 
-8) Now you can use Colorbox in your HTML files and initiate it from src/js/main.js
+8) Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`
 
 ## License
 
-XH Generator is licensed under [MIT License](LICENSE.md)
+XH Generator is licensed under [MIT License](LICENSE)

@@ -122,24 +122,25 @@ The meaning of files and folders are as follows:
  - **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
  - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
  - **scss / less** - SCSS or Less files
-   - `main.scss` / `main.less` - main file where other stylesheets are imported
-   - `_variables.scss` / `variables.less` - variables file
-   - `_mixins.scss` / `mixins.less` - mixins file
-   - `_common.scss` / `common.less` - common styles with some minimal default styling
-   - `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+    - `main.scss` / `main.less` - main file where other stylesheets are imported
+    - `_variables.scss` / `variables.less` - variables file
+    - `_mixins.scss` / `mixins.less` - mixins file
+    - `_common.scss` / `common.less` - common styles with some minimal default styling
+    - `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
  - **js** 
-   - `main.js` is a main JS file in project
+    - `main.js` is a main JS file in project
  - `home.html`, etc. - HTML files composed from HTML partials
+- `index.html` - project index with project pages listed
+- `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
+- `bower.json` - Bower dependencies in the project
+- `package.json` - npm packages dependencies
+- `.yo-rc.json` - Yeoman generator configuration file
 - `.bowerrc` - configuration file for Bower
 - `.editorconfig` - [EditorConfig](http://editorconfig.org/) configuration file to achieve consistent coding style
 - `.gitattributes` - [Git](http://git-scm.com/) configuration file to force Unix line ending in all text files
 - `.gitignore` - default Git ignore files and folders
 - `.jshitrc` - [JSHint](http://www.jshint.com/) configuration
-- `.yo-rc.json` - Yeoman generator configuration file
-- `bower.json` - Bower dependencies in the project
-- `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
-- `index.html` - project index with project pages listed
-- `package.json` - npm packages dependencies
+
 
 On a typical project, you will work in src folder and check your work in dist folder so you don’t have to touch other files.
 

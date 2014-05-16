@@ -51,7 +51,7 @@ The following software needs to be installed if you want to use XH Generator. Th
 
 ### 1) Node.js
 
-Install [Node.js](http://nodejs.org/) so you can work with npm, Node package manager.
+Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
 
 ### 2) Sass
 If you want to use SCSS for CSS preprocessing (SCSS is a default option), you will need to install [Ruby](https://www.ruby-lang.org/en/installation/) and [Sass](http://sass-lang.com/install). Once Ruby is installed (on Mac it comes preinstalled), install the Sass preprocessor from the command line.
@@ -142,7 +142,7 @@ The meaning of files and folders are as follows:
 - `.jshitrc` - [JSHint](http://www.jshint.com/) configuration
 
 
-On a typical project, you will work in src folder and check your work in dist folder so you don’t have to touch other files.
+On a typical project, you will work in `src` folder and check your work in `dist` folder so you don’t have to touch other files.
 
 ### 3) Adding pages to the project
 
@@ -162,14 +162,14 @@ yo xh:page “Home”
 
 The command will do the following:
 
-1. creates a HTML file for your page in src folder
+1. creates a HTML file for your page in `src` folder
 2. adds a page name and link to the project index
-3. creates a source SCSS or Less file for the page and adds an @import statement to *main.scss* or *main.less*
-4. creates images subfolder for the page in *dist/img* folder
+3. creates a source SCSS or Less file for the page and adds an `@import` statement to `main.scss` or `main.less`
+4. creates images subfolder for the page in `dist/img` folder
 
 ![Page added](docs/img/page-added.png)
 
-When running the command, you will asked if index.html and main.scss (or main.less) should be overridden:
+When running the command, you will asked if `index.html` and `main.scss` (or `main.less`) should be overridden:
 
 ![Project index overwrite](docs/img/index-overwrite.png)
 
@@ -181,7 +181,7 @@ If you wonder what Yanxdh means in the above screenshot, it is:
 - **d:** Show the differences between the old and the new file
 - **h:** Help, list all options
 
-Confirm overwriting the both files with *Y* or with *a* at once.
+Confirm overwriting the both files with `Y` or with `a` at once.
 
 ### 4) Development
 
@@ -193,7 +193,7 @@ grunt
 
 ![grunt command](docs/img/grunt.png)
 
-If everything went ok, the preview files will be generated and you will be able to check your work in the *dist* folder. XH Generator doesn't create a server, so you need to preview files on your existing local web server.
+If everything went ok, the preview files will be generated and you will be able to check your work in the `dist` folder. XH Generator doesn't create a server, so you need to preview files on your existing local web server.
 
 To re-compile HTML / SCSS file in real time you can use watch task. Type
 
@@ -211,13 +211,13 @@ To rebuild the whole project and validate HTML files, use the grunt task again
 grunt
 ```
 
-(Please note that HTML validation in *grunt* task can be time consuming so we recommend using *grunt watch* for regular development.)
+(Please note that HTML validation in `grunt` task can be time consuming so we recommend using `grunt watch` for regular development.)
 
 ## Tips & Tricks
 
 ### Working with files in the dist folder
 
-In general, it’s not recommended that you work directly with files in the dist folder except images in `dist/img` folder. The files in `dist` folder are automatically generated from the source files in `src` folder. However, once you hand over the project to your client, they can work directly with plain HTML and CSS files if they wish.
+In general, it’s not recommended that you work directly with files in the `dist` folder except images in `dist/img` folder. The files in `dist` folder are automatically generated from the source files in `src` folder. However, once you hand over the project to your client, they can work directly with plain HTML and CSS files if they wish.
 
 HTML and CSS files are prettified for consistent formatting and a table of contents from imported SCSS or Less stylesheets is generated at the beginning of `main.css` for better overview.
 
@@ -237,12 +237,12 @@ The following approach is recommended when creating styles:
 1. Use `main.scss` or `main.less` only for importing other stylesheets. Do not write styles directly to these files!
 2. Use variables and mixins files to store your variables and mixins.
 3. Use `common.scss` or `common.less` for element's styling which is shared across 2 or more pages. Typically those are main layout, headers, footers, sidebars, pagers, buttons, etc.
-4. If you want, you can separate common elements to more stylesheets like buttons.scss, forms.scss, etc. and import them in `main.scss` (or `main.less`)
+4. If you want, you can separate common elements to more stylesheets like `buttons.scss`, `forms.scss`, etc. and import them in `main.scss` (or `main.less`)
 5. Use individual pages stylesheets for storing styles which are unique for certain page. This will ease collaboration among more developers.
 
 ### Adding 3rd party dependency via Bower
 
-Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to your project. The following example shows how you can add it as a Bower package and merge its JS file into common plugins.js file.
+Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to your project. The following example shows how you can add it as a Bower package and merge its JS file into common `plugins.js` file.
 
 1. First, install it via Bower
 
@@ -250,7 +250,7 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
     bower install jquery-colorbox --save-dev
     ```
 
-2. Then link it in `src/includes/scripts.html`. This will ensure that the library will be added to plugins.js file
+2. Then link it in `src/includes/scripts.html`. This will ensure that the library will be added to `plugins.js` file
 
     ```html
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>

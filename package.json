@@ -1,6 +1,6 @@
 {
   "name": "generator-xh",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Yeoman generator for scaffolding front-end projects.",
   "keywords": [
     "yeoman-generator",

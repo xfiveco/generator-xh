@@ -22,7 +22,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
  - [Project structure](#2-project-structure)
  - [Adding pages to the project](#3-adding-pages-to-the-project)
  - [Development](#4-development)
-- [Tips & Tricks](#tips-tricks)
+- [Tips & Tricks](#tips--tricks)
  - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
  - [Writing styles](#writing-styles)
  - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)
@@ -243,38 +243,38 @@ The following approach is recommended when creating styles:
 
 Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to your project. The following example shows how you can add it as a Bower package and merge its JS file into common plugins.js file.
 
-1) First, install it via Bower
+1. First, install it via Bower
 
-```
-bower install jquery-colorbox --save-dev
-```
+    ```
+    bower install jquery-colorbox --save-dev
+    ```
 
-2) Then link it in `src/includes/scripts.html`. This will ensure that the library will be added to plugins.js file
+2. Then link it in `src/includes/scripts.html`. This will ensure that the library will be added to plugins.js file
 
-```html
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/jquery.min.js">\x3C/script>')</script>
-<!-- build:js js/plugins.js -->
-<script src="bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
-<!-- endbuild -->
-<script src="js/main.js"></script>
-```
-
-3) Download [Colorbox archive](https://github.com/jackmoore/colorbox/archive/master.zip) and copy images from `example1/images` folder to `dist/img/colorbox` folder.
-
-4) Get `colorbox.css` from the archive, rename it to `colorbox.scss` and store it in `src/scss` folder
-
-5) Import `colorbox.scss` in `main.scss`
-
-```css
-@import "colorbox";
+    ```html
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery.min.js">\x3C/script>')</script>
+    <!-- build:js js/plugins.js -->
+    <script src="bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
+    <!-- endbuild -->
+    <script src="js/main.js"></script>
 ```
 
-6) Replace all instances of `images/` in `colorbox.scss` with `../img/colorbox/`
+3. Download [Colorbox archive](https://github.com/jackmoore/colorbox/archive/master.zip) and copy images from `example1/images` folder to `dist/img/colorbox` folder.
 
-7) Run the `grunt` task or `grunt watch`
+4. Get `colorbox.css` from the archive, rename it to `colorbox.scss` and store it in `src/scss` folder
 
-8) Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`
+5. Import `colorbox.scss` in `main.scss`
+
+    ```css
+    @import "colorbox";
+    ```
+
+6. Replace all instances of `images/` in `colorbox.scss` with `../img/colorbox/`
+
+7. Run the `grunt` task or `grunt watch`
+
+8. Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`
 
 ## License
 

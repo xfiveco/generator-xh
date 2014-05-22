@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.3
+
+#### Date: 2014-05-22
+
+##### Changes
+
+- Added `dist/media` folder for storing content images which are not part of UI
+- Removed redundant content from the project index
+- Added changelog
+
 ## v0.1.2
 
 #### Date: 2014-05-16

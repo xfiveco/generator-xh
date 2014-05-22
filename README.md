@@ -26,17 +26,20 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
  - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
  - [Writing styles](#writing-styles)
  - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)
+- [Contributing](#contributing)
+- [Credits](#credits)
 - [License](#license)
 
 ## Features
 - Custom project name
 - Responsive project index with a list of pages / templates
-- HTML includes to avoid code duplication
+- [HTML includes](https://github.com/alanshaw/grunt-include-replace) to avoid code duplication
 - A sub generator for adding pages to the project
 - Industry standard [normalize.css](http://necolas.github.io/normalize.css/) as a base stylesheet
 - CSS Preprocessing with [SCSS](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
 - Optional [WordPress styles](http://codex.wordpress.org/CSS) for images and captions
 - Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [CSS3 Pie](http://css3pie.com/)
+- Add vendor-prefixed CSS properties with [autprefixer](https://github.com/nDmitry/grunt-autoprefixer)
 - Grunt tasks for prettifying built HTML / CSS / JS
 - Auto generated table of contents in main.css
 - Functionality for merging JS libraries to reduce number of HTTP requests
@@ -61,7 +64,7 @@ gem install sass
 ```
 
 ### 3) Grunt
-Then install [Grunt](http://gruntjs.com/), JavaScript task runner, from the command line:
+Then install [Grunt](http://gruntjs.com/)'s command line interface (CLI) globally:
 
 ```
 npm install -g grunt-cli
@@ -223,7 +226,7 @@ HTML and CSS files are prettified for consistent formatting and a table of conte
 
 ### Writing styles
 
-XH Generator supports SCSS or Less. The following source files are generated in `src/scss` or `src/less` folders:
+XH Generator supports SCSS or Less. Sass syntax is not recommended. The following source files are generated in `src/scss` or `src/less` folders:
 
 - `main.scss` / `main.less` - main file where other stylesheets are imported
 - `_variables.scss` / `variables.less` - variables file
@@ -237,7 +240,7 @@ The following approach is recommended when creating styles:
 1. Use `main.scss` or `main.less` only for importing other stylesheets. Do not write styles directly to these files!
 2. Use variables and mixins files to store your variables and mixins.
 3. Use `common.scss` or `common.less` for element's styling which is shared across 2 or more pages. Typically those are main layout, headers, footers, sidebars, pagers, buttons, etc.
-4. If you want, you can separate common elements to more stylesheets like `buttons.scss`, `forms.scss`, etc. and import them in `main.scss` (or `main.less`)
+4. If you want, you can separate common elements to more stylesheets like `buttons.scss`, `forms.scss`, etc. and import them in `main.scss` (or `main.less`). In such case you can also create related pages for them eg. buttons.html and this will create a stylesheet for you automatically.
 5. Use individual pages stylesheets for storing styles which are unique for certain page. This will ease collaboration among more developers.
 
 ### Adding 3rd party dependency via Bower
@@ -277,6 +280,16 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 
 8. Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`
 
+## Contributing
+Please follow the GitHub guides for contributing and reporting issues to the project:
+
+- [Contributing to Open Source on GitHub](https://guides.github.com/activities/contributing-to-open-source/)
+- [Mastering Issues](http://https://guides.github.com/features/issues/)
+
+## Credits
+
+XH Generator is inspired by [Yeogurt Generator](https://github.com/larsonjj/generator-yeogurt).
+
 ## License
 
-XH Generator is licensed under [MIT License](LICENSE)
+XH Generator is licensed under [MIT License](LICENSE).

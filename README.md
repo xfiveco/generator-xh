@@ -26,6 +26,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
  - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
  - [Writing styles](#writing-styles)
  - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)
+- [Changelog](#changelog)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
@@ -279,6 +280,10 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 7. Run the `grunt` task or `grunt watch`
 
 8. Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`
+
+## Changelog
+
+Check [Changelog](CHANGELOG.md)
 
 ## Contributing
 Please follow the GitHub guides for contributing and reporting issues to the project:

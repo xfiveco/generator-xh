@@ -51,6 +51,7 @@ describe('XH generator defaults', function () {
       'dist/_xprecise',
       'dist/css',
       'dist/img',
+      'dist/media',
       'dist/js',
       'dist/js/PIE.htc'
     ];

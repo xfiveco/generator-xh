@@ -48,6 +48,7 @@ describe('XH generator Less', function () {
       'dist/_xprecise',
       'dist/css',
       'dist/img',
+      'dist/media',
       'dist/js'
     ];
 

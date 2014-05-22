@@ -126,6 +126,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('dist/js');
     this.mkdir('dist/img');
     this.mkdir('dist/img/common');
+    this.mkdir('dist/media');
     this.mkdir('dist/_xprecise');
 
     // HTML

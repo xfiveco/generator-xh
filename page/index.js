@@ -5,14 +5,19 @@ var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
 
 var PageGenerator = yeoman.generators.NamedBase.extend({
   init: function () {
+
+    this.slug = this._.slugify(this.name);
+    var reserved = ['main', 'variables', 'mixins', 'common', 'wordpress', 'wp'];
+
     if (!this.name) {
-        console.log('Name cannot be empty.');
-        return;
+      console.log('Name cannot be empty.');
+      process.exit();
+    } else if (reserved.indexOf(this.slug) >= 0) {
+      console.log('You cannot use reserved words - main, variables, mixins, common, wordpress, wp - as a page name.');
+      process.exit();
     }
 
     this.cssPreprocessor = config.cssPreprocessor;
-    this.slug = this._.slugify(this.name);
-
     console.log('Creating page ' + this.name + '.');
   },
 

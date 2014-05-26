@@ -300,8 +300,11 @@ module.exports = function(grunt) {
     'replace',
 
     // Checks
-    'validation',
     'jshint'
+  ]);
+
+  grunt.registerTask('validate', [
+    'validation'
   ]);
 };
 

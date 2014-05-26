@@ -214,6 +214,15 @@ module.exports = function(grunt) {
           from: '@@timestamp',
           to: '<%%= grunt.template.today() %>'
         }]
+      },
+
+      xprecise: {
+        src: ['<%%= xh.src %>/includes/scripts.html'],
+        overwrite: true,
+        replacements: [{
+          from: '<script src="http://cssonsails.org/xprecise/xprecise.min.js"></script>',
+          to: ''
+        }]
       }
     },
 
@@ -297,7 +306,8 @@ module.exports = function(grunt) {
 
     // Replacements
     'search',
-    'replace',
+    'replace:css',
+    'replace:js',
 
     // Checks
     'jshint'
@@ -306,5 +316,9 @@ module.exports = function(grunt) {
   grunt.registerTask('validate', [
     'validation'
   ]);
+
+  grunt.registerTask('qa', 'QA Task', function() {
+    grunt.task.run(['replace:xprecise', 'default', 'validate', 'jshint']);
+  });
 };
 

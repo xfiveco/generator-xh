@@ -209,13 +209,23 @@ and this will start a task that will watch for changes in files and recompile th
 
 ![grunt watch command](docs/img/grunt-watch.png)
 
-To rebuild the whole project and validate HTML files, use the grunt task again
+To rebuild the whole project, use the grunt task again
 
 ```
 grunt
 ```
 
-(Please note that HTML validation in `grunt` task can be time consuming so we recommend using `grunt watch` for regular development.)
+To validate HTML files, use the following task
+
+```
+grunt validate
+```
+
+To detach X-Precise from pages, rebuild the project, validate HTML files and check JavaScript files with JS Hint, use the following task
+
+```
+grunt qa
+```
 
 ## Tips & Tricks
 
@@ -283,7 +293,7 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 
 ## Changelog
 
-Check [Changelog](CHANGELOG.md)
+Check [Releases](https://github.com/xhtmlized/generator-xh/releases)
 
 ## Contributing
 Please follow the GitHub guides for contributing and reporting issues to the project:

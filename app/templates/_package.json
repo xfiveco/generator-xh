@@ -1,6 +1,11 @@
 {
   "name": "<%= _.slugify(projectName) %>",
+  "description": "<%= _.slugify(projectName) %>",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "devDependencies": {
     "grunt": "^0.4.4", <% if (cssPreprocessor === 'SCSS') { %>
     "grunt-contrib-sass": "^0.7.3",<% } %><% if (cssPreprocessor === 'LESS') { %>

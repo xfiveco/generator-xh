@@ -10,9 +10,8 @@
     "tests"
   ],
   "dependencies": {<% if (useModernizr) { %>
-    "modernizr": "~2.8.1",<% } %><% if (useBootstrap) { %>
-    "bootstrap": "~3.1.1",<% } %><% if (cssPreprocessor === 'SCSS' && !useBootstrap) { %>
-    "normalize-scss": "~3.0.0",<% } %><% if (cssPreprocessor === 'LESS' && !useBootstrap) { %>
+    "modernizr": "~2.8.2",<% } %><% if (useBootstrap) { %>
+    "bootstrap": "~3.1.1",<% } %><% if (!useBootstrap) { %>
     "normalize.css": "~3.0.1",<% } %>
     "jquery": "~1.11.1"
   },

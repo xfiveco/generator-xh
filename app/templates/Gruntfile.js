@@ -128,10 +128,19 @@ module.exports = function(grunt) {
 
     cssbeautifier: {
       files: ['<%%= xh.dist %>/css/*.css', '!<%%= xh.dist %>/css/libraries.min.css'],
+      options : {
+        indent: '  '
+      }
     },
 
     // JS
     copy: {
+      normalize: {
+        src: 'src/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS') { %>
+        dest: 'src/bower_components/normalize.css/normalize.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
+        dest: 'src/bower_components/normalize.css/normalize.less'<% } %>
+      },
+
       jquery: {
         cwd: 'src/bower_components/jquery/dist/',
         src: 'jquery.min.js',
@@ -232,11 +241,7 @@ module.exports = function(grunt) {
             }
             return toc;
           }
-        },<% if (cssPreprocessor === 'LESS') { %>
-        {
-          from: /\}/g,
-          to: '}\n'
-        },<% } %>
+        },
         // Add empty line after section & subsection comment
         {
           from: /=== \*\//g,
@@ -246,8 +251,7 @@ module.exports = function(grunt) {
         {
           from: /}(?!\n\n)/gi,
           to: '}\n'
-        }
-        ]
+        }]
       },
 
       js: {
@@ -364,13 +368,17 @@ module.exports = function(grunt) {
     'validation'
   ]);
 
-  grunt.registerTask('qa', 'QA Task', function() {
-    grunt.task.run(['replace:xprecise', 'default', 'validate', 'jshint']);
-  });
+  grunt.registerTask('qa', [
+      'replace:xprecise',
+      'default',
+      'validate',
+      'jshint'
+  ]);
 
-  grunt.registerTask('postinstall', [
-    'copy:jquery'<% if (useModernizr) { %>,
-    'uglify:modernizr'<% } %>
+  grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>
+    'copy:normalize',<% } %><% if (useModernizr) { %>
+    'uglify:modernizr',<% } %>
+    'copy:jquery'
   ]);
 };
 

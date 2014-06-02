@@ -17,7 +17,42 @@ module.exports = function(grunt) {
     // Configs
     xh: {
       src: 'src',
-      dist: 'dist'
+      dist: 'dist',
+      build: ['head.html', 'scripts.html']
+    },
+
+    useminPrepare: {
+      html: {
+        src: '<%%= xh.build %>',
+        cwd: '<%%= xh.src %>/includes/',
+        expand: true
+      },
+
+      options: {
+        dest: '<%%= xh.dist %>',
+        root: '<%%= xh.src %>',
+        flow: {
+          steps: {'js': ['concat'], 'css': ['concat'] },
+          post: {}
+        }
+      }
+    },
+
+    usemin: {
+      html: {
+        src: '<%%= xh.build %>',
+        cwd: '<%%= xh.src %>/includes/',
+        expand: true
+      },
+
+      options: {
+        assetsDirs: ['<%%= xh.src %>/includes/']
+      }
+    },
+
+
+    clean: {
+      src: [".tmp"]
     },
 
     // HTML Includes
@@ -31,26 +66,6 @@ module.exports = function(grunt) {
           ext: '.html'
         }]
       }
-    },
-
-    useminPrepare: {
-      html: '<%%= xh.dist %>/*.html',
-      options: {
-        dest: '<%%= xh.dist %>',
-        root: '<%%= xh.src %>',
-        flow: {
-          steps: {'js': ['concat'], 'css': ['concat'] },
-          post: {}
-        }
-      }
-    },
-
-    usemin: {
-      html: '<%%= xh.dist %>/*.html'
-    },
-
-    clean: {
-      src: [".tmp"]
     },
 
     jsbeautifier: {
@@ -117,10 +132,26 @@ module.exports = function(grunt) {
 
     // JS
     copy: {
-      files: {
+      js: {
         cwd: '<%%= xh.src %>/js/',
         src: 'main.js',
         dest: '<%%= xh.dist %>/js/',
+        expand: true
+      },
+
+      // Backup include files
+      backup: {
+        cwd: '<%%= xh.src %>/includes/',
+        src: '<%%= xh.build %>',
+        dest: '.tmp',
+        expand: true
+      },
+
+      // Restore include files
+      restore: {
+        cwd: '.tmp',
+        src: '<%%= xh.build %>',
+        dest: '<%%= xh.src %>/includes/',
         expand: true
       }
     },
@@ -261,10 +292,12 @@ module.exports = function(grunt) {
       html: {
         files: ['<%%= xh.src %>/*.html', '<%%= xh.src %>/includes/*.html'],
         tasks: [
-          'includereplace',
           'useminPrepare',
           'concat',
+          'copy:backup',
           'usemin',
+          'includereplace',
+          'copy:restore',
           'jsbeautifier:html',
           'clean'
         ],
@@ -275,7 +308,7 @@ module.exports = function(grunt) {
 
       js: {
         files: '<%%= xh.src %>/js/*.js',
-        tasks: ['copy', 'jsbeautifier:js', 'replace:js', 'jshint'],
+        tasks: ['copy:js', 'jsbeautifier:js', 'replace:js', 'jshint'],
         options: {
           livereload: true
         }
@@ -286,10 +319,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     // HTML
-    'includereplace',
     'useminPrepare',
     'concat',
+    'copy:backup',
     'usemin',
+    'includereplace',
+    'copy:restore',
     'jsbeautifier:html',
     'clean',
 
@@ -301,7 +336,7 @@ module.exports = function(grunt) {
     'cssbeautifier',
 
     // JS
-    'copy',
+    'copy:js',
     'jsbeautifier:js',
 
     // Replacements

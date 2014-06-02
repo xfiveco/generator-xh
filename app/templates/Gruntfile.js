@@ -241,6 +241,11 @@ module.exports = function(grunt) {
         {
           from: /=== \*\//g,
           to: '=== */\n'
+        },
+        // Add empty line after rule if it doesn't have one already
+        {
+          from: /}(?!\n\n)/gi,
+          to: '}\n'
         }
         ]
       },

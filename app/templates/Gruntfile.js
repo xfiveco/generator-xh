@@ -132,6 +132,13 @@ module.exports = function(grunt) {
 
     // JS
     copy: {
+      jquery: {
+        cwd: 'src/bower_components/jquery/dist/',
+        src: 'jquery.min.js',
+        dest: '<%%= xh.dist %>/js/',
+        expand: true
+      },
+
       js: {
         cwd: '<%%= xh.src %>/js/',
         src: 'main.js',
@@ -355,5 +362,10 @@ module.exports = function(grunt) {
   grunt.registerTask('qa', 'QA Task', function() {
     grunt.task.run(['replace:xprecise', 'default', 'validate', 'jshint']);
   });
+
+  grunt.registerTask('postinstall', [
+    'copy:jquery'<% if (useModernizr) { %>,
+    'uglify:modernizr'<% } %>
+  ]);
 };
 

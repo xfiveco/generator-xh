@@ -31,6 +31,7 @@ describe('XH generator Less', function () {
       'index.html',
       'package.json',
       'src',
+      'src/template.html',
       'src/includes',
       'src/includes/footer.html',
       'src/includes/head.html',

@@ -171,12 +171,10 @@ The command will do the following:
 
 1. creates a HTML file for your page in `src` folder
 2. adds a page name and link to the project index
-3. creates a source SCSS or Less file for the page and adds an `@import` statement to `main.scss` or `main.less`
-4. creates images subfolder for the page in `dist/img` folder
 
 ![Page added](docs/img/page-added.png)
 
-When running the command, you will asked if `index.html` and `main.scss` (or `main.less`) should be overridden:
+When running the command, you will asked if `index.html` should be overridden:
 
 ![Project index overwrite](docs/img/index-overwrite.png)
 
@@ -188,7 +186,7 @@ If you wonder what Yanxdh means in the above screenshot, it is:
 - **d:** Show the differences between the old and the new file
 - **h:** Help, list all options
 
-Confirm overwriting the both files with `Y` or with `a` at once.
+Confirm overwriting the file with `Y` or with `a` at once.
 
 ### 4) Development
 
@@ -275,18 +273,16 @@ XH Generator supports SCSS or Less. Sass syntax is not recommended. The followin
 - `main.scss` / `main.less` - main file where other stylesheets are imported
 - `_variables.scss` / `variables.less` - variables file
 - `_mixins.scss` / `mixins.less` - mixins file
-- `_common.scss` / `common.less` - minimal common styling
+- `_common.scss` / `common.less` - some minimal common styling
 - `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
-- `_home.scss` / `home.less`, `_about.scss` / `about.less`, etc. - individual pages
 
 The following approach is recommended when creating styles:
 
 1. Use `main.scss` or `main.less` only for importing other stylesheets. Do not write styles directly to these files!
 2. Use variables and mixins files to store your variables and mixins.
-3. Use `common.scss` or `common.less` for element's styling which is shared across 2 or more pages. Typically those are main layout, headers, footers, sidebars, pagers, buttons, etc.
-4. If you want, you can separate common elements to more stylesheets like `buttons.scss`, `forms.scss`, etc. and import them in `main.scss` (or `main.less`). In such case you can also create related pages for them eg. `buttons.html` and this will create a stylesheet for you automatically.
-5. Use individual pages stylesheets for storing styles which are unique for certain page. This will ease collaboration among more developers.
-6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use Less as it's [faster than Ruby Saas](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
+3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended), or pages.
+4. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
+5. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use Less as it's [faster than Ruby Saas](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
 
 ### Adding 3rd party dependency via Bower
 

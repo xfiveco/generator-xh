@@ -33,6 +33,7 @@ describe('XH generator defaults', function () {
       'package.json',
       'src',
       'src/wp.html',
+      'src/template.html',
       'src/includes',
       'src/includes/footer.html',
       'src/includes/head.html',

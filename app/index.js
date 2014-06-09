@@ -134,6 +134,8 @@ var XhGenerator = yeoman.generators.Base.extend({
       this.copy('src/_wp.html', 'src/wp.html');
     }
 
+    this.copy('src/_template.html', 'src/template.html');
+
     this.template('src/includes/_head.html', 'src/includes/head.html');
     this.copy('src/includes/_header.html', 'src/includes/header.html');
     this.copy('src/includes/_sidebar.html', 'src/includes/sidebar.html');

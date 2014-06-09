@@ -251,8 +251,9 @@ The following approach is recommended when creating styles:
 1. Use `main.scss` or `main.less` only for importing other stylesheets. Do not write styles directly to these files!
 2. Use variables and mixins files to store your variables and mixins.
 3. Use `common.scss` or `common.less` for element's styling which is shared across 2 or more pages. Typically those are main layout, headers, footers, sidebars, pagers, buttons, etc.
-4. If you want, you can separate common elements to more stylesheets like `buttons.scss`, `forms.scss`, etc. and import them in `main.scss` (or `main.less`). In such case you can also create related pages for them eg. buttons.html and this will create a stylesheet for you automatically.
+4. If you want, you can separate common elements to more stylesheets like `buttons.scss`, `forms.scss`, etc. and import them in `main.scss` (or `main.less`). In such case you can also create related pages for them eg. `buttons.html` and this will create a stylesheet for you automatically.
 5. Use individual pages stylesheets for storing styles which are unique for certain page. This will ease collaboration among more developers.
+6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use Less as it's [faster than Ruby Saas](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
 
 ### Adding 3rd party dependency via Bower
 

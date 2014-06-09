@@ -369,10 +369,10 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('qa', [
-      'replace:xprecise',
-      'default',
-      'validate',
-      'jshint'
+    'replace:xprecise',
+    'default',
+    'validate',
+    'jshint'
   ]);
 
   grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>

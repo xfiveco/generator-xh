@@ -79,7 +79,7 @@ For managing certain dependencies like Bootstrap, you will need [Bower](http://b
 npm install -g bower
 ```
 
-Also make sure that [git](http://git-scm.com/) is installed as some bower packages require it to be fetched and installed.
+Also make sure that [git](http://git-scm.com/) is installed as some bower packages require it to be fetched and installed. On Windows ensure that Git is installed in your PATH by selecting *Run Git from the Windows Command Prompt* option during installation (check this [screenshot](http://wiki.team-mediaportal.com/@api/deki/files/3808/=Git_Setup_-_Run_from_Windows_Command_Prompt.PNG)).
 
 ### 5) Yeoman
 XH Generator is a [Yeoman](http://yeoman.io/) generator, so obviously it depends on it. You can easily install Yeoman with the following command:

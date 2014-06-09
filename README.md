@@ -22,6 +22,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
  - [Project structure](#2-project-structure)
  - [Adding pages to the project](#3-adding-pages-to-the-project)
  - [Development](#4-development)
+ - [Collaborating](#5-collaborating)
 - [Tips & Tricks](#tips--tricks)
  - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
  - [Writing styles](#writing-styles)
@@ -77,6 +78,8 @@ For managing certain dependencies like Bootstrap, you will need [Bower](http://b
 ```
 npm install -g bower
 ```
+
+Also make sure that [git](http://git-scm.com/) is installed as some bower packages require it to be fetched and installed.
 
 ### 5) Yeoman
 XH Generator is a [Yeoman](http://yeoman.io/) generator, so obviously it depends on it. You can easily install Yeoman with the following command:
@@ -226,6 +229,36 @@ To detach X-Precise from pages, rebuild the project, validate HTML files and che
 ```
 grunt qa
 ```
+
+### 5) Collaborating
+
+If you are joining an existing project which was set up using XH Generator, remember that the project was already generated with `yo xh` command so you don't have to generate it again. Assuming that you have all [prerequisites](#prerequisites) installed, all you need to do is to clone the existing repository and install Bower and npm dependencies.
+
+Let's imagine we have a project called Robot Magic here at the XHTMLized GitHub account. First, we will clone it locally:
+
+```
+git clone git@github.com:xhtmlized/robot-magic.git
+```
+
+Now change the directory to your newly cloned project:
+
+```
+cd robot-magic
+```
+
+First, install Bower depedencies:
+
+```
+bower install
+```
+
+Then install npm dependencies:
+
+```
+npm install
+```
+
+Now the project is set up and you can continue like described in the [Development](#4-development) section. If there are no pages in the project yet, first you need to [add some pages to it](#3-adding-pages-to-the-project).
 
 ## Tips & Tricks
 

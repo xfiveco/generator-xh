@@ -5,6 +5,13 @@ var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
 
 var WPGenerator = yeoman.generators.Base.extend({
 
+  init: function () {
+    if (yeoman.file.exists(config.wpFolder + '/wp-config.php')) {
+      console.log('WordPress is already installed.');
+      process.exit();
+    }
+  },
+
   askFor: function () {
     var done = this.async();
 
@@ -44,7 +51,7 @@ var WPGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  _installWordPress: function () {
+  installWordPress: function () {
     var done = this.async();
 
     this.remote('wordpress', 'wordpress', '3.9.1', function (err, remote) {
@@ -80,7 +87,7 @@ var WPGenerator = yeoman.generators.Base.extend({
     this.write(config.wpFolder + '/wp-config.php', wpConfigFile);
   },
 
-  _installWPizedLight: function () {
+  installWPizedLight: function () {
     var done = this.async();
 
     this.remote('xhtmlized', 'wpized-light', 'master', function (err, remote) {
@@ -97,7 +104,7 @@ var WPGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  _updateThemeStylesheet: function () {
+  updateThemeStylesheet: function () {
     var themeStylesheetFile = config.wpThemeFolder + '/style.css';
     var themeStylesheet = this.readFileAsString(themeStylesheetFile);
     themeStylesheet = themeStylesheet.replace('WPized Light', config.projectName);

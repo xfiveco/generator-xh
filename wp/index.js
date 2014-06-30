@@ -88,6 +88,10 @@ var WPGenerator = yeoman.generators.Base.extend({
   },
 
   installWPizedLight: function () {
+    if (!this.installWPizedLight) {
+      return;
+    }
+
     var done = this.async();
 
     this.remote('xhtmlized', 'wpized-light', 'master', function (err, remote) {
@@ -105,6 +109,10 @@ var WPGenerator = yeoman.generators.Base.extend({
   },
 
   updateThemeStylesheet: function () {
+    if (!this.installWPizedLight) {
+      return;
+    }
+
     var themeStylesheetFile = config.wpThemeFolder + '/style.css';
     var themeStylesheet = this.readFileAsString(themeStylesheetFile);
     themeStylesheet = themeStylesheet.replace('WPized Light', config.projectName);

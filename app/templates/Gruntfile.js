@@ -361,14 +361,14 @@ module.exports = function(grunt) {
 
     // JS
     'copy:js',
-    'jsbeautifier:js',<% if (isWP) { %>
-
-    'copy:wp',<% } %>
+    'jsbeautifier:js',
 
     // Replacements
     'search',
     'replace:css',
-    'replace:js',
+    'replace:js',<% if (isWP) { %>
+
+    'copy:wp',<% } %>
 
     // Checks
     'jshint'

@@ -87,7 +87,16 @@ var XhGenerator = yeoman.generators.Base.extend({
         this.projectAuthor = '';
       }
 
+      // WP
+      if (this.isWP) {
+        this.wpFolder = 'wp';
+        this.wpThemeFolderName = this._.slugify(this.projectName);
+        this.wpThemeFolder = this.wpFolder + '/wp-content/themes/' + this.wpThemeFolderName;
+      }
+
       this.props = props;
+      this.props.wpFolder = this.wpFolder;
+      this.props.wpThemeFolder = this.wpThemeFolder;
 
       done();
 
@@ -130,10 +139,6 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('dist/_xprecise');
 
     // HTML
-    if (this.isWP) {
-      this.copy('src/_wp.html', 'src/wp.html');
-    }
-
     this.copy('src/_template.html', 'src/template.html');
 
     this.template('src/includes/_head.html', 'src/includes/head.html');
@@ -142,7 +147,13 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.copy('src/includes/_scripts.html', 'src/includes/scripts.html');
     this.copy('src/includes/_footer.html', 'src/includes/footer.html');
 
-    // SASS
+    // HTML
+    if (this.isWP) {
+      this.mkdir(this.wpThemeFolder);
+      this.copy('src/_wp.html', 'src/wp.html');
+    }
+
+    // SCSS
     if (this.cssPreprocessor === 'SCSS') {
       this.mkdir('src/scss');
       this.template('src/scss/_main.scss', 'src/scss/main.scss');

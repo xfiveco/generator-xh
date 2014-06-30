@@ -153,7 +153,14 @@ module.exports = function(grunt) {
         src: 'main.js',
         dest: '<%%= xh.dist %>/js/',
         expand: true
-      },
+      },<% if (isWP) { %>
+
+      wp: {
+        cwd: '<%%= xh.dist %>/',
+        src: ['**', '!_xprecise', '!*.html'],
+        dest: '<%= wpThemeFolder  %>',
+        expand: true
+      },<% } %>
 
       // Backup include files
       backup: {
@@ -292,14 +299,14 @@ module.exports = function(grunt) {
     watch: {<% if (cssPreprocessor === 'SCSS') { %>
       scss: {
         files: ['<%%= xh.src %>/scss/*.scss'],
-        tasks: ['sass', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'],
+        tasks: ['sass', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>],
         options: {
           livereload: true
         }
       },<% } %><% if (cssPreprocessor === 'LESS') { %>
       less: {
         files: ['<%%= xh.src %>/less/*.less'],
-        tasks: ['less', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'],
+        tasks: ['less', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>],
         options: {
           livereload: true
         }
@@ -314,7 +321,8 @@ module.exports = function(grunt) {
           'usemin',
           'includereplace',
           'copy:restore',
-          'jsbeautifier:html',
+          'jsbeautifier:html',<% if (isWP) { %>
+          'copy:wp',<% } %>
           'clean'
         ],
         options: {
@@ -324,7 +332,7 @@ module.exports = function(grunt) {
 
       js: {
         files: '<%%= xh.src %>/js/*.js',
-        tasks: ['copy:js', 'jsbeautifier:js', 'replace:js', 'jshint'],
+        tasks: ['copy:js', 'jsbeautifier:js', 'replace:js', 'jshint'<% if (isWP) { %>, 'copy:wp'<% } %>],
         options: {
           livereload: true
         }
@@ -353,7 +361,9 @@ module.exports = function(grunt) {
 
     // JS
     'copy:js',
-    'jsbeautifier:js',
+    'jsbeautifier:js',<% if (isWP) { %>
+
+    'copy:wp',<% } %>
 
     // Replacements
     'search',

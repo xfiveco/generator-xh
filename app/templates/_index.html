@@ -8,7 +8,7 @@
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
     <style>
     <!--
         html, body, div, span, h1, h2, h3, h4, h5, h6, p, pre, a, abbr, acronym, code, em, img, strong, sub, sup, dl, dt, dd, ol, ul, li { margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
@@ -45,6 +45,7 @@
         #content section article h3.wip { color: #00a6b6; }
         #content section article h3.done { color: #00ad69; }
         #content section p { font-size: 110%; color: #999; }
+        #content section p.credentials { clear: both; padding: 5px 0 0 34px; font-size: 100%; }
         #content section p strong { color: #666; }
 
         #content section.status { padding: 0 0 60px; border-bottom: 1px solid #ededed; }
@@ -70,6 +71,7 @@
         #content section.files article li span { display: inline-block; margin-top: 6px; width: 35%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; -moz-binding: url(<q>assets/xml/ellipsis.xml#ellipsis</q>); }
         #content section.files article li i{ font-size: 130%; }
         .fa-file-o { float: left; width: 5%; margin: 3px 1% 0; }
+        .fa-file-o, .fa-wordpress, .fa-lock { float: left; width: 5%; margin: 3px 1% 0; }
         .fa-check { float: right; width: 5%; margin: -2px 0 0 2%; color: #333; font-size: 180%!important; visibility: hidden; }
         .done .fa-check { visibility: visible}
 
@@ -152,7 +154,7 @@
         </section>
         <section class="files">
             <header>
-                <h2>Preview Files</h2>
+                <h2>Front-end</h2>
                 <ul>
                     <li class="done"><i></i>Completed</li>
                     <li class="wip"><i></i>In Development</li>
@@ -164,7 +166,29 @@
 <!-- @@pageList -->
                 </ul>
             </article>
-        </section>
+        </section><% if (isWP) { %>
+        <section class="files">
+            <header>
+                <h2>WordPress</h2>
+                <ul>
+                    <li class="done"><i></i>Completed</li>
+                    <li class="wip"><i></i>In Development</li>
+                    <li><i></i>Not Yet Started</li>
+                </ul>
+            </header>
+            <article>
+                <ul>
+                  <li class="wip"><i class="fa fa-wordpress"></i><a href="wp/"><strong>WordPress Site</strong></a><i class="fa fa-check"></i></li>
+                  <li><i class="fa fa-lock"></i><a href="wp/wp-admin/"><strong>WordPress Admin</strong> </a>
+                    <p class="credentials">
+                      Username: admin <br>
+                      Password: password
+                    </p>
+                  </li>
+                </ul>
+            </article>
+        </section><% } %>
+
     </div>
     <!-- / content -->
     <aside id="sidebar">

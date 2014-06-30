@@ -4,16 +4,45 @@ var yeoman = require('yeoman-generator');
 var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
 
 var WPGenerator = yeoman.generators.Base.extend({
-  init: function () {
 
-    this.wpFolder = 'wp';
-    this.themeFolder = this._.slugify(config.projectName);
+  askFor: function () {
+    var done = this.async();
 
-    console.log(config.isWP);
-    console.log(config.projectName);
-    console.log(this.themeFolder);
+    var prompts = [{
+        name: 'databaseHost',
+        message: 'Please enter the database host:',
+        default: "$_SERVER['XTEAM_DB_HOST']"
+      }, {
+        name: 'databaseName',
+        message: 'Please enter the database name:',
+        default: "$_SERVER['XTEAM_DB_NAME']"
+      }, {
+        name: 'databaseUser',
+        message: 'Please enter the database user:',
+        default: "$_SERVER['XTEAM_DB_USER']"
+      }, {
+        name: 'databasePassword',
+        message: 'Please enter the database password:',
+        default: "$_SERVER['XTEAM_DB_PASSWORD']"
+      }, {
+        type: 'confirm',
+        name: 'installWPizedLight',
+        message: 'Should WPized Light base theme be installed?',
+        default: true
+      }
+    ];
+
+    this.prompt(prompts, function (props) {
+      this.databaseHost = props.databaseHost;
+      this.databaseName = props.databaseName;
+      this.databaseUser = props.databaseUser;
+      this.databasePassword = props.databasePassword;
+      this.installWPizedLight = props.installWPizedLight;
+
+      done();
+
+    }.bind(this));
   },
-
 
   _installWordPress: function () {
     var done = this.async();
@@ -24,12 +53,31 @@ var WPGenerator = yeoman.generators.Base.extend({
         return done(err);
       }
 
-      remote.bulkDirectory('.', this.wpFolder);
+      remote.bulkDirectory('.', config.wpFolder);
 
       console.log('WordPress installed');
 
       done();
     });
+  },
+
+  addConfig: function () {
+    var wpConfigFile = this.readFileAsString(config.wpFolder + '/wp-config-sample.php');
+
+    function getDbSetting(setting) {
+      if (setting.indexOf("$_SERVER") !== -1) {
+        return setting;
+      } else {
+        return "'" + setting + "'";
+      }
+    }
+
+    wpConfigFile = wpConfigFile.replace("'localhost'", getDbSetting(this.databaseHost));
+    wpConfigFile = wpConfigFile.replace("'database_name_here'", getDbSetting(this.databaseName));
+    wpConfigFile = wpConfigFile.replace("'username_here'", getDbSetting(this.databaseUser));
+    wpConfigFile = wpConfigFile.replace("'password_here'", getDbSetting(this.databasePassword));
+
+    this.write(config.wpFolder + '/wp-config.php', wpConfigFile);
   },
 
   _installWPizedLight: function () {
@@ -41,7 +89,7 @@ var WPGenerator = yeoman.generators.Base.extend({
         return done(err);
       }
 
-      remote.bulkDirectory('.', this.wpFolder + '/wp-content/themes/' + this.themeFolder);
+      remote.bulkDirectory('.', config.wpThemeFolder);
 
       console.log('WPized Light installed');
 
@@ -49,10 +97,13 @@ var WPGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  addConfig: function () {
-    var wpConfigFile = this.readFileAsString(this.wpFolder + '/wp-config-sample.php');
-    this.write(this.wpFolder + '/wp-config.php', wpConfigFile);
+  _updateThemeStylesheet: function () {
+    var themeStylesheetFile = config.wpThemeFolder + '/style.css';
+    var themeStylesheet = this.readFileAsString(themeStylesheetFile);
+    themeStylesheet = themeStylesheet.replace('WPized Light', config.projectName);
+    this.write(themeStylesheetFile, themeStylesheet);
   }
+
 });
 
 module.exports = WPGenerator;

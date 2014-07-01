@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "yeoman-generator": "~0.16.0",
-    "chalk": "~0.4.0"
+    "chalk": "~0.4.0",
+    "simple-git": "^0.10.0"
   },
   "devDependencies": {
     "mocha": "*"

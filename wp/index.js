@@ -3,9 +3,37 @@ var util = require('util');
 var yeoman = require('yeoman-generator');
 var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
 
+/**
+ * Find out current WordPress version from repository tags
+ */
+function getCurrentWpVersion(callback) {
+
+  var latestVersion = '3.9';
+
+  require('simple-git')().listRemote('--tags git://github.com/WordPress/WordPress.git', function (err, tagsList) {
+
+    if (err) {
+      return callback(err, latestVersion);
+    }
+
+    var tagList = ('' + tagsList).split('\n');
+    tagList.pop();
+
+    var lastTag = /\d\.\d(\.\d)?/ig.exec(tagList.pop());
+
+    if (lastTag !== null) {
+      latestVersion = lastTag[0];
+    }
+
+    callback(null, latestVersion);
+  });
+
+};
+
 var WPGenerator = yeoman.generators.Base.extend({
 
   init: function () {
+
     if (yeoman.file.exists(config.wpFolder + '/wp-config.php')) {
       console.log('WordPress is already installed.');
       process.exit();
@@ -53,19 +81,24 @@ var WPGenerator = yeoman.generators.Base.extend({
 
   installWordPress: function () {
     var done = this.async();
+    var me = this;
 
-    this.remote('wordpress', 'wordpress', '3.9.1', function (err, remote) {
+    getCurrentWpVersion(function(err, ver) {
 
-      if (err) {
-        return done(err);
-      }
+      me.remote('wordpress', 'wordpress', ver, function (err, remote) {
 
-      remote.bulkDirectory('.', config.wpFolder);
+        if (err) {
+          return done(err);
+        }
 
-      console.log('WordPress installed');
+        remote.bulkDirectory('.', config.wpFolder);
 
-      done();
+        console.log('WordPress ' + ver + ' has been downloaded.');
+
+        done();
+      });
     });
+
   },
 
   addConfig: function () {
@@ -102,7 +135,7 @@ var WPGenerator = yeoman.generators.Base.extend({
 
       remote.bulkDirectory('.', config.wpThemeFolder);
 
-      console.log('WPized Light installed');
+      console.log('WPized Light has been downloaded.');
 
       done();
     });

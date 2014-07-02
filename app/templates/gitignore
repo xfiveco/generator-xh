@@ -40,3 +40,4 @@ validation-status.json
 .ruby-version
 .ruby-gemset
 csstoc.json
+dev-vhost.conf

@@ -67,10 +67,22 @@ var WPGenerator = yeoman.generators.Base.extend({
         message: 'Please enter the database password:',
         default: "$_SERVER['XTEAM_DB_PASSWORD']"
       }, {
-        type: 'confirm',
-        name: 'installWPizedLight',
-        message: 'Should WPized Light base theme be installed?',
-        default: true
+        type: 'checkbox',
+        name: 'features',
+        message: 'Select additional features:',
+        choices: [{
+            name: 'WPized Light Base Theme',
+            value: 'installWPizedLight',
+            checked: true
+        }, {
+            name: 'WP Sync DB Plugin',
+            value: 'installWpSyncDb',
+            checked: true
+        }, {
+            name: 'Stream Plugin',
+            value: 'installWpStream',
+            checked: true
+        }]
       }
     ];
 
@@ -79,7 +91,17 @@ var WPGenerator = yeoman.generators.Base.extend({
       this.databaseName = props.databaseName;
       this.databaseUser = props.databaseUser;
       this.databasePassword = props.databasePassword;
-      this.installWPizedLight = props.installWPizedLight;
+      this.features = props.features;
+
+      var features = this.features;
+
+      function hasFeature(feat) {
+        return features.indexOf(feat) !== -1;
+      }
+
+      this.installWPizedLight = hasFeature('installWPizedLight');
+      this.installWpSyncDb = hasFeature('installWpSyncDb');
+      this.installWpStream = hasFeature('installWpStream');
 
       done();
 
@@ -127,6 +149,14 @@ var WPGenerator = yeoman.generators.Base.extend({
     this.write(config.wpFolder + '/wp-config.php', wpConfigFile);
   },
 
+  createVhostFile: function () {
+    var name = this._.slugify(config.projectName);
+    this.documentRoot = process.cwd();
+    this.serverName = "dev-" + name + ".previewized.com";
+    this.dbName = name;
+    this.template('dev-vhost.conf', 'dev-vhost.conf');
+  },
+
   installWPizedLight: function () {
     if (!this.installWPizedLight) {
       return;
@@ -145,18 +175,62 @@ var WPGenerator = yeoman.generators.Base.extend({
       remote.bulkDirectory('.', config.wpThemeFolder);
 
       done();
-    });
+    }, true);
+
   },
 
-  updateThemeStylesheet: function () {
+  updateThemeStyles: function () {
     if (!this.installWPizedLight) {
       return;
     }
 
+    // Update theme stylesheet
     var themeStylesheetFile = config.wpThemeFolder + '/style.css';
     var themeStylesheet = this.readFileAsString(themeStylesheetFile);
     themeStylesheet = themeStylesheet.replace('WPized Light', config.projectName);
     this.write(themeStylesheetFile, themeStylesheet);
+  },
+
+  installWpSyncDb: function () {
+    if (!this.installWpSyncDb) {
+      return;
+    }
+
+    var done = this.async();
+
+    this.remote('wp-sync-db', 'wp-sync-db', 'master', function (err, remote) {
+
+      if (err) {
+        return done(err);
+      }
+
+      console.log('\nCopying WP Sync DB Plugin\n');
+
+      remote.bulkDirectory('.', 'wp/wp-content/plugins/wp-sync-db');
+
+      done();
+    });
+  },
+
+  installWpStream: function () {
+    if (!this.installWpStream) {
+      return;
+    }
+
+    var done = this.async();
+
+    this.remote('x-team', 'wp-stream', 'master', function (err, remote) {
+
+      if (err) {
+        return done(err);
+      }
+
+      console.log('\nCopying Stream Plugin\n');
+
+      remote.bulkDirectory('.', 'wp/wp-content/plugins/stream');
+
+      done();
+    });
   },
 
   informUser: function () {

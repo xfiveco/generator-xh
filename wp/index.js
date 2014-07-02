@@ -1,6 +1,7 @@
 'use strict';
 var util = require('util');
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
 var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
 
 /**
@@ -42,6 +43,12 @@ var WPGenerator = yeoman.generators.Base.extend({
 
   askFor: function () {
     var done = this.async();
+
+    // Welcome user
+    console.log('');
+    console.log(chalk.cyan(' **********************************************') + '\n');
+    console.log(chalk.white('  Set up WordPress installation') + '\n');
+    console.log(chalk.cyan(' **********************************************') + '\n');
 
     var prompts = [{
         name: 'databaseHost',
@@ -91,9 +98,9 @@ var WPGenerator = yeoman.generators.Base.extend({
           return done(err);
         }
 
-        remote.bulkDirectory('.', config.wpFolder);
+        console.log('\nCopying WordPress ' + ver + '\n');
 
-        console.log('WordPress ' + ver + ' has been downloaded.');
+        remote.bulkDirectory('.', config.wpFolder);
 
         done();
       });
@@ -133,9 +140,9 @@ var WPGenerator = yeoman.generators.Base.extend({
         return done(err);
       }
 
-      remote.bulkDirectory('.', config.wpThemeFolder);
+      console.log('\nCopying WPized Light Theme\n');
 
-      console.log('WPized Light has been downloaded.');
+      remote.bulkDirectory('.', config.wpThemeFolder);
 
       done();
     });
@@ -150,6 +157,10 @@ var WPGenerator = yeoman.generators.Base.extend({
     var themeStylesheet = this.readFileAsString(themeStylesheetFile);
     themeStylesheet = themeStylesheet.replace('WPized Light', config.projectName);
     this.write(themeStylesheetFile, themeStylesheet);
+  },
+
+  informUser: function () {
+    console.log('\nAll done!');
   }
 
 });

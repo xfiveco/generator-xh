@@ -22,7 +22,8 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
  - [Project structure](#2-project-structure)
  - [Adding pages to the project](#3-adding-pages-to-the-project)
  - [Development](#4-development)
- - [Collaborating](#5-collaborating)
+ - [WordPress Development](#5-wordpress-development)
+ - [Collaborating](#6-collaborating)
 - [Tips & Tricks](#tips--tricks)
  - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
  - [Writing styles](#writing-styles)
@@ -39,7 +40,6 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - A sub generator for adding pages to the project
 - Industry standard [normalize.css](http://necolas.github.io/normalize.css/) as a base stylesheet
 - CSS Preprocessing with [SCSS](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
-- Optional [WordPress styles](http://codex.wordpress.org/CSS) for images and captions
 - Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [CSS3 Pie](http://css3pie.com/)
 - Add vendor-prefixed CSS properties with [autprefixer](https://github.com/nDmitry/grunt-autoprefixer)
 - Grunt tasks for prettifying built HTML / CSS / JS
@@ -47,6 +47,8 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - Functionality for merging JS libraries to reduce number of HTTP requests
 - Consistent coding style supported by [.editorconfig](http://editorconfig.org/)
 - JavaScript code linting with [JSHint](http://www.jshint.com/)
+- Optional [WordPress styles](http://codex.wordpress.org/CSS) for images and captions
+- WordPress development support
 
 ## Prerequisites
 
@@ -228,7 +230,33 @@ To detach X-Precise from pages, rebuild the project, validate HTML files and che
 grunt qa
 ```
 
-### 5) Collaborating
+### 5) WordPress Development
+
+XH Generator supports WordPress development. When setting up the project using `yo xh`, answer _Yes_ to the question _Is this a WordPress project_?. The generator prepares directory structure for WP installation and connects the front-end files to the project theme.
+
+Use the WordPress subgenerator to set up a WordPress project any time in the project life cycle:
+
+```
+yo xh:wp
+```
+
+Several options are available:
+
+- database settings which are later inserted into `wp-config.php`
+- installation of [WPized Light base theme](https://github.com/xhtmlized/wpized-light).
+- installation of [Stream](https://wp-stream.com/) plugin
+- installation of [WP Sync DB](https://github.com/wp-sync-db/wp-sync-db) plugin
+
+Once you run the subgenerator, it does the following:
+
+- downloads the latest WP distribution and places it to `wp` folder
+- downloads the optional theme and plugins and place them to their respective folders
+- sets up `wp-config.php`
+- creates a sample `dev-vhost.conf` file which you can use to set up a virtual host
+
+When running Grunt tasks the front-end `dist` files are automatically copied to your theme folder, so you can continue working on the front-end like usually and all updates will be applied to the WordPress site as well.
+
+### 6) Collaborating
 
 If you are joining an existing project which was set up using XH Generator, remember that the project was already generated with `yo xh` command so you don't have to generate it again. Assuming that you have all [prerequisites](#prerequisites) installed, all you need to do is to clone the existing repository and install Bower and npm dependencies.
 

@@ -50,9 +50,9 @@ module.exports = function(grunt) {
       }
     },
 
-
     clean: {
-      src: [".tmp"]
+      tmp: { src: ['.tmp'] },
+      dist: { src: ['<%%= xh.dist %>'] }
     },
 
     // HTML Includes
@@ -349,6 +349,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', [
+    'clean:dist',
+
     // HTML
     'useminPrepare',
     'concat',
@@ -357,7 +359,7 @@ module.exports = function(grunt) {
     'includereplace',
     'copy:restore',
     'jsbeautifier:html',
-    'clean',
+    'clean:tmp',
 
     // CSS
     <% if (cssPreprocessor === 'SCSS') { %>

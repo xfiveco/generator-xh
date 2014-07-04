@@ -120,7 +120,7 @@ module.exports = function(grunt) {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'
         }
       }
-    },<% } %> <% if (cssPreprocessor === 'LESS') { %>
+    },<% } %><% if (cssPreprocessor === 'LESS') { %>
     less: {
       dist: {
         options: {
@@ -128,6 +128,20 @@ module.exports = function(grunt) {
         },
         files: {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/less/main.less'
+        }
+      }
+    },<% } %><% if (cssPreprocessor === 'LIBSASS') { %>
+    sass: {
+      dist: {
+        options: {
+          outputStyle: 'nested',
+          imagePath: '../img',
+          includePaths: [
+            '<%= xh.src %>/bower_components'
+          ]
+        },
+        files: {
+          '<%= xh.dist %>/css/main.css': '<%= xh.src %>/scss/main.scss'
         }
       }
     },<% } %>
@@ -149,7 +163,7 @@ module.exports = function(grunt) {
     // JS
     copy: {
       normalize: {
-        src: '<%%= xh.src %>/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS') { %>
+        src: '<%%= xh.src %>/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
         dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
         dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.less'<% } %>
       },
@@ -450,7 +464,7 @@ module.exports = function(grunt) {
     'copy:assets'
   ]);
 
-  grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS') { %>
+  grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
     'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
     'less',<% } %>
     'autoprefixer',

@@ -59,7 +59,7 @@ var XhGenerator = yeoman.generators.Base.extend({
         type: 'list',
         name: 'cssPreprocessor',
         message: 'Which CSS preprocessor would you like to use?',
-        choices: ['SCSS', 'LESS'],
+        choices: ['SCSS', 'LESS', 'LIBSASS'],
         default: 'SCSS'
       }, {
         type: 'confirm',

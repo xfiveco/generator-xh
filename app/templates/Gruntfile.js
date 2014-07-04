@@ -50,9 +50,9 @@ module.exports = function(grunt) {
       }
     },
 
-
     clean: {
-      src: [".tmp"]
+      tmp: { src: ['.tmp'] },
+      dist: { src: ['<%%= xh.dist %>'] }
     },
 
     // HTML Includes
@@ -107,7 +107,8 @@ module.exports = function(grunt) {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'
         }
       }
-    }, <% } %><% if (cssPreprocessor === 'LESS') { %>
+    },<% } %> <% if (cssPreprocessor === 'LESS') { %>
+
     less: {
       dist: {
         options: {
@@ -187,8 +188,8 @@ module.exports = function(grunt) {
       dist: {
         src: ['<%%= xh.src %>/js/main.js', '<%%= xh.dist %>/js/main.js'],
       }
-    },
-    <% if (useModernizr) { %>
+    },<% if (useModernizr) { %>
+
     uglify: {
       modernizr: {
         files: {
@@ -296,21 +297,27 @@ module.exports = function(grunt) {
     },
 
     // Watch
-    watch: {<% if (cssPreprocessor === 'SCSS') { %>
+    watch: {
+      options: {
+        spawn: false
+      },<% if (cssPreprocessor === 'SCSS') { %>
+
       scss: {
         files: ['<%%= xh.src %>/scss/*.scss'],
-        tasks: ['sass', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>],
-        options: {
-          livereload: true
-        }
+        tasks: ['sass', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>]
       },<% } %><% if (cssPreprocessor === 'LESS') { %>
+
       less: {
         files: ['<%%= xh.src %>/less/*.less'],
-        tasks: ['less', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>],
+        tasks: ['less', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>]
+      },<% } %>
+
+      css: {
+        files: ['<%%= xh.dist %>/css/*.css'],
         options: {
           livereload: true
         }
-      },<% } %>
+      },
 
       html: {
         files: ['<%%= xh.src %>/*.html', '<%%= xh.src %>/includes/*.html'],
@@ -342,6 +349,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', [
+    'clean:dist',
+
     // HTML
     'useminPrepare',
     'concat',
@@ -350,7 +359,7 @@ module.exports = function(grunt) {
     'includereplace',
     'copy:restore',
     'jsbeautifier:html',
-    'clean',
+    'clean:tmp',
 
     // CSS
     <% if (cssPreprocessor === 'SCSS') { %>

@@ -1,5 +1,6 @@
 
-@mixin clearfix {
+// Use with @extend %clearfix;
+%clearfix {
   &:after {
     content: "";
     display: table;

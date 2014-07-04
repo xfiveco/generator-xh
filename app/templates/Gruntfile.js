@@ -107,7 +107,8 @@ module.exports = function(grunt) {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'
         }
       }
-    }, <% } %><% if (cssPreprocessor === 'LESS') { %>
+    },<% } %> <% if (cssPreprocessor === 'LESS') { %>
+
     less: {
       dist: {
         options: {
@@ -187,8 +188,8 @@ module.exports = function(grunt) {
       dist: {
         src: ['<%%= xh.src %>/js/main.js', '<%%= xh.dist %>/js/main.js'],
       }
-    },
-    <% if (useModernizr) { %>
+    },<% if (useModernizr) { %>
+
     uglify: {
       modernizr: {
         files: {

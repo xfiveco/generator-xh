@@ -1,7 +1,7 @@
 {
   "name": "generator-xh",
   "version": "0.3.0",
-  "description": "A Yeoman generator for scaffolding front-end projects.",
+  "description": "A Yeoman generator for scaffolding web projects.",
   "keywords": [
     "yeoman-generator",
     "frontend",
@@ -10,6 +10,7 @@
     "less",
     "modernizr",
     "bootstrap",
+    "wordpress",
     "xhtmlized"
   ],
   "license": "MIT",

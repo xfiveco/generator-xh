@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 
     clean: {
       tmp: { src: ['.tmp'] },
-      dist: { src: ['<%%= xh.dist %>'] }
+      dist: { src: ['<%%= xh.dist %>/*.html', '<%%= xh.dist %>/css', '<%%= xh.dist %>/js', '<%%= xh.dist %>/fonts'] }
     },
 
     // HTML Includes
@@ -146,6 +146,13 @@ module.exports = function(grunt) {
         cwd: 'src/bower_components/jquery/dist/',
         src: 'jquery.min.js',
         dest: '<%%= xh.dist %>/js/',
+        expand: true
+      },
+
+      fonts: {
+        cwd: '<%%= xh.src %>/fonts/',
+        src: '*.*',
+        dest: '<%%= xh.dist %>/fonts/',
         expand: true
       },
 
@@ -343,6 +350,13 @@ module.exports = function(grunt) {
         options: {
           livereload: true
         }
+      },
+
+      fonts: {
+        files: ['<%%= xh.src %>/fonts/*.*'],
+        tasks: [
+          'copy:fonts'
+        ]
       }
     }
 
@@ -360,6 +374,9 @@ module.exports = function(grunt) {
     'copy:restore',
     'jsbeautifier:html',
     'clean:tmp',
+
+    // Fonts
+    'copy:fonts',
 
     // CSS
     <% if (cssPreprocessor === 'SCSS') { %>

@@ -22,7 +22,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     console.log('');
     console.log(chalk.cyan(' ***********************************************************') + '\n');
     console.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
-    console.log(chalk.white('  A Yeoman generator for scaffolding front-end projects') + '\n');
+    console.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
     console.log(chalk.cyan(' ***********************************************************') + '\n');
 
     var prompts = [{
@@ -129,8 +129,10 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('src');
     this.mkdir('src/includes');
     this.mkdir('src/js');
+    this.mkdir('src/fonts');
 
     this.mkdir('dist');
+    this.mkdir('dist/fonts');
     this.mkdir('dist/css');
     this.mkdir('dist/js');
     this.mkdir('dist/img');

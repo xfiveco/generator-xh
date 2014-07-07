@@ -35,6 +35,11 @@ var WPGenerator = yeoman.generators.Base.extend({
 
   init: function () {
 
+    if (!config.isWP) {
+      console.log('This project was not set up as a WordPress project');
+      process.exit();
+    }
+
     if (yeoman.file.exists(config.wpFolder + '/wp-config.php')) {
       console.log('WordPress is already installed.');
       process.exit();
@@ -132,6 +137,9 @@ var WPGenerator = yeoman.generators.Base.extend({
 
   addConfig: function () {
     var wpConfigFile = this.readFileAsString(config.wpFolder + '/wp-config-sample.php');
+    var prefix = this._.slugify(config.projectName);
+    prefix = prefix.replace(/-/g, '_');
+
 
     function getDbSetting(setting) {
       if (setting.indexOf("$_SERVER") !== -1) {
@@ -145,6 +153,7 @@ var WPGenerator = yeoman.generators.Base.extend({
     wpConfigFile = wpConfigFile.replace("'database_name_here'", getDbSetting(this.databaseName));
     wpConfigFile = wpConfigFile.replace("'username_here'", getDbSetting(this.databaseUser));
     wpConfigFile = wpConfigFile.replace("'password_here'", getDbSetting(this.databasePassword));
+    wpConfigFile = wpConfigFile.replace("wp_", prefix + '_');
 
     this.write(config.wpFolder + '/wp-config.php', wpConfigFile);
   },

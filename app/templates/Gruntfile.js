@@ -10,6 +10,8 @@ module.exports = function(grunt) {
   });
 
   // Project configuration.
+  grunt.option('force', true);
+
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
@@ -337,7 +339,7 @@ module.exports = function(grunt) {
           'copy:restore',
           'jsbeautifier:html',<% if (isWP) { %>
           'copy:wp',<% } %>
-          'clean'
+          'clean:tmp'
         ],
         options: {
           livereload: true

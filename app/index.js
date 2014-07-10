@@ -34,6 +34,11 @@ var XhGenerator = yeoman.generators.Base.extend({
         message: 'Should XHTMLized branding be used?',
         default: true
       }, {
+        type: 'confirm',
+        name: 'ignoreDist',
+        message: 'Add dist folder to the Git ignore list?',
+        default: false
+      }, {
         type: 'list',
         name: 'cssPreprocessor',
         message: 'Which CSS preprocessor would you like to use?',
@@ -67,6 +72,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
       this.useBranding = props.useBranding;
+      this.ignoreDist = props.ignoreDist;
       this.cssPreprocessor = props.cssPreprocessor;
       this.isWP = props.isWP;
       this.features = props.features;
@@ -114,8 +120,8 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
     this.copy('gitattributes', '.gitattributes');
-    this.copy('gitignore', '.gitignore');
     this.copy('jshintrc', '.jshintrc');
+    this.template('gitignore', '.gitignore');
 
     // Application files
     this.template('_package.json', 'package.json');

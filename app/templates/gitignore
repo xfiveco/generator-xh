@@ -32,7 +32,8 @@ nbproject
 .sass-cache
 .tmp
 node_modules
-bower_components
+bower_components<% if (ignoreDist) { %>
+dist <% } %>
 
 # Other
 validation-report.json

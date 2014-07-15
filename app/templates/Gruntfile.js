@@ -153,8 +153,29 @@ module.exports = function(grunt) {
 
       fonts: {
         cwd: '<%%= xh.src %>/fonts/',
-        src: '*.*',
+        src: ['*.*', '!do_not_delete_me.png'],
         dest: '<%%= xh.dist %>/fonts/',
+        expand: true
+      },
+
+      img: {
+        cwd: '<%%= xh.src %>/img/',
+        src: ['*.*', '!do_not_delete_me.png'],
+        dest: '<%%= xh.dist %>/img/',
+        expand: true
+      },
+
+      media: {
+        cwd: '<%%= xh.src %>/media/',
+        src: ['*.*', '!do_not_delete_me.png'],
+        dest: '<%%= xh.dist %>/media/',
+        expand: true
+      },
+
+      xprecise: {
+        cwd: '<%%= xh.src %>/xprecise/',
+        src: ['*.*', '!do_not_delete_me.png'],
+        dest: '<%%= xh.dist %>/_xprecise/',
         expand: true
       },
 
@@ -167,7 +188,7 @@ module.exports = function(grunt) {
 
       wp: {
         cwd: '<%%= xh.dist %>/',
-        src: ['**', '!_xprecise', '!*.html'],
+        src: ['**', '!**/_xprecise/**', '!*.html'],
         dest: '<%= wpThemeFolder  %>',
         expand: true
       },<% } %>
@@ -354,11 +375,18 @@ module.exports = function(grunt) {
         }
       },
 
-      fonts: {
-        files: ['<%%= xh.src %>/fonts/*.*'],
+      assets: {
+        files: ['<%%= xh.src %>/img/*.*', '<%%= xh.src %>/media/*.*', '<%%= xh.src %>/fonts/*.*', '<%%= xh.src %>/xprecise/*.*'],
         tasks: [
-          'copy:fonts'
-        ]
+          'copy:img',
+          'copy:media',
+          'copy:fonts',
+          'copy:xprecise',
+          'copy:wp'
+        ],
+        options: {
+          livereload: true
+        }
       }
     }
 
@@ -377,8 +405,11 @@ module.exports = function(grunt) {
     'jsbeautifier:html',
     'clean:tmp',
 
-    // Fonts
+    // Copy Assets
+    'copy:img',
+    'copy:media',
     'copy:fonts',
+    'copy:xprecise',
 
     // CSS
     <% if (cssPreprocessor === 'SCSS') { %>

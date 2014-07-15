@@ -45,12 +45,14 @@ describe('XH generator Less', function () {
       'src/less/mixins.less',
       'src/less/variables.less',
       'src/less/main.less',
-      'dist',
-      'dist/_xprecise',
-      'dist/css',
-      'dist/img',
-      'dist/media',
-      'dist/js'
+      'src/fonts',
+      'src/img',
+      'src/media',
+      'src/xprecise',
+      'src/fonts/do_not_delete_me.png',
+      'src/img/do_not_delete_me.png',
+      'src/media/do_not_delete_me.png',
+      'src/xprecise/do_not_delete_me.png'
     ];
 
     helpers.mockPrompt(this.app, {

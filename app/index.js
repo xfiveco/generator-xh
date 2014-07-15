@@ -136,7 +136,17 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('src/includes');
     this.mkdir('src/js');
     this.mkdir('src/fonts');
+    this.mkdir('src/img');
+    this.mkdir('src/img/common');
+    this.mkdir('src/media');
+    this.mkdir('src/xprecise');
 
+    this.copy('src/img/do_not_delete_me.png', 'src/fonts/do_not_delete_me.png');
+    this.copy('src/img/do_not_delete_me.png', 'src/img/do_not_delete_me.png');
+    this.copy('src/img/do_not_delete_me.png', 'src/media/do_not_delete_me.png');
+    this.copy('src/img/do_not_delete_me.png', 'src/xprecise/do_not_delete_me.png');
+
+    /*
     this.mkdir('dist');
     this.mkdir('dist/fonts');
     this.mkdir('dist/css');
@@ -145,6 +155,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.mkdir('dist/img/common');
     this.mkdir('dist/media');
     this.mkdir('dist/_xprecise');
+    */
 
     // HTML
     this.copy('src/_template.html', 'src/template.html');

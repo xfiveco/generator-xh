@@ -33,7 +33,7 @@ nbproject
 .tmp
 node_modules
 bower_components<% if (ignoreDist) { %>
-dist <% } %>
+dist<% } %>
 
 # Other
 validation-report.json

@@ -50,14 +50,14 @@ describe('XH generator defaults', function () {
       'src/scss/_variables.scss',
       'src/scss/_wordpress.scss',
       'src/scss/main.scss',
-      'dist',
-      'dist/_xprecise',
-      'dist/css',
-      'dist/fonts',
-      'dist/img',
-      'dist/media',
-      'dist/js',
-      'dist/js/PIE.htc'
+      'src/fonts',
+      'src/img',
+      'src/media',
+      'src/xprecise',
+      'src/fonts/do_not_delete_me.png',
+      'src/img/do_not_delete_me.png',
+      'src/media/do_not_delete_me.png',
+      'src/xprecise/do_not_delete_me.png'
     ];
 
     helpers.mockPrompt(this.app, {

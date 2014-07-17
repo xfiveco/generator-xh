@@ -333,12 +333,12 @@ module.exports = function(grunt) {
       },<% if (cssPreprocessor === 'SCSS') { %>
 
       scss: {
-        files: ['<%%= xh.src %>/scss/*.scss'],
+        files: ['<%%= xh.src %>/scss/**/*.scss'],
         tasks: ['sass', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>]
       },<% } %><% if (cssPreprocessor === 'LESS') { %>
 
       less: {
-        files: ['<%%= xh.src %>/less/*.less'],
+        files: ['<%%= xh.src %>/less/**/*.less'],
         tasks: ['less', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>]
       },<% } %>
 

@@ -290,7 +290,7 @@ Now the project is set up and you can continue like described in the [Developmen
 
 ### Working with files in the dist folder
 
-In general, it’s not recommended that you work directly with files in the `dist` folder except images in `dist/img` folder. The files in `dist` folder are automatically generated from the source files in `src` folder. However, once you hand over the project to your client, they can work directly with plain HTML and CSS files if they wish.
+In general, it’s not recommended that you work directly with files in the `dist`. The files in `dist` folder are automatically generated from the source files in `src` folder. However, once you hand over the project to your client, they can work directly with plain HTML and CSS files if they wish.
 
 HTML and CSS files are prettified for consistent formatting and a table of contents from imported SCSS or Less stylesheets is generated at the beginning of `main.css` for better overview.
 

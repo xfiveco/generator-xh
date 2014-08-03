@@ -192,30 +192,30 @@ Confirm overwriting the file with `Y` or with `a` at once.
 
 ### 4) Development
 
-When you have the basic setup done and your first page added, you can start development. Run the grunt command to generate preview files in the dist folder:
+When you have the basic setup done and your first page added, you can start development. Run the grunt build command to generate preview files in the dist folder:
 
 ```
-grunt
+grunt build
 ```
 
 ![grunt command](docs/img/grunt.png)
 
 If everything went ok, the preview files will be generated and you will be able to check your work in the `dist` folder. XH Generator doesn't create a server, so you need to preview files on your existing local web server.
 
-To re-compile HTML / SCSS file in real time you can use watch task. Type
+To re-compile HTML / SCSS file in real time you can use default task. Type
 
 ```
-grunt watch
+grunt
 ```
 
 and this will start a task that will watch for changes in files and recompile them as needed. Now you can also connect with a [LiveReload browser extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions) to enable live reloads in your browser.
 
 ![grunt watch command](docs/img/grunt-watch.png)
 
-To rebuild the whole project, use the grunt task again
+To rebuild the whole project, use the grunt build task again
 
 ```
-grunt
+grunt build
 ```
 
 To validate HTML files, use the following task

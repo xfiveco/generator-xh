@@ -11,8 +11,8 @@
   <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, '');</script><% if (useModernizr) { %>
-  <!-- build:js js/modernizr.min.js -->
+  <% if (useModernizr) { %><!-- build:js js/modernizr.min.js -->
     <script src="bower_components/modernizr/modernizr.min.js"></script>
-  <!-- endbuild --><% } %>
+  <!-- endbuild --><% } else { %><script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, 'js');</script>
+  <% } %>
 </head>

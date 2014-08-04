@@ -9,9 +9,13 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.pkg = require('../package.json');
 
     this.on('end', function () {
-      if (!this.options['skip-install']) {
-        this.installDependencies();
-      }
+      // http://stackoverflow.com/questions/18841273/how-to-run-a-grunt-task-after-my-yeoman-generator-finishes-installing
+      this.installDependencies({
+        skipInstall: this.options['skip-install'],
+        callback: function () {
+          this.spawnCommand('grunt', ['postinstall']);
+        }.bind(this) // bind the callback to the parent scope
+      });
     });
   },
 

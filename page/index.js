@@ -6,6 +6,10 @@ var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
 var PageGenerator = yeoman.generators.NamedBase.extend({
   init: function () {
 
+    this.on('end', function () {
+      this.spawnCommand('grunt', ['build']);
+    });
+
     this.slug = this._.slugify(this.name);
     var reserved = ['main', 'variables', 'mixins', 'common', 'wordpress', 'wp'];
 

@@ -147,7 +147,7 @@ module.exports = function(grunt) {
       jquery: {
         cwd: 'src/bower_components/jquery/dist/',
         src: 'jquery.min.js',
-        dest: '<%%= xh.dist %>/js/',
+        dest: '<%%= xh.src %>/js/',
         expand: true
       },
 
@@ -181,7 +181,7 @@ module.exports = function(grunt) {
 
       js: {
         cwd: '<%%= xh.src %>/js/',
-        src: ['main.js', <% if (useModernizr) { %>'modernizr.min.js'<% } else { %>'html5shiv.min.js'<% } %>],
+        src: ['main.js', 'jquery.min.js', <% if (useModernizr) { %>'modernizr.min.js'<% } else { %>'html5shiv.min.js'<% } %>],
         dest: '<%%= xh.dist %>/js/',
         expand: true
       },<% if (isWP) { %>
@@ -212,7 +212,7 @@ module.exports = function(grunt) {
       shiv: {
         cwd: 'src/bower_components/html5shiv/dist/',
         src: 'html5shiv.min.js',
-        dest: '<%%= xh.dist %>/js/',
+        dest: '<%%= xh.src %>/js/',
         expand: true
       }<% } %>
     },
@@ -235,7 +235,7 @@ module.exports = function(grunt) {
       }
     },<% } %>
 
-    // Remplacements in main.css and main.js
+    // Replacements in main.css and main.js
     replace: {
       css: {
         src: ['<%%= xh.dist %>/css/main.css'],

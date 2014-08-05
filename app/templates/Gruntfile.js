@@ -315,8 +315,8 @@ module.exports = function(grunt) {
     search: {
       imports: {
         files: {<% if (cssPreprocessor === 'SCSS') { %>
-            src: ['<%%= xh.src %>/scss/main.scss']<% } %><% if (cssPreprocessor === 'LESS') { %>
-            src: ['<%%= xh.src %>/less/main.less']<% } %>
+          src: ['<%%= xh.src %>/scss/main.scss']<% } %><% if (cssPreprocessor === 'LESS') { %>
+          src: ['<%%= xh.src %>/less/main.less']<% } %>
         },
         options: {
           searchString: /@import[ \("']*([^;]+)[;\)"']*/g,
@@ -330,17 +330,18 @@ module.exports = function(grunt) {
     watch: {
       options: {
         spawn: false
-      },<% if (cssPreprocessor === 'SCSS') { %>
+      },
 
-      scss: {
-        files: ['<%%= xh.src %>/scss/**/*.scss'],
-        tasks: ['sass', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>]
-      },<% } %><% if (cssPreprocessor === 'LESS') { %>
-
-      less: {
-        files: ['<%%= xh.src %>/less/**/*.less'],
-        tasks: ['less', 'autoprefixer', 'cssbeautifier', 'search', 'replace:css'<% if (isWP) { %>, 'copy:wp'<% } %>]
-      },<% } %>
+      compileCSS: {
+        files: [<% if (cssPreprocessor === 'SCSS') { %>
+          '<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
+          '<%%= xh.src %>/less/**/*.less'<% } %>
+        ],
+        tasks: [
+          'build-css'<% if (isWP) { %>,
+          'copy:wp'<% } %>
+        ]
+      },
 
       css: {
         files: ['<%%= xh.dist %>/css/*.css'],
@@ -352,15 +353,7 @@ module.exports = function(grunt) {
       html: {
         files: ['<%%= xh.src %>/*.html', '<%%= xh.src %>/includes/*.html'],
         tasks: [
-          'useminPrepare',
-          'concat',
-          'copy:backup',
-          'usemin',
-          'includereplace',
-          'copy:restore',
-          'jsbeautifier:html',<% if (isWP) { %>
-          'copy:wp',<% } %>
-          'clean:tmp'
+          'build-html'
         ],
         options: {
           livereload: true
@@ -369,7 +362,10 @@ module.exports = function(grunt) {
 
       js: {
         files: '<%%= xh.src %>/js/*.js',
-        tasks: ['copy:js', 'jsbeautifier:js', 'replace:js', 'jshint'<% if (isWP) { %>, 'copy:wp'<% } %>],
+        tasks: [
+          'build-js'<% if (isWP) { %>,
+          'copy:wp'<% } %>
+        ],
         options: {
           livereload: true
         }
@@ -378,11 +374,8 @@ module.exports = function(grunt) {
       assets: {
         files: ['<%%= xh.src %>/img/*.*', '<%%= xh.src %>/media/*.*', '<%%= xh.src %>/fonts/*.*', '<%%= xh.src %>/xprecise/*.*'],
         tasks: [
-          'copy:img',
-          'copy:media',
-          'copy:fonts',
-          'copy:xprecise',
-          'copy:wp'
+          'build-assets'<% if (isWP) { %>,
+          'copy:wp'<% } %>
         ],
         options: {
           livereload: true
@@ -392,10 +385,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('default', [
-    'clean:dist',
-
-    // HTML
+  grunt.registerTask('build-html', [
     'useminPrepare',
     'concat',
     'copy:backup',
@@ -403,34 +393,42 @@ module.exports = function(grunt) {
     'includereplace',
     'copy:restore',
     'jsbeautifier:html',
-    'clean:tmp',
+    'clean:tmp'
+  ]);
 
-    // Copy Assets
+  grunt.registerTask('build-assets', [
     'copy:img',
     'copy:media',
     'copy:fonts',
-    'copy:xprecise',
+    'copy:xprecise'
+  ]);
 
-    // CSS
+  grunt.registerTask('build-css', [
     <% if (cssPreprocessor === 'SCSS') { %>
     'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
     'less',<% } %>
     'autoprefixer',
     'cssbeautifier',
+    'search',
+    'replace:css'
+  ]);
 
-    // JS
+  grunt.registerTask('build-js', [
     'copy:js',
     'jsbeautifier:js',
+    'replace:js',
+    'jshint'
+  ]);
 
-    // Replacements
-    'search',
-    'replace:css',
-    'replace:js',<% if (isWP) { %>
+  grunt.registerTask('build', [
+    'clean:dist',
+
+    'build-html',
+    'build-assets',
+    'build-css',
+    'build-js',<% if (isWP) { %>
 
     'copy:wp',<% } %>
-
-    // Checks
-    'jshint'
   ]);
 
   grunt.registerTask('validate', [
@@ -439,7 +437,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('qa', [
     'replace:xprecise',
-    'default',
+    'build',
     'validate',
     'jshint'
   ]);
@@ -449,5 +447,8 @@ module.exports = function(grunt) {
     'uglify:modernizr',<% } %>
     'copy:jquery'
   ]);
-};
 
+  grunt.registerTask('default', [
+    'watch'
+  ]);
+};

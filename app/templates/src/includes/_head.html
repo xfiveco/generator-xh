@@ -8,11 +8,10 @@
   <script src="bower_components/bootstrap/dist/css/bootstrap.min.css"></script>
   <!-- endbuild --><% } %>
   <link rel="stylesheet" media="all" href="css/main.css">
+  <% if (useModernizr) { %>
+    <script src="js/modernizr.min.js"></script>
+  <% } else { %><script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, 'js');</script>
   <!--[if lt IE 9]>
-      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  <script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, '');</script><% if (useModernizr) { %>
-  <!-- build:js js/modernizr.min.js -->
-    <script src="bower_components/modernizr/modernizr.min.js"></script>
-  <!-- endbuild --><% } %>
+    <script src="js/html5shiv.min.js"></script>
+  <![endif]--><% } %>
 </head>

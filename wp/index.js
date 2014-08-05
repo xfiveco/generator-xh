@@ -36,12 +36,12 @@ var WPGenerator = yeoman.generators.Base.extend({
   init: function () {
 
     if (!config.isWP) {
-      console.log('This project was not set up as a WordPress project');
+      this.log('This project was not set up as a WordPress project');
       process.exit();
     }
 
     if (yeoman.file.exists(config.wpFolder + '/wp-config.php')) {
-      console.log('WordPress is already installed.');
+      this.log('WordPress is already installed.');
       process.exit();
     }
   },
@@ -50,10 +50,10 @@ var WPGenerator = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Welcome user
-    console.log('');
-    console.log(chalk.cyan(' **********************************************') + '\n');
-    console.log(chalk.white('  Set up WordPress installation') + '\n');
-    console.log(chalk.cyan(' **********************************************') + '\n');
+    this.log('');
+    this.log(chalk.cyan(' **********************************************') + '\n');
+    this.log(chalk.white('  Set up WordPress installation') + '\n');
+    this.log(chalk.cyan(' **********************************************') + '\n');
 
     var prompts = [{
         name: 'databaseHost',
@@ -125,7 +125,7 @@ var WPGenerator = yeoman.generators.Base.extend({
           return done(err);
         }
 
-        console.log('\nCopying WordPress ' + ver + '\n');
+        me.log('\nCopying WordPress ' + ver + '\n');
 
         remote.bulkDirectory('.', config.wpFolder);
 
@@ -172,6 +172,7 @@ var WPGenerator = yeoman.generators.Base.extend({
     }
 
     var done = this.async();
+    var me = this;
 
     this.remote('xhtmlized', 'wpized-light', 'master', function (err, remote) {
 
@@ -179,7 +180,7 @@ var WPGenerator = yeoman.generators.Base.extend({
         return done(err);
       }
 
-      console.log('\nCopying WPized Light Theme\n');
+      me.log('\nCopying WPized Light Theme\n');
 
       remote.bulkDirectory('.', config.wpThemeFolder);
 
@@ -206,6 +207,7 @@ var WPGenerator = yeoman.generators.Base.extend({
     }
 
     var done = this.async();
+    var me = this;
 
     this.remote('wp-sync-db', 'wp-sync-db', 'master', function (err, remote) {
 
@@ -213,7 +215,7 @@ var WPGenerator = yeoman.generators.Base.extend({
         return done(err);
       }
 
-      console.log('\nCopying WP Sync DB Plugin\n');
+      me.log('\nCopying WP Sync DB Plugin\n');
 
       remote.bulkDirectory('.', 'wp/wp-content/plugins/wp-sync-db');
 
@@ -227,6 +229,7 @@ var WPGenerator = yeoman.generators.Base.extend({
     }
 
     var done = this.async();
+    var me = this;
 
     this.remote('x-team', 'wp-stream', 'master', function (err, remote) {
 
@@ -234,7 +237,7 @@ var WPGenerator = yeoman.generators.Base.extend({
         return done(err);
       }
 
-      console.log('\nCopying Stream Plugin\n');
+      me.log('\nCopying Stream Plugin\n');
 
       remote.bulkDirectory('.', 'wp/wp-content/plugins/stream');
 
@@ -243,7 +246,7 @@ var WPGenerator = yeoman.generators.Base.extend({
   },
 
   informUser: function () {
-    console.log('\nAll done!');
+    this.log('\nAll done!');
   }
 
 });

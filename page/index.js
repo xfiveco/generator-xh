@@ -10,14 +10,14 @@ var PageGenerator = yeoman.generators.NamedBase.extend({
     var reserved = ['main', 'variables', 'mixins', 'common', 'wordpress', 'wp'];
 
     if (!this.name) {
-      console.log('Name cannot be empty.');
+      this.log('Name cannot be empty.');
       process.exit();
     } else if (reserved.indexOf(this.slug) >= 0) {
-      console.log('You cannot use reserved words - main, variables, mixins, common, wordpress, wp - as a page name.');
+      this.log('You cannot use reserved words - main, variables, mixins, common, wordpress, wp - as a page name.');
       process.exit();
     }
 
-    console.log('Creating page ' + this.name + '.');
+    this.log('Creating page ' + this.name + '.');
   },
 
   // Create HTML page and list it on the project index file

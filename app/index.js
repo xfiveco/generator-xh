@@ -23,11 +23,11 @@ var XhGenerator = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Welcome user
-    console.log('');
-    console.log(chalk.cyan(' ***********************************************************') + '\n');
-    console.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
-    console.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
-    console.log(chalk.cyan(' ***********************************************************') + '\n');
+    this.log('');
+    this.log(chalk.cyan(' ***********************************************************') + '\n');
+    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
+    this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
+    this.log(chalk.cyan(' ***********************************************************') + '\n');
 
     var prompts = [{
         name: 'projectName',
@@ -149,17 +149,6 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.copy('src/img/do_not_delete_me.png', 'src/img/do_not_delete_me.png');
     this.copy('src/img/do_not_delete_me.png', 'src/media/do_not_delete_me.png');
     this.copy('src/img/do_not_delete_me.png', 'src/xprecise/do_not_delete_me.png');
-
-    /*
-    this.mkdir('dist');
-    this.mkdir('dist/fonts');
-    this.mkdir('dist/css');
-    this.mkdir('dist/js');
-    this.mkdir('dist/img');
-    this.mkdir('dist/img/common');
-    this.mkdir('dist/media');
-    this.mkdir('dist/_xprecise');
-    */
 
     // HTML
     this.copy('src/_template.html', 'src/template.html');

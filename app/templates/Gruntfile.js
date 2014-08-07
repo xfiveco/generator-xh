@@ -186,7 +186,7 @@ module.exports = function(grunt) {
       xprecise: {
         cwd: '<%%= xh.src %>/xprecise/',
         src: ['*.*', '!do_not_delete_me.png'],
-        dest: '<%%= xh.dist %>/_xprecise/',
+        dest: '<%%= xh.dist %>/xprecise/',
         expand: true
       },
 
@@ -199,7 +199,7 @@ module.exports = function(grunt) {
 
       wp: {
         cwd: '<%%= xh.dist %>/',
-        src: ['**', '!**/_xprecise/**', '!*.html'],
+        src: ['**', '!**/xprecise/**', '!*.html'],
         dest: '<%= wpThemeFolder  %>',
         expand: true
       },<% } %>
@@ -316,7 +316,7 @@ module.exports = function(grunt) {
         src: ['<%%= xh.src %>/includes/scripts.html'],
         overwrite: true,
         replacements: [{
-          from: '<script src="http://cssonsails.org/xprecise/xprecise.min.js"></script>',
+          from: '<script src="http://xhtmlized.github.io/x-precise/xprecise.min.js"></script>',
           to: ''
         }]
       }

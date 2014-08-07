@@ -153,7 +153,7 @@ module.exports = function(grunt) {
         src: 'jquery.min.js',
         dest: '<%%= xh.dist %>/js/',
         expand: true
-      },<% if (!useModernizr) { %>,
+      },<% if (!useModernizr) { %>
 
       shiv: {
         cwd: 'src/bower_components/html5shiv/dist/',

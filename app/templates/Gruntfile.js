@@ -92,7 +92,11 @@ module.exports = function(grunt) {
     validation: {
       src: ['<%%= xh.dist %>/*.html'],
       options: {
-        reset: true
+        reset: true,
+        relaxerror: [
+          'Bad value X-UA-Compatible for attribute http-equiv on element meta.',
+          'The frameborder attribute on the iframe element is obsolete. Use CSS instead.'
+        ]
       }
     },
 

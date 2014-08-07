@@ -335,7 +335,27 @@ module.exports = function(grunt) {
           logFile: "csstoc.json"
         }
       }
-    },
+    }<% if (reloader === 'BrowserSync') { %>,
+
+    browserSync: {
+      src: {
+        bsFiles: {
+          src: [
+            '<%= xh.dist %>/css/*.css',
+            '<%= xh.src %>/js/*.js',
+            '<%= xh.src %>/img/*.*',
+            '<%= xh.src %>/media/*.*',
+            '<%= xh.src %>/fonts/*.*',
+            '<%= xh.src %>/xprecise/*.*',
+            '<%= xh.src %>/**/*.html'
+          ]
+        },
+
+        options: {
+          watchTask: true
+        }
+      }
+    }<% } %>,
 
     // Watch
     watch: {
@@ -348,49 +368,38 @@ module.exports = function(grunt) {
           '<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
           '<%%= xh.src %>/less/**/*.less'<% } %>
         ],
-        tasks: [
-          'build-css'<% if (isWP) { %>,
-          'copy:wp'<% } %>
-        ]
-      },
+        tasks: [ 'build-css'<% if (isWP) { %>, 'copy:wp'<% } %> ]
+      }<% if (reloader === 'LiveReload') { %>,
 
       css: {
         files: ['<%%= xh.dist %>/css/*.css'],
         options: {
           livereload: true
         }
-      },
+      }<% } %>,
 
       html: {
         files: ['<%%= xh.src %>/*.html', '<%%= xh.src %>/includes/*.html'],
-        tasks: [
-          'build-html'
-        ],
+        tasks: [ 'build-html' ]<% if (reloader === 'LiveReload') { %>,
         options: {
           livereload: true
-        }
+        }<% } %>
       },
 
       js: {
         files: '<%%= xh.src %>/js/*.js',
-        tasks: [
-          'build-js'<% if (isWP) { %>,
-          'copy:wp'<% } %>
-        ],
+        tasks: [ 'build-js'<% if (isWP) { %>, 'copy:wp'<% } %> ]<% if (reloader === 'LiveReload') { %>,
         options: {
           livereload: true
-        }
+        }<% } %>
       },
 
       assets: {
         files: ['<%%= xh.src %>/img/*.*', '<%%= xh.src %>/media/*.*', '<%%= xh.src %>/fonts/*.*', '<%%= xh.src %>/xprecise/*.*'],
-        tasks: [
-          'build-assets'<% if (isWP) { %>,
-          'copy:wp'<% } %>
-        ],
+        tasks: [ 'build-assets'<% if (isWP) { %>, 'copy:wp'<% } %> ]<% if (reloader === 'LiveReload') { %>,
         options: {
           livereload: true
-        }
+        }<% } %>
       }
     }
 
@@ -460,7 +469,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'postinstall',
+    'postinstall'<% if (reloader === 'BrowserSync') { %>,
+    'browserSync'<% } %>,
     'watch'
   ]);
 };

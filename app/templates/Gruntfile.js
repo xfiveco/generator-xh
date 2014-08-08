@@ -114,7 +114,6 @@ module.exports = function(grunt) {
         }
       }
     },<% } %> <% if (cssPreprocessor === 'LESS') { %>
-
     less: {
       dist: {
         options: {
@@ -143,81 +142,82 @@ module.exports = function(grunt) {
     // JS
     copy: {
       normalize: {
-        src: 'src/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS') { %>
-        dest: 'src/bower_components/normalize.css/normalize.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
-        dest: 'src/bower_components/normalize.css/normalize.less'<% } %>
+        src: '<%%= xh.src %>/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS') { %>
+        dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
+        dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.less'<% } %>
       },
 
       jquery: {
-        cwd: 'src/bower_components/jquery/dist/',
+        expand: true,
+        cwd: '<%%= xh.src %>/bower_components/jquery/dist/',
         src: 'jquery.min.js',
-        dest: '<%%= xh.dist %>/js/',
-        expand: true
+        dest: '<%%= xh.dist %>/js/'
       },<% if (!useModernizr) { %>
 
       shiv: {
-        cwd: 'src/bower_components/html5shiv/dist/',
+        expand: true,
+        cwd: '<%%= xh.src %>/bower_components/html5shiv/dist/',
         src: 'html5shiv.min.js',
-        dest: '<%%= xh.dist %>/js/',
-        expand: true
+        dest: '<%%= xh.dist %>/js/'
       },<% } %>
 
-      fonts: {
-        cwd: '<%%= xh.src %>/fonts/',
-        src: ['*.*', '!do_not_delete_me.png'],
-        dest: '<%%= xh.dist %>/fonts/',
-        expand: true
-      },
-
-      img: {
-        cwd: '<%%= xh.src %>/img/',
-        src: ['*.*', '!do_not_delete_me.png'],
-        dest: '<%%= xh.dist %>/img/',
-        expand: true
-      },
-
-      media: {
-        cwd: '<%%= xh.src %>/media/',
-        src: ['*.*', '!do_not_delete_me.png'],
-        dest: '<%%= xh.dist %>/media/',
-        expand: true
-      },
-
-      xprecise: {
-        cwd: '<%%= xh.src %>/xprecise/',
-        src: ['*.*', '!do_not_delete_me.png'],
-        dest: '<%%= xh.dist %>/xprecise/',
-        expand: true
+      assets: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%%= xh.src %>/img/',
+            src: ['**/*.*', '!do_not_delete_me.png'],
+            dest: '<%%= xh.dist %>/img/'
+          },
+          {
+            expand: true,
+            cwd: '<%%= xh.src %>/media/',
+            src: ['**/*.*', '!do_not_delete_me.png'],
+            dest: '<%%= xh.dist %>/media/'
+          },
+          {
+            expand: true,
+            cwd: '<%%= xh.src %>/fonts/',
+            src: ['**/*.*', '!do_not_delete_me.png'],
+            dest: '<%%= xh.dist %>/fonts/'
+          },
+          {
+            expand: true,
+            cwd: '<%%= xh.src %>/xprecise/',
+            src: ['**/*.*', '!do_not_delete_me.png'],
+            dest: '<%%= xh.dist %>/xprecise/'
+          }
+        ]
       },
 
       js: {
+        expand: true,
         cwd: '<%%= xh.src %>/js/',
         src: ['main.js'],
-        dest: '<%%= xh.dist %>/js/',
-        expand: true
+        dest: '<%%= xh.dist %>/js/'
       },<% if (isWP) { %>
 
       wp: {
+        expand: true,
         cwd: '<%%= xh.dist %>/',
         src: ['**', '!**/xprecise/**', '!*.html'],
-        dest: '<%= wpThemeFolder  %>',
-        expand: true
+        dest: '<%= wpThemeFolder  %>'
       },<% } %>
 
       // Backup include files
       backup: {
+        expand: true,
         cwd: '<%%= xh.src %>/includes/',
         src: '<%%= xh.build %>',
-        dest: '.tmp',
-        expand: true
+        dest: '.tmp'
       },
 
       // Restore include files
       restore: {
+        expand: true,
         cwd: '.tmp',
         src: '<%%= xh.build %>',
-        dest: '<%%= xh.src %>/includes/',
-        expand: true
+        dest: '<%%= xh.src %>/includes/'
       }
     },
 
@@ -344,14 +344,8 @@ module.exports = function(grunt) {
       },
 
       compileCSS: {
-        files: [<% if (cssPreprocessor === 'SCSS') { %>
-          '<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
-          '<%%= xh.src %>/less/**/*.less'<% } %>
-        ],
-        tasks: [
-          'build-css'<% if (isWP) { %>,
-          'copy:wp'<% } %>
-        ]
+        files: [<% if (cssPreprocessor === 'SCSS') { %>'<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/**/*.less'<% } %>],
+        tasks: ['build-css'<% if (isWP) { %>, 'copy:wp'<% } %>]
       },
 
       css: {
@@ -363,31 +357,23 @@ module.exports = function(grunt) {
 
       html: {
         files: ['<%%= xh.src %>/*.html', '<%%= xh.src %>/includes/*.html'],
-        tasks: [
-          'build-html'
-        ],
+        tasks: ['build-html'],
         options: {
           livereload: true
         }
       },
 
       js: {
-        files: '<%%= xh.src %>/js/*.js',
-        tasks: [
-          'build-js'<% if (isWP) { %>,
-          'copy:wp'<% } %>
-        ],
+        files: ['<%%= xh.src %>/js/*.js'],
+        tasks: ['build-js'<% if (isWP) { %>, 'copy:wp'<% } %>],
         options: {
           livereload: true
         }
       },
 
       assets: {
-        files: ['<%%= xh.src %>/img/*.*', '<%%= xh.src %>/media/*.*', '<%%= xh.src %>/fonts/*.*', '<%%= xh.src %>/xprecise/*.*'],
-        tasks: [
-          'build-assets'<% if (isWP) { %>,
-          'copy:wp'<% } %>
-        ],
+        files: ['<%%= xh.src %>/{img,media,fonts,xprecise}/**/*'],
+        tasks: ['build-assets'<% if (isWP) { %>, 'copy:wp'<% } %>],
         options: {
           livereload: true
         }
@@ -408,10 +394,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build-assets', [
-    'copy:img',
-    'copy:media',
-    'copy:fonts',
-    'copy:xprecise'
+    'copy:assets'
   ]);
 
   grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS') { %>

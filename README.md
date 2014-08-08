@@ -41,7 +41,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - Industry standard [normalize.css](http://necolas.github.io/normalize.css/) as a base stylesheet
 - CSS Preprocessing with [SCSS](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
 - Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [CSS3 Pie](http://css3pie.com/)
-- Add vendor-prefixed CSS properties with [autprefixer](https://github.com/nDmitry/grunt-autoprefixer)
+- Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/nDmitry/grunt-autoprefixer)
 - Grunt tasks for prettifying built HTML / CSS / JS
 - Auto generated table of contents in main.css
 - Functionality for merging JS libraries to reduce number of HTTP requests
@@ -333,7 +333,7 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
     <script src="js/main.js"></script>
 ```
 
-3. Download [Colorbox archive](https://github.com/jackmoore/colorbox/archive/master.zip) and copy images from `example1/images` folder to `dist/img/colorbox` folder.
+3. Download [Colorbox archive](https://github.com/jackmoore/colorbox/archive/master.zip) and copy images from `example1/images` folder to `src/img/colorbox` folder.
 
 4. Get `colorbox.css` from the archive, rename it to `colorbox.scss` and store it in `src/scss` folder
 
@@ -345,7 +345,7 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 
 6. Replace all instances of `images/` in `colorbox.scss` with `../img/colorbox/`
 
-7. Run the `grunt` task or `grunt watch`
+7. Run the `grunt build` task or `grunt` task
 
 8. Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`
 
@@ -354,7 +354,18 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 Check [Releases](https://github.com/xhtmlized/generator-xh/releases)
 
 ## Contributing
-Please follow the GitHub guides for contributing and reporting issues to the project:
+
+If you want to contribute to the XH Generator development, watch the project repository so you are notified about the new issues and related discussion.
+
+Each fix or new idea needs be added as an issue so they can be referred later and reviewed and discussed if necessary.
+
+The following labels are used to mark the issues and ensure predictable generator API and usage:
+
+- **Minor Improvement** - improvement which doesn't significantly affect the way how you work with the generator now.
+- **Workflow Change** - will change the way how you work with the generator and projects and you'll probably need to learn or get used to the new stuff. There will be at least 2 weeks interval between creating such issue and starting actual work. During this period you can discuss the issue or submit your objections to the proposed idea.
+- **Future Enhancement** - ideas for the future enhancements, they usually won't be implemented sooner than in a couple of weeks or months. If particular future enhancement changes the workflow, such label will be added to it at least 2 weeks before development starts.
+
+Please also follow the GitHub guides for contributing and reporting issues to the project:
 
 - [Contributing to Open Source on GitHub](https://guides.github.com/activities/contributing-to-open-source/)
 - [Mastering Issues](http://https://guides.github.com/features/issues/)

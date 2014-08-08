@@ -349,11 +349,23 @@ module.exports = function(grunt) {
         },
 
         options: {
-          watchTask: true,
+          watchTask: true,<% if (server) { %>
           server: {
             baseDir: "./"
-          },
+          },<% } %>
           notify: false
+        }
+      }
+    }<% } else if (reloader === 'LiveReload' && server) { %>,
+
+    connect: {
+      server: {
+        options: {
+          base: './',
+          open: true,
+          livereload: true,
+          hostname: 'localhost',
+          port: 3000
         }
       }
     }<% } %>,
@@ -465,7 +477,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'postinstall'<% if (reloader === 'BrowserSync') { %>,
-    'browserSync'<% } %>,
+    'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>,
+    'connect:server'<% } %>,
     'watch'
   ]);
 };

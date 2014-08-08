@@ -60,6 +60,12 @@ module.exports = function(grunt) {
     // HTML Includes
     includereplace: {
       dist: {
+        options: {
+          globals: {<% if (reloader !== 'None' && !server) { %>
+            reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:<% if (reloader === 'BrowserSync') { %>3000/browser-sync-client.js<% } else if (reloader === 'LiveReload') { %>35729/livereload.js?snipver=1<% } %>\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>',<% } %>
+            xprecise: '<script async src="http://xhtmlized.github.io/x-precise/xprecise.min.js"></script>'
+          }
+        },
         files: [{
           expand: true,
           cwd: '<%%= xh.src %>',
@@ -316,10 +322,19 @@ module.exports = function(grunt) {
         src: ['<%%= xh.src %>/includes/scripts.html'],
         overwrite: true,
         replacements: [{
-          from: '<script src="http://xhtmlized.github.io/x-precise/xprecise.min.js"></script>',
+          from: '@@xprecise\n',
           to: ''
         }]
-      }
+      }<% if (reloader !== 'None' && !server) { %>,
+
+      reloader: {
+        src: ['<%%= xh.src %>/includes/scripts.html'],
+        overwrite: true,
+        replacements: [{
+          from: '@@reloader\n',
+          to: ''
+        }]
+      }<% } %>
     },
 
     // Create list of @imports
@@ -351,7 +366,8 @@ module.exports = function(grunt) {
         options: {
           watchTask: true,<% if (server) { %>
           server: {
-            baseDir: "./"
+            baseDir: "./",
+            port: 3000
           },<% } %>
           notify: false
         }
@@ -363,7 +379,9 @@ module.exports = function(grunt) {
         options: {
           base: './',
           open: true,
-          livereload: true,
+          livereload: {
+            port: 35729
+          },
           hostname: 'localhost',
           port: 3000
         }
@@ -463,7 +481,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('qa', [
-    'replace:xprecise',
+    'replace:xprecise',<% if (reloader !== 'None' && !server) { %>
+    'replace:reloader',<% } %>
     'build',
     'validate',
     'jshint'

@@ -458,8 +458,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>
-    'copy:normalize',<% } %><% if (useModernizr) { %>
-    'uglify:modernizr',<% } else { %>'copy:shiv',<% } %>
+    'copy:normalize',<% } %>
+    <% if (useModernizr) { %>'uglify:modernizr',<% } else { %>'copy:shiv',<% } %>
     'copy:jquery'
   ]);
 

@@ -70,7 +70,7 @@ var XhGenerator = yeoman.generators.Base.extend({
         type: 'list',
         name: 'reloader',
         message: 'Which type of live reloader would you like to use?',
-        choices: ['LiveReload', 'BrowserSync'],
+        choices: ['LiveReload', 'BrowserSync', 'None'],
         default: 'BrowserSync'
       }
     ];

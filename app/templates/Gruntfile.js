@@ -341,18 +341,21 @@ module.exports = function(grunt) {
       src: {
         bsFiles: {
           src: [
-            '<%= xh.dist %>/css/*.css',
-            '<%= xh.src %>/js/*.js',
-            '<%= xh.src %>/img/*.*',
-            '<%= xh.src %>/media/*.*',
-            '<%= xh.src %>/fonts/*.*',
-            '<%= xh.src %>/xprecise/*.*',
-            '<%= xh.src %>/**/*.html'
+            '<%%= xh.dist %>/css/*.css',
+            '<%%= xh.src %>/js/*.js',
+            '<%%= xh.src %>/img/*.*',
+            '<%%= xh.src %>/media/*.*',
+            '<%%= xh.src %>/fonts/*.*',
+            '<%%= xh.src %>/xprecise/*.*',
+            '<%%= xh.src %>/**/*.html'
           ]
         },
 
         options: {
-          watchTask: true
+          watchTask: true,
+          server: {
+            baseDir: "./"
+          }
         }
       }
     }<% } %>,

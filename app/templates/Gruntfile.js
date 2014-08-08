@@ -341,10 +341,10 @@ module.exports = function(grunt) {
       src: {
         bsFiles: {
           src: [
-            '<%= xh.dist %>/css/*.css',
-            '<%= xh.dist %>/js/*.js',
-            '<%= xh.dist %>/{img,media,fonts,xprecise}/**/*.*',
-            '<%= xh.dist %>/**/*.html'
+            '<%%= xh.dist %>/css/*.css',
+            '<%%= xh.dist %>/js/*.js',
+            '<%%= xh.dist %>/{img,media,fonts,xprecise}/**/*.*',
+            '<%%= xh.dist %>/**/*.html'
           ]
         },
 

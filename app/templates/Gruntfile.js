@@ -361,7 +361,8 @@ module.exports = function(grunt) {
     // Watch
     watch: {
       options: {
-        spawn: false
+        spawn: false<% if (reloader === 'BrowserSync') { %>,
+        interrupt: true<% } %>
       },
 
       compileCSS: {

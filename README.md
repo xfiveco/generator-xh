@@ -125,7 +125,7 @@ The generated project structure will look like this:
 
 The meaning of files and folders are as follows:
 
-- **dist** - production / preview files are automatically generated here, this is where you check your work in a browser. 
+- **dist** - production / preview files are automatically generated here, this is where you check your work in a browser.
 - **node_modules** - Node.js modules for various Grunt tasks, usually you don’t have to do anything about this folder
 - **src** - source files, development is done here
  - **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
@@ -136,7 +136,7 @@ The meaning of files and folders are as follows:
     - `_mixins.scss` / `mixins.less` - mixins file
     - `_common.scss` / `common.less` - common styles with some minimal default styling
     - `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
- - **js** 
+ - **js**
     - `main.js` is a main JS file in project
  - `home.html`, etc. - HTML files composed from HTML partials
 - `index.html` - project index with project pages listed
@@ -155,7 +155,7 @@ On a typical project, you will work in `src` folder and check your work in `dist
 
 ### 3) Adding pages to the project
 
-Once you have basic project structure generated, you should add pages you will be working on. XH Generator comes with a subgenerator for adding new pages to the project. 
+Once you have basic project structure generated, you should add pages you will be working on. XH Generator comes with a subgenerator for adding new pages to the project.
 
 From the command line type:
 
@@ -167,6 +167,12 @@ for example
 
 ```
 yo xh:page “Home”
+```
+
+You can also create multiple pages at once by separating page names with space:
+
+```
+yo xh:page “Home” “About Us” “Contact Us” “News”
 ```
 
 The command will do the following:

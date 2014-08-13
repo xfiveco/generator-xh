@@ -114,7 +114,7 @@ module.exports = function(grunt) {
         options: {
           style: 'expanded',
           sourcemap: true,
-          loadPath: 'src/bower_components/'
+          loadPath: '<%%= xh.src %>/bower_components/'
         },
         files: {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'
@@ -124,7 +124,7 @@ module.exports = function(grunt) {
     less: {
       dist: {
         options: {
-          path: 'src/bower_components/'
+          path: '<%%= xh.src %>/bower_components/'
         },
         files: {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/less/main.less'
@@ -137,11 +137,11 @@ module.exports = function(grunt) {
           outputStyle: 'nested',
           imagePath: '../img',
           includePaths: [
-            '<%= xh.src %>/bower_components'
+            '<%%= xh.src %>/bower_components'
           ]
         },
         files: {
-          '<%= xh.dist %>/css/main.css': '<%= xh.src %>/scss/main.scss'
+          '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'
         }
       }
     },<% } %>

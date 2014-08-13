@@ -108,8 +108,7 @@ module.exports = function(grunt) {
     },
 
     // CSS
-    <% if (cssPreprocessor === 'SCSS') { %>
-    sass: {
+    <% if (cssPreprocessor === 'SCSS') { %>sass: {
       dist: {
         options: {
           style: 'expanded',
@@ -355,7 +354,7 @@ module.exports = function(grunt) {
     // Create list of @imports
     search: {
       imports: {
-        files: {<% if (cssPreprocessor === 'SCSS') { %>
+        files: {<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
           src: ['<%%= xh.src %>/scss/main.scss']<% } %><% if (cssPreprocessor === 'LESS') { %>
           src: ['<%%= xh.src %>/less/main.less']<% } %>
         },
@@ -411,7 +410,7 @@ module.exports = function(grunt) {
       },
 
       compileCSS: {
-        files: [<% if (cssPreprocessor === 'SCSS') { %>'<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/**/*.less'<% } %>],
+        files: [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/**/*.less'<% } %>],
         tasks: ['build-css'<% if (isWP) { %>, 'copy:wp'<% } %>]
       }<% if (reloader === 'LiveReload') { %>,
 

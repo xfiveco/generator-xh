@@ -27,7 +27,10 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     var prompts = [{
         name: 'projectName',
-        message: 'Please enter the project name:'
+        message: 'Please enter the project name:',
+        validate: function (input) {
+          return !!input;
+        }
       }, {
         type: 'confirm',
         name: 'useBranding',
@@ -54,18 +57,32 @@ var XhGenerator = yeoman.generators.Base.extend({
         name: 'features',
         message: 'Select additional features:',
         choices: [{
-            name: 'Bootstrap',
-            value: 'useBootstrap',
-            checked: false
+          name: 'Bootstrap',
+          value: 'useBootstrap',
+          checked: false
         }, {
-            name: 'Modernizr',
-            value: 'useModernizr',
-            checked: false
+          name: 'Modernizr',
+          value: 'useModernizr',
+          checked: false
         }, {
-            name: 'CSS3 Pie',
-            value: 'useCSS3Pie',
-            checked: false
+          name: 'CSS3 Pie',
+          value: 'useCSS3Pie',
+          checked: false
         }]
+      }, {
+        type: 'list',
+        name: 'reloader',
+        message: 'Which type of live reloader would you like to use?',
+        choices: ['LiveReload', 'BrowserSync', 'None'],
+        default: 'BrowserSync'
+      }, {
+        when: function (response) {
+          return response.reloader !== 'None';
+        },
+        type: 'confirm',
+        name: 'server',
+        message: 'Do you want to run development server?',
+        default: true
       }
     ];
 
@@ -76,6 +93,8 @@ var XhGenerator = yeoman.generators.Base.extend({
       this.cssPreprocessor = props.cssPreprocessor;
       this.isWP = props.isWP;
       this.features = props.features;
+      this.reloader = props.reloader;
+      this.server = props.server;
 
       var features = this.features;
 

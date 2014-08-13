@@ -60,6 +60,12 @@ module.exports = function(grunt) {
     // HTML Includes
     includereplace: {
       dist: {
+        options: {
+          globals: {<% if (reloader !== 'None' && !server) { %>
+            reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:<% if (reloader === 'BrowserSync') { %>3000/browser-sync-client.js<% } else if (reloader === 'LiveReload') { %>35729/livereload.js?snipver=1<% } %>\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>',<% } %>
+            xprecise: '<script async src="http://xhtmlized.github.io/x-precise/xprecise.min.js"></script>'
+          }
+        },
         files: [{
           expand: true,
           cwd: '<%%= xh.src %>',
@@ -316,10 +322,19 @@ module.exports = function(grunt) {
         src: ['<%%= xh.src %>/includes/scripts.html'],
         overwrite: true,
         replacements: [{
-          from: '<script src="http://xhtmlized.github.io/x-precise/xprecise.min.js"></script>',
+          from: '@@xprecise\n',
           to: ''
         }]
-      }
+      }<% if (reloader !== 'None' && !server) { %>,
+
+      reloader: {
+        src: ['<%%= xh.src %>/includes/scripts.html'],
+        overwrite: true,
+        replacements: [{
+          from: '@@reloader\n',
+          to: ''
+        }]
+      }<% } %>
     },
 
     // Create list of @imports
@@ -335,48 +350,85 @@ module.exports = function(grunt) {
           logFile: "csstoc.json"
         }
       }
-    },
+    }<% if (reloader === 'BrowserSync') { %>,
+
+    browserSync: {
+      src: {
+        bsFiles: {
+          src: [
+            '<%%= xh.dist %>/css/*.css',
+            '<%%= xh.dist %>/js/*.js',
+            '<%%= xh.dist %>/{img,media,fonts,xprecise}/**/*.*',
+            '<%%= xh.dist %>/**/*.html'
+          ]
+        },
+
+        options: {
+          watchTask: true,<% if (server) { %>
+          server: {
+            baseDir: "./",
+            port: 3000
+          },<% } %>
+          notify: false
+        }
+      }
+    }<% } else if (reloader === 'LiveReload' && server) { %>,
+
+    connect: {
+      server: {
+        options: {
+          base: './',
+          open: true,
+          livereload: {
+            port: 35729
+          },
+          hostname: 'localhost',
+          port: 3000
+        }
+      }
+    }<% } %>,
 
     // Watch
     watch: {
       options: {
-        spawn: false
+        spawn: false<% if (reloader === 'BrowserSync') { %>,
+        interrupt: true<% } %>
       },
 
       compileCSS: {
         files: [<% if (cssPreprocessor === 'SCSS') { %>'<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/**/*.less'<% } %>],
         tasks: ['build-css'<% if (isWP) { %>, 'copy:wp'<% } %>]
-      },
+      }<% if (reloader === 'LiveReload') { %>,
 
       css: {
         files: ['<%%= xh.dist %>/css/*.css'],
         options: {
           livereload: true
         }
-      },
+      }<% } %>,
 
       html: {
         files: ['<%%= xh.src %>/*.html', '<%%= xh.src %>/includes/*.html'],
-        tasks: ['build-html'],
+        tasks: ['build-html']<% if (reloader === 'LiveReload') { %>,
         options: {
           livereload: true
-        }
+        }<% } %>
       },
 
       js: {
         files: ['<%%= xh.src %>/js/*.js'],
-        tasks: ['build-js'<% if (isWP) { %>, 'copy:wp'<% } %>],
+        tasks: ['build-js'<% if (isWP) { %>, 'copy:wp'<% } %>]<% if (reloader === 'LiveReload') { %>,
         options: {
           livereload: true
-        }
+        }<% } %>
       },
 
       assets: {
         files: ['<%%= xh.src %>/{img,media,fonts,xprecise}/**/*'],
-        tasks: ['build-assets'<% if (isWP) { %>, 'copy:wp'<% } %>],
+        tasks: ['build-assets'<% if (isWP) { %>, 'copy:wp'<% } %>]<% if (reloader === 'LiveReload') { %>,
         options: {
           livereload: true
-        }
+        }<% } %>
       }
     }
 
@@ -430,20 +482,23 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('qa', [
-    'replace:xprecise',
+    'replace:xprecise',<% if (reloader !== 'None' && !server) { %>
+    'replace:reloader',<% } %>
     'build',
     'validate',
     'jshint'
   ]);
 
   grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>
-    'copy:normalize',<% } %><% if (useModernizr) { %>
-    'uglify:modernizr',<% } else { %>'copy:shiv',<% } %>
+    'copy:normalize',<% } %>
+    <% if (useModernizr) { %>'uglify:modernizr',<% } else { %>'copy:shiv',<% } %>
     'copy:jquery'
   ]);
 
   grunt.registerTask('default', [
-    'postinstall',
+    'postinstall'<% if (reloader === 'BrowserSync') { %>,
+    'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>,
+    'connect:server'<% } %>,
     'watch'
   ]);
 };

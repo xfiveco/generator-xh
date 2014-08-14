@@ -259,11 +259,11 @@ module.exports = function(grunt) {
           from: '@@toc',
           to: function () {
 
-            if (!grunt.file.exists('csstoc.json')) {
+            if (!grunt.file.exists('.tmp/csstoc.json')) {
               return '';
             }
 
-            var toc_file = grunt.file.readJSON('csstoc.json')
+            var toc_file = grunt.file.readJSON('.tmp/csstoc.json')
             var files = toc_file.results;
             var toc = '';
             var i = 1;
@@ -347,7 +347,7 @@ module.exports = function(grunt) {
         options: {
           searchString: /@import[ \("']*([^;]+)[;\)"']*/g,
           logFormat: "json",
-          logFile: "csstoc.json"
+          logFile: ".tmp/csstoc.json"
         }
       }
     }<% if (reloader === 'BrowserSync') { %>,
@@ -455,7 +455,8 @@ module.exports = function(grunt) {
     'autoprefixer',
     'cssbeautifier',
     'search',
-    'replace:css'
+    'replace:css',
+    'clean:tmp'
   ]);
 
   grunt.registerTask('build-js', [

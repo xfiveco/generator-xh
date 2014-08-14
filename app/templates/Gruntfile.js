@@ -20,6 +20,7 @@ module.exports = function(grunt) {
     xh: {
       src: 'src',
       dist: 'dist',
+      tmp: '.tmp',
       build: ['head.html', 'scripts.html']
     },
 
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
     },
 
     clean: {
-      tmp: { src: ['.tmp'] },
+      tmp: { src: ['<%%= xh.tmp %>'] },
       dist: { src: ['<%%= xh.dist %>/*.html', '<%%= xh.dist %>/css', '<%%= xh.dist %>/js', '<%%= xh.dist %>/fonts'] }
     },
 
@@ -215,13 +216,13 @@ module.exports = function(grunt) {
         expand: true,
         cwd: '<%%= xh.src %>/includes/',
         src: '<%%= xh.build %>',
-        dest: '.tmp'
+        dest: '<%%= xh.tmp %>'
       },
 
       // Restore include files
       restore: {
         expand: true,
-        cwd: '.tmp',
+        cwd: '<%%= xh.tmp %>',
         src: '<%%= xh.build %>',
         dest: '<%%= xh.src %>/includes/'
       }
@@ -259,11 +260,11 @@ module.exports = function(grunt) {
           from: '@@toc',
           to: function () {
 
-            if (!grunt.file.exists('.tmp/csstoc.json')) {
+            if (!grunt.file.exists('<%%= xh.tmp %>/csstoc.json')) {
               return '';
             }
 
-            var toc_file = grunt.file.readJSON('.tmp/csstoc.json')
+            var toc_file = grunt.file.readJSON('<%%= xh.tmp %>/csstoc.json')
             var files = toc_file.results;
             var toc = '';
             var i = 1;
@@ -347,7 +348,7 @@ module.exports = function(grunt) {
         options: {
           searchString: /@import[ \("']*([^;]+)[;\)"']*/g,
           logFormat: "json",
-          logFile: ".tmp/csstoc.json"
+          logFile: "<%%= xh.tmp %>/csstoc.json"
         }
       }
     }<% if (reloader === 'BrowserSync') { %>,

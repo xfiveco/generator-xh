@@ -42,6 +42,8 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - CSS Preprocessing with [SCSS](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
 - Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [CSS3 Pie](http://css3pie.com/)
 - Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/nDmitry/grunt-autoprefixer)
+- Live reload and browsers syncing with [BrowserSync](http://www.browsersync.io/) or LiveReload
+- Optional development server
 - Grunt tasks for prettifying built HTML / CSS / JS
 - Auto generated table of contents in main.css
 - Functionality for merging JS libraries to reduce number of HTTP requests
@@ -207,7 +209,7 @@ grunt build
 
 ![grunt command](docs/img/grunt.png)
 
-If everything went ok, the preview files will be generated and you will be able to check your work in the `dist` folder. XH Generator doesn't create a server, so you need to preview files on your existing local web server.
+If everything went ok, the preview files will be generated and you will be able to check your work in the `dist` folder.
 
 To re-compile HTML / SCSS file in real time you can use default task. Type
 

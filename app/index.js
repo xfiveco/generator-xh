@@ -37,6 +37,20 @@ var XhGenerator = yeoman.generators.Base.extend({
         message: 'Should XHTMLized branding be used?',
         default: true
       }, {
+        type: 'list',
+        name: 'reloader',
+        message: 'Which type of live reloader would you like to use?',
+        choices: ['LiveReload', 'BrowserSync', 'None'],
+        default: 'BrowserSync'
+      }, {
+        when: function (response) {
+          return response.reloader !== 'None';
+        },
+        type: 'confirm',
+        name: 'server',
+        message: 'Do you want to run development server?',
+        default: true
+      }, {
         type: 'confirm',
         name: 'ignoreDist',
         message: 'Add dist folder to the Git ignore list?',
@@ -69,20 +83,6 @@ var XhGenerator = yeoman.generators.Base.extend({
           value: 'useCSS3Pie',
           checked: false
         }]
-      }, {
-        type: 'list',
-        name: 'reloader',
-        message: 'Which type of live reloader would you like to use?',
-        choices: ['LiveReload', 'BrowserSync', 'None'],
-        default: 'BrowserSync'
-      }, {
-        when: function (response) {
-          return response.reloader !== 'None';
-        },
-        type: 'confirm',
-        name: 'server',
-        message: 'Do you want to run development server?',
-        default: true
       }
     ];
 

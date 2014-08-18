@@ -325,7 +325,7 @@ The following approach is recommended when creating styles:
 
 ### LibSass notices
 
-LibSass is many times faster than Ruby Sass, however that speed comes at a price. Some  features of Ruby Sass may not yet be ported there or a bit faulty (http://benfrain.com/libsass-lightning-fast-sass-compiler-ready-prime-time/), also some features of the libraries you would like to use may not be available (like automatic sprite generation from [Compass](http://compass-style.org/)). In some projects requirements or simple convenience may end up being a reason to choose Ruby version over LibSass one.
+LibSass is many times faster than Ruby Sass, however that speed comes at a price. Some  features of Ruby Sass [may not yet be ported there or a bit faulty](http://benfrain.com/libsass-lightning-fast-sass-compiler-ready-prime-time/), also some features of the libraries you would like to use may not be available (like automatic sprite generation from [Compass](http://compass-style.org/)). In some projects requirements or simple convenience may end up being a reason to choose Ruby version over LibSass one.
 
 Issues found when working with LibSass can be browsed (and created) on [LibSass GitHub](https://github.com/sass/libsass/issues) page. One of them is lack of support for map (hash) datatype. If you find yourself wishing for it when using LibSass, you may want to take a look at [Sass List–Maps](https://github.com/lunelson/sass-list-maps).
 

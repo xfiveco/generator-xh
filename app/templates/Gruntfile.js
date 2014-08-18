@@ -21,7 +21,8 @@ module.exports = function(grunt) {
       src: 'src',
       dist: 'dist',
       tmp: '.tmp',
-      build: ['head.html', 'scripts.html']
+      build: ['head.html', 'scripts.html'],
+      root: __dirname
     },
 
     useminPrepare: {
@@ -133,11 +134,14 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         options: {
-          outputStyle: 'nested',
+          outputStyle: 'expanded',
           imagePath: '../img',
           includePaths: [
             '<%%= xh.src %>/bower_components'
-          ]
+          ],
+          // for some reason sourceMaps will have correct path only when
+          // absolute source map path is used
+          sourceMap: '<%= xh.root %>/<%= xh.dist %>/css/main.css.map'
         },
         files: {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'

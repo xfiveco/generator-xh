@@ -27,6 +27,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - [Tips & Tricks](#tips--tricks)
  - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
  - [Writing styles](#writing-styles)
+ - [LibSass notices](#libsass-notices)
  - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)
 - [Changelog](#changelog)
 - [Contributing](#contributing)
@@ -40,6 +41,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - A sub generator for adding pages to the project
 - Industry standard [normalize.css](http://necolas.github.io/normalize.css/) as a base stylesheet
 - CSS Preprocessing with [SCSS](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
+- Support for both [LibSass](http://libsass.org/) (default) and [Ruby version](http://sass-lang.com/install) when using SCSS
 - Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [CSS3 Pie](http://css3pie.com/)
 - Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/nDmitry/grunt-autoprefixer)
 - Live reload and browsers syncing with [BrowserSync](http://www.browsersync.io/) or LiveReload
@@ -62,8 +64,8 @@ The following software needs to be installed if you want to use XH Generator. Th
 
 Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
 
-### 2) Sass
-If you want to use SCSS for CSS preprocessing (SCSS is a default option), you will need to install [Ruby](https://www.ruby-lang.org/en/installation/) and [Sass](http://sass-lang.com/install). Once Ruby is installed (on Mac it comes preinstalled), install the Sass preprocessor from the command line.
+### 2) Sass _(Optional)_
+If you want to use SCSS for CSS preprocessing and need to use original ruby compiler ([LibSass](http://libsass.org/) - a C version of Sass compiler is the default option), you will need to install [Ruby](https://www.ruby-lang.org/en/installation/) and [Sass](http://sass-lang.com/install). Once Ruby is installed (on Mac it comes preinstalled), install the Sass preprocessor from the command line.
 
 ```
 gem install sass
@@ -217,7 +219,7 @@ To re-compile HTML / SCSS file in real time you can use default task. Type
 grunt
 ```
 
-and this will start a task that will watch for changes in files and recompile them as needed. Now you can also connect with a [LiveReload browser extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions) to enable live reloads in your browser.
+and this will start a task that will watch for changes in files and recompile them as needed. If relevant options were selected during project setup, development server may be started and/or BrowserSync (or LiveReload) scripts injected.
 
 ![grunt watch command](docs/img/grunt-watch.png)
 
@@ -319,7 +321,13 @@ The following approach is recommended when creating styles:
 2. Use variables and mixins files to store your variables and mixins.
 3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended), or pages.
 4. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
-5. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use Less as it's [faster than Ruby Saas](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
+5. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case you will probably want to keep the default LibSass or use Less as they are [faster than Ruby Sass](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
+
+### LibSass notices
+
+LibSass is many times faster than Ruby Sass, however that speed comes at a price. Some  features of Ruby Sass may not yet be ported there or a bit faulty (http://benfrain.com/libsass-lightning-fast-sass-compiler-ready-prime-time/), also some features of the libraries you would like to use may not be available (like automatic sprite generation from [Compass](http://compass-style.org/)). In some projects requirements or simple convenience may end up being a reason to choose Ruby version over LibSass one.
+
+Issues found when working with LibSass can be browsed (and created) on [LibSass GitHub](https://github.com/sass/libsass/issues) page. One of them is lack of support for map (hash) datatype. If you find yourself wishing for it when using LibSass, you may want to take a look at [Sass List–Maps](https://github.com/lunelson/sass-list-maps).
 
 ### Adding 3rd party dependency via Bower
 

@@ -259,12 +259,13 @@ module.exports = function(grunt) {
         {
           from: '@@toc',
           to: function () {
+            var tmp = grunt.config.get('xh.tmp');
 
-            if (!grunt.file.exists('<%%= xh.tmp %>/csstoc.json')) {
+            if (!grunt.file.exists(tmp + '/csstoc.json')) {
               return '';
             }
 
-            var toc_file = grunt.file.readJSON('<%%= xh.tmp %>/csstoc.json')
+            var toc_file = grunt.file.readJSON(tmp + '/csstoc.json');
             var files = toc_file.results;
             var toc = '';
             var i = 1;
@@ -347,8 +348,8 @@ module.exports = function(grunt) {
         },
         options: {
           searchString: /@import[ \("']*([^;]+)[;\)"']*/g,
-          logFormat: "json",
-          logFile: "<%%= xh.tmp %>/csstoc.json"
+          logFormat: 'json',
+          logFile: '<%%= xh.tmp %>/csstoc.json'
         }
       }
     }<% if (reloader === 'BrowserSync') { %>,
@@ -367,7 +368,7 @@ module.exports = function(grunt) {
         options: {
           watchTask: true,<% if (server) { %>
           server: {
-            baseDir: "./",
+            baseDir: './',
             port: 3000
           },<% } %>
           notify: false

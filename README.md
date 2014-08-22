@@ -321,13 +321,13 @@ The following approach is recommended when creating styles:
 2. Use variables and mixins files to store your variables and mixins.
 3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended), or pages.
 4. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
-5. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case you will probably want to keep the default LibSass or use Less as they are [faster than Ruby Sass](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
+5. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use the default LibSass or Less as they are [faster than Ruby Sass](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
 
 ### LibSass notices
 
-LibSass is many times faster than Ruby Sass, however that speed comes at a price. Some  features of Ruby Sass [may not yet be ported there or a bit faulty](http://benfrain.com/libsass-lightning-fast-sass-compiler-ready-prime-time/), also some features of the libraries you would like to use may not be available (like automatic sprite generation from [Compass](http://compass-style.org/)). In some projects requirements or simple convenience may end up being a reason to choose Ruby version over LibSass one.
+LibSass is much faster than Ruby Sass, however some features of Ruby Sass [may not yet be ported there or a bit faulty](http://benfrain.com/libsass-lightning-fast-sass-compiler-ready-prime-time/). Sometimes project requiremens force you to choose Ruby version over LibSass as some features of the libraries you would like to use may not be available in LibSass (like automatic sprite generation from [Compass](http://compass-style.org/)).
 
-Issues found when working with LibSass can be browsed (and created) on [LibSass GitHub](https://github.com/sass/libsass/issues) page. One of them is lack of support for map (hash) datatype. If you find yourself wishing for it when using LibSass, you may want to take a look at [Sass List–Maps](https://github.com/lunelson/sass-list-maps).
+You can browse or add LibSass issues at [LibSass GitHub](https://github.com/sass/libsass/issues) page. One of the issues is a lack of support for the map (hash) datatype. If you need this feature when using LibSass, take a look at [Sass List–Maps](https://github.com/lunelson/sass-list-maps).
 
 ### Adding 3rd party dependency via Bower
 

@@ -59,8 +59,16 @@ var XhGenerator = yeoman.generators.Base.extend({
         type: 'list',
         name: 'cssPreprocessor',
         message: 'Which CSS preprocessor would you like to use?',
-        choices: ['SCSS', 'LESS'],
-        default: 'SCSS'
+        choices: [{
+          name: 'SCSS (LibSass; not fully compatible with Ruby version but much faster)',
+          value: 'LIBSASS'
+        }, {
+          value: 'LESS'
+        }, {
+          name: 'SCSS (Ruby)',
+          value: 'SCSS'
+        }],
+        default: 'LIBSASS'
       }, {
         type: 'confirm',
         name: 'isWP',
@@ -181,7 +189,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     }
 
     // SCSS
-    if (this.cssPreprocessor === 'SCSS') {
+    if (this.cssPreprocessor === 'SCSS' || this.cssPreprocessor === 'LIBSASS') {
       this.mkdir('src/scss');
       this.template('src/scss/_main.scss', 'src/scss/main.scss');
       this.copy('src/scss/_variables.scss', 'src/scss/_variables.scss');

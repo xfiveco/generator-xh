@@ -21,7 +21,8 @@ module.exports = function(grunt) {
       src: 'src',
       dist: 'dist',
       tmp: '.tmp',
-      build: ['head.html', 'scripts.html']
+      build: ['head.html', 'scripts.html'],
+      root: __dirname
     },
 
     useminPrepare: {
@@ -108,26 +109,42 @@ module.exports = function(grunt) {
     },
 
     // CSS
-    <% if (cssPreprocessor === 'SCSS') { %>
-    sass: {
+    <% if (cssPreprocessor === 'SCSS') { %>sass: {
       dist: {
         options: {
           style: 'expanded',
           sourcemap: true,
-          loadPath: 'src/bower_components/'
+          loadPath: '<%%= xh.src %>/bower_components/'
         },
         files: {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'
         }
       }
-    },<% } %> <% if (cssPreprocessor === 'LESS') { %>
+    },<% } %><% if (cssPreprocessor === 'LESS') { %>
     less: {
       dist: {
         options: {
-          path: 'src/bower_components/'
+          path: '<%%= xh.src %>/bower_components/'
         },
         files: {
           '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/less/main.less'
+        }
+      }
+    },<% } %><% if (cssPreprocessor === 'LIBSASS') { %>
+    sass: {
+      dist: {
+        options: {
+          outputStyle: 'expanded',
+          imagePath: '../img',
+          includePaths: [
+            '<%%= xh.src %>/bower_components'
+          ],
+          // for some reason sourceMaps will have correct path only when
+          // absolute source map path is used
+          sourceMap: '<%%= xh.root %>/<%%= xh.dist %>/css/main.css.map'
+        },
+        files: {
+          '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/scss/main.scss'
         }
       }
     },<% } %>
@@ -149,7 +166,7 @@ module.exports = function(grunt) {
     // JS
     copy: {
       normalize: {
-        src: '<%%= xh.src %>/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS') { %>
+        src: '<%%= xh.src %>/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
         dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
         dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.less'<% } %>
       },
@@ -342,7 +359,7 @@ module.exports = function(grunt) {
     // Create list of @imports
     search: {
       imports: {
-        files: {<% if (cssPreprocessor === 'SCSS') { %>
+        files: {<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
           src: ['<%%= xh.src %>/scss/main.scss']<% } %><% if (cssPreprocessor === 'LESS') { %>
           src: ['<%%= xh.src %>/less/main.less']<% } %>
         },
@@ -398,7 +415,7 @@ module.exports = function(grunt) {
       },
 
       compileCSS: {
-        files: [<% if (cssPreprocessor === 'SCSS') { %>'<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/**/*.less'<% } %>],
+        files: [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/**/*.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/**/*.less'<% } %>],
         tasks: ['build-css'<% if (isWP) { %>, 'copy:wp'<% } %>]
       }<% if (reloader === 'LiveReload') { %>,
 
@@ -451,7 +468,7 @@ module.exports = function(grunt) {
     'copy:assets'
   ]);
 
-  grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS') { %>
+  grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
     'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
     'less',<% } %>
     'autoprefixer',

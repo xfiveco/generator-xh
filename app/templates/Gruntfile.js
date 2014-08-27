@@ -251,7 +251,7 @@ module.exports = function(grunt) {
         force: true
       },
       dist: {
-        src: ['<%%= xh.src %>/js/main.js', '<%%= xh.dist %>/js/main.js'],
+        src: ['<%%= xh.src %>/js/main.js']
       }
     },<% if (useModernizr) { %>
 

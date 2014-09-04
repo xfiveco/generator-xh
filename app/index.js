@@ -7,7 +7,6 @@ var updateNotifier = require('update-notifier');
 
 var XhGenerator = yeoman.generators.Base.extend({
   init: function () {
-    var done = this.async();
     this.pkg = require('../package.json');
 
     this.on('end', function () {
@@ -15,6 +14,12 @@ var XhGenerator = yeoman.generators.Base.extend({
         skipInstall: this.options['skip-install']
       });
     });
+
+    this.updateNotify();
+  },
+
+  updateNotify: function () {
+    var done = this.async();
 
     var notifier = updateNotifier({
       packageName: this.pkg.name,
@@ -35,21 +40,38 @@ var XhGenerator = yeoman.generators.Base.extend({
       this.updateNotify = props.updateNotify;
 
       if (!this.updateNotify) {
-        copyToClipboard('npm update -g ' + this.pkg.name); //temp only for OS X users
+        copyToClipboard('npm update -g ' + this.pkg.name);
         this.log(chalk.yellow('Command was copied to your clipboard \n'));
         process.exit();
       }
 
       done();
-
     }.bind(this));
 
+    //possibly working on OS X, Linux, OpenBSD, Windows, not tested.
     var copyToClipboard = function (data) {
-      var proc = require('child_process').spawn('pbcopy');
+      var proc;
+
+      switch (process.platform) {
+      case 'darwin':
+        proc = require('child_process').spawn('pbcopy');
+        break;
+      case 'win32':
+        proc = require('child_process').spawn('clip');
+        break;
+      case 'linux':
+        proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
+        break;
+      case 'openbsd':
+        proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
+        break;
+      default:
+        throw 'Tried to copy update command to your clipboard, but you are using unknown platform: ' + process.platform;
+      }
+
       proc.stdin.write(data);
       proc.stdin.end();
     };
-
   },
 
   askFor: function () {
@@ -62,12 +84,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
     this.log(chalk.cyan(' ***********************************************************') + '\n');
 
-    var prompts = [/*{
-        type: 'confirm',
-        name: 'kaka',
-        message: 'update?',
-        default: true
-      },*/ {
+    var prompts = [{
         name: 'projectName',
         message: 'Please enter the project name',
         validate: function (input) {

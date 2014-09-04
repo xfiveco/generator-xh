@@ -3,6 +3,7 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var updateNotifier = require('update-notifier');
 
 var XhGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -13,6 +14,18 @@ var XhGenerator = yeoman.generators.Base.extend({
         skipInstall: this.options['skip-install']
       });
     });
+
+    var notifier = updateNotifier({
+      packageName: this.pkg.name,
+      packageVersion: this.pkg.version,
+      updateCheckInterval: 1000 * 60
+    });
+
+    notifier.notify('Update available');
+
+    if (notifier.update.latest !== notifier.update.current) {
+      this.log(chalk.yellow('Do you want to upgrade?'), '\n');
+    }
   },
 
   askFor: function () {
@@ -25,9 +38,14 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
     this.log(chalk.cyan(' ***********************************************************') + '\n');
 
-    var prompts = [{
+    var prompts = [/*{
+        type: 'confirm',
+        name: 'kaka',
+        message: 'update?',
+        default: true
+      },*/ {
         name: 'projectName',
-        message: 'Please enter the project name:',
+        message: 'Please enter the project name',
         validate: function (input) {
           return !!input;
         }

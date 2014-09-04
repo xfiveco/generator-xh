@@ -55,6 +55,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     // tested on OS X, Linux, possibly working on OpenBSD and Windows.
     var copyToClipboard = function (data) {
       var proc;
+      var exec;
 
       switch (process.platform) {
       case 'darwin':
@@ -62,6 +63,8 @@ var XhGenerator = yeoman.generators.Base.extend({
         break;
       case 'win32':
         proc = require('child_process').spawn('clip');
+        exec = require('child_process').exec;
+        exec('clip', function(error, stdout, stderr) {});
         break;
       case 'linux':
         proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);

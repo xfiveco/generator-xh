@@ -7,6 +7,7 @@ var updateNotifier = require('update-notifier');
 
 var XhGenerator = yeoman.generators.Base.extend({
   init: function () {
+    var done = this.async();
     this.pkg = require('../package.json');
 
     this.on('end', function () {
@@ -23,9 +24,32 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     notifier.notify('Update available');
 
-    if (notifier.update.latest !== notifier.update.current) {
-      this.log(chalk.yellow('Do you want to upgrade?'), '\n');
-    }
+    var prompts = [{
+      type: 'confirm',
+      name: 'updateNotify',
+      message: 'Do you want to continue using older version?',
+      default: true
+    }];
+
+    this.prompt(prompts, function (props) {
+      this.updateNotify = props.updateNotify;
+
+      if (!this.updateNotify) {
+        copyToClipboard('npm update -g ' + this.pkg.name); //temp only for OS X users
+        this.log(chalk.yellow('Command was copied to your clipboard \n'));
+        process.exit();
+      }
+
+      done();
+
+    }.bind(this));
+
+    var copyToClipboard = function (data) {
+      var proc = require('child_process').spawn('pbcopy');
+      proc.stdin.write(data);
+      proc.stdin.end();
+    };
+
   },
 
   askFor: function () {

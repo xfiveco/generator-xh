@@ -14,11 +14,10 @@ var XhGenerator = yeoman.generators.Base.extend({
         skipInstall: this.options['skip-install']
       });
     });
-
-    this.updateNotify();
   },
 
-  updateNotify: function () {
+  // notify user about updates
+  askForUpdate: function () {
     var done = this.async();
 
     var notifier = updateNotifier({
@@ -27,8 +26,6 @@ var XhGenerator = yeoman.generators.Base.extend({
       updateCheckInterval: 1000 * 60
     });
 
-    notifier.notify('Update available');
-
     var prompts = [{
       type: 'confirm',
       name: 'updateNotify',
@@ -36,19 +33,26 @@ var XhGenerator = yeoman.generators.Base.extend({
       default: true
     }];
 
-    this.prompt(prompts, function (props) {
-      this.updateNotify = props.updateNotify;
+    notifier.notify('Update available');
 
-      if (!this.updateNotify) {
-        copyToClipboard('npm update -g ' + this.pkg.name);
-        this.log(chalk.yellow('Command was copied to your clipboard \n'));
-        process.exit();
-      }
+    if(notifier.update) {
+      this.prompt(prompts, function (props) {
+        this.updateNotify = props.updateNotify;
 
+        if (!this.updateNotify) {
+          copyToClipboard('npm update -g ' + this.pkg.name);
+          this.log(chalk.yellow('Update command was copied to your clipboard \n'));
+          process.exit();
+        }
+
+        done();
+      }.bind(this));
+    } else {
       done();
-    }.bind(this));
+    }
 
-    //possibly working on OS X, Linux, OpenBSD, Windows, not tested.
+    // copying npm update -g generator-xh to clipboard
+    // tested on OS X, Linux, possibly working on OpenBSD and Windows.
     var copyToClipboard = function (data) {
       var proc;
 

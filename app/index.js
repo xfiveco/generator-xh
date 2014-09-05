@@ -52,7 +52,6 @@ var XhGenerator = yeoman.generators.Base.extend({
     }
 
     // copying npm update -g generator-xh to clipboard
-    // tested on OS X, Linux, possibly working on OpenBSD and Windows.
     var copyToClipboard = function (data) {
       var proc;
       var exec;

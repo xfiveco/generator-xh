@@ -30,7 +30,7 @@ var XhGenerator = yeoman.generators.Base.extend({
       type: 'confirm',
       name: 'updateNotify',
       message: 'Do you want to continue using older version?',
-      default: true
+      default: false
     }];
 
     notifier.notify('Update available');

@@ -4,6 +4,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var updateNotifier = require('update-notifier');
+var stringLength = require('string-length');
 
 var XhGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -23,33 +24,52 @@ var XhGenerator = yeoman.generators.Base.extend({
     var notifier = updateNotifier({
       packageName: this.pkg.name,
       packageVersion: this.pkg.version,
-      updateCheckInterval: 1000 * 60
+      updateCheckInterval: 1000 * 1
     });
 
     var prompts = [{
-      type: 'confirm',
+      type: 'list',
       name: 'updateNotify',
       message: 'Do you want to continue using older version?',
-      default: false
+      choices: [{
+        name: 'No (and copy update command to my clipboard)',
+        value: 'noandcopy'
+      }, {
+        name: 'Yes',
+        value: 'yes'
+      }, {
+        name: 'No',
+        value: 'no'
+      }],
+      default: 'noandcopy'
     }];
 
-    notifier.notify('Update available');
+    // update message rendering
+    var updateMessage = function () {
+      var fill = function (str, count) {
+        return new Array(count + 1).join(str);
+      };
 
-    if(notifier.update) {
-      this.prompt(prompts, function (props) {
-        this.updateNotify = props.updateNotify;
+      var line1 = ' Update available: ' + chalk.green.bold(notifier.update.latest) +
+        chalk.dim(' (current: ' + notifier.update.current + ')') + ' ';
+      var line2 = ' Run ' + chalk.red('npm update -g ' + notifier.packageName) +
+        ' to update. ';
+      var contentWidth = Math.max(stringLength(line1), stringLength(line2));
+      var line1rest = contentWidth - stringLength(line1);
+      var line2rest = contentWidth - stringLength(line2);
+      var top = chalk.yellow('┌' + fill('─', contentWidth) + '┐');
+      var bottom = chalk.yellow('└' + fill('─', contentWidth) + '┘');
+      var side = chalk.yellow('│');
 
-        if (!this.updateNotify) {
-          copyToClipboard('npm update -g ' + this.pkg.name);
-          this.log(chalk.yellow('Update command was copied to your clipboard \n'));
-          process.exit();
-        }
+      var message =
+        '\n' +
+        top + '\n' +
+        side + line1 + fill(' ', line1rest) + side + '\n' +
+        side + line2 + fill(' ', line2rest) + side + '\n' +
+        bottom + '\n';
 
-        done();
-      }.bind(this));
-    } else {
-      done();
-    }
+      console.error(message);
+    };
 
     // copying npm update -g generator-xh to clipboard
     var copyToClipboard = function (data) {
@@ -63,7 +83,7 @@ var XhGenerator = yeoman.generators.Base.extend({
       case 'win32':
         proc = require('child_process').spawn('clip');
         exec = require('child_process').exec;
-        exec('clip', function(error, stdout, stderr) {});
+        exec('clip', function (error, stdout, stderr) {});
         break;
       case 'linux':
         proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
@@ -78,6 +98,27 @@ var XhGenerator = yeoman.generators.Base.extend({
       proc.stdin.write(data);
       proc.stdin.end();
     };
+
+
+    if (notifier.update) {
+      updateMessage();
+
+      this.prompt(prompts, function (props) {
+        this.updateNotify = props.updateNotify;
+
+        if (this.updateNotify === 'noandcopy') {
+          copyToClipboard('npm update -g ' + this.pkg.name);
+          this.log(chalk.yellow('Update command was copied to your clipboard \n'));
+          process.exit();
+        } else if (this.updateNotify === 'no') {
+          process.exit();
+        }
+
+        done();
+      }.bind(this));
+    } else {
+      done();
+    }
   },
 
   askFor: function () {

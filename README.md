@@ -1,6 +1,8 @@
 XH Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh.svg?branch=master)](https://travis-ci.org/xhtmlized/generator-xh) [![NPM version](https://badge.fury.io/js/generator-xh.svg)](http://badge.fury.io/js/generator-xh)
 ============
 
+[![NPM](https://nodei.co/npm/generator-xh.png?downloads=true)](https://nodei.co/npm/generator-xh/)
+
 XH Generator is a [Yeoman](http://yeoman.io) generator for scaffolding web projects. XH is suitable for client work when you deliver a completed project to your client for further review and development.
 
 XH Generator creates a project structure, files and Grunt tasks which support modern workflows like CSS preprocessors. Built HTML, CSS and JS files are prettified and fully editable so clients can work directly with them if they wish.
@@ -44,6 +46,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - Support for both [LibSass](http://libsass.org/) (default) and [Ruby version](http://sass-lang.com/install) when using SCSS
 - Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [CSS3 Pie](http://css3pie.com/)
 - Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/nDmitry/grunt-autoprefixer)
+- Add fallback for rem units automatically with [remfallback](https://github.com/thomasdobber/grunt-remfallback) (set base font size for `<html>` tag - 100% is default 16px)
 - Live reload and browsers syncing with [BrowserSync](http://www.browsersync.io/) or LiveReload
 - Optional development server
 - Grunt tasks for prettifying built HTML / CSS / JS

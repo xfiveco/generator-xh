@@ -1,4 +1,5 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+  'use strict';
 
   require('time-grunt')(grunt);
 
@@ -22,13 +23,14 @@ module.exports = function(grunt) {
       dist: 'dist',
       tmp: '.tmp',
       build: ['head.html', 'scripts.html'],
-      root: __dirname
+      root: __dirname,
+      includes: '<%%= xh.src %>/includes'
     },
 
     useminPrepare: {
       html: {
         src: '<%%= xh.build %>',
-        cwd: '<%%= xh.src %>/includes/',
+        cwd: '<%%= xh.includes %>',
         expand: true
       },
 
@@ -45,12 +47,12 @@ module.exports = function(grunt) {
     usemin: {
       html: {
         src: '<%%= xh.build %>',
-        cwd: '<%%= xh.src %>/includes/',
+        cwd: '<%%= xh.includes %>',
         expand: true
       },
 
       options: {
-        assetsDirs: ['<%%= xh.src %>/includes/']
+        assetsDirs: ['<%%= xh.includes %>/']
       }
     },
 
@@ -66,7 +68,8 @@ module.exports = function(grunt) {
           globals: {<% if (reloader !== 'None' && !server) { %>
             reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:<% if (reloader === 'BrowserSync') { %>3000/browser-sync-client.js<% } else if (reloader === 'LiveReload') { %>35729/livereload.js?snipver=1<% } %>\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>',<% } %>
             xprecise: '<script async src="http://xhtmlized.github.io/x-precise/xprecise.min.js"></script>'
-          }
+          },
+          includesDir: '<%%= xh.includes %>'
         },
         files: [{
           expand: true,
@@ -242,7 +245,7 @@ module.exports = function(grunt) {
       // Backup include files
       backup: {
         expand: true,
-        cwd: '<%%= xh.src %>/includes/',
+        cwd: '<%%= xh.includes %>',
         src: '<%%= xh.build %>',
         dest: '<%%= xh.tmp %>'
       },
@@ -252,7 +255,7 @@ module.exports = function(grunt) {
         expand: true,
         cwd: '<%%= xh.tmp %>',
         src: '<%%= xh.build %>',
-        dest: '<%%= xh.src %>/includes/'
+        dest: '<%%= xh.includes %>/'
       }
     },
 
@@ -349,7 +352,7 @@ module.exports = function(grunt) {
       },
 
       xprecise: {
-        src: ['<%%= xh.src %>/includes/scripts.html'],
+        src: ['<%%= xh.includes %>/scripts.html'],
         overwrite: true,
         replacements: [{
           from: '@@xprecise\n',
@@ -358,7 +361,7 @@ module.exports = function(grunt) {
       }<% if (reloader !== 'None' && !server) { %>,
 
       reloader: {
-        src: ['<%%= xh.src %>/includes/scripts.html'],
+        src: ['<%%= xh.includes %>/scripts.html'],
         overwrite: true,
         replacements: [{
           from: '@@reloader\n',
@@ -409,9 +412,7 @@ module.exports = function(grunt) {
         options: {
           base: './',
           open: true,
-          livereload: {
-            port: 35729
-          },
+          livereload: 35729,
           hostname: 'localhost',
           port: 3000
         }
@@ -438,7 +439,7 @@ module.exports = function(grunt) {
       }<% } %>,
 
       html: {
-        files: ['<%%= xh.src %>/*.html', '<%%= xh.src %>/includes/*.html'],
+        files: ['<%%= xh.src %>/*.html', '<%%= xh.includes %>/*.html'],
         tasks: ['build-html']<% if (reloader === 'LiveReload') { %>,
         options: {
           livereload: true

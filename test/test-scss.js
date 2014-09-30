@@ -3,9 +3,9 @@
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 
-describe('XH generator Less', function () {
+describe('XH generator SCSS', function () {
   beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, 'temp', 'less'), function (err) {
+    helpers.testDirectory(path.join(__dirname, 'temp', 'scss'), function (err) {
       if (err) {
         return done(err);
       }
@@ -40,18 +40,18 @@ describe('XH generator Less', function () {
       'src/includes/sidebar.html',
       'src/includes/scripts.html',
       'src/includes/footer.html',
-      'src/less/main.less',
-      'src/less/variables.less',
-      'src/less/mixins.less',
-      'src/less/common.less',
+      'src/scss/main.scss',
+      'src/scss/_variables.scss',
+      'src/scss/_mixins.scss',
+      'src/scss/_common.scss',
       'src/js/main.js'
     ];
 
     helpers.mockPrompt(this.app, {
       projectName: 'Test Project',
-      useBranding: false,
-      reloader: 'LiveReload',
-      cssPreprocessor: 'LESS',
+      useBranding: true,
+      server: false,
+      cssPreprocessor: 'SCSS',
       isWP: false,
       features: []
     });

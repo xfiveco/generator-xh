@@ -29,7 +29,9 @@
   },
   "dependencies": {
     "yeoman-generator": "~0.16.0",
-    "chalk": "~0.5.1",
+    "update-notifier": "~0.2.0",
+    "string-length": "^0.1.2",
+    "chalk": "^0.5.1",
     "simple-git": "^0.10.0"
   },
   "devDependencies": {

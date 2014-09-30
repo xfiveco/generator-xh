@@ -15,6 +15,11 @@ var XhGenerator = yeoman.generators.Base.extend({
     });
   },
 
+  askForUpdate: function() {
+    var update = require('./update');
+    update.notify.apply(this);
+  },
+
   askFor: function () {
     var done = this.async();
 
@@ -27,7 +32,7 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     var prompts = [{
         name: 'projectName',
-        message: 'Please enter the project name:',
+        message: 'Please enter the project name',
         validate: function (input) {
           return !!input;
         }

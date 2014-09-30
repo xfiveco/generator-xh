@@ -44,7 +44,8 @@ describe('XH generator SCSS', function () {
       'src/scss/_variables.scss',
       'src/scss/_mixins.scss',
       'src/scss/_common.scss',
-      'src/js/main.js'
+      'src/js/main.js',
+      'Gemfile'
     ];
 
     helpers.mockPrompt(this.app, {

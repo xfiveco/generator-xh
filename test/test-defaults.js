@@ -3,15 +3,15 @@
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 
-describe('XH generator defaults', function () {
+describe('XH generator Defaults', function () {
   beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
+    helpers.testDirectory(path.join(__dirname, 'temp', 'defaults'), function (err) {
       if (err) {
         return done(err);
       }
 
       this.app = helpers.createGenerator('xh:app', [
-        '../../app'
+        '../../../app'
       ]);
 
       done();
@@ -21,49 +21,41 @@ describe('XH generator defaults', function () {
   it('creates expected files', function (done) {
     var expected = [
       // add files you expect to exist here.
+      '.yo-rc.json',
       '.bowerrc',
       '.editorconfig',
       '.gitattributes',
-      '.gitignore',
       '.jshintrc',
-      '.yo-rc.json',
+      '.gitignore',
+      'package.json',
       'bower.json',
       'Gruntfile.js',
       'index.html',
-      'package.json',
-      'src',
-      'wp/wp-content/themes',
-      'src/wp.html',
-      'src/template.html',
-      'src/includes',
-      'src/includes/footer.html',
-      'src/includes/head.html',
-      'src/includes/header.html',
-      'src/includes/scripts.html',
-      'src/includes/sidebar.html',
-      'src/fonts',
-      'src/js',
-      'src/js/main.js',
-      'src/scss',
-      'src/scss/_common.scss',
-      'src/scss/_mixins.scss',
-      'src/scss/_variables.scss',
-      'src/scss/_wordpress.scss',
-      'src/scss/main.scss',
-      'src/fonts',
-      'src/img',
-      'src/media',
-      'src/xprecise',
       'src/fonts/do_not_delete_me.png',
       'src/img/do_not_delete_me.png',
       'src/media/do_not_delete_me.png',
-      'src/xprecise/do_not_delete_me.png'
+      'src/xprecise/do_not_delete_me.png',
+      'src/template.html',
+      'src/includes/head.html',
+      'src/includes/header.html',
+      'src/includes/sidebar.html',
+      'src/includes/scripts.html',
+      'src/includes/footer.html',
+      'src/wp.html',
+      'src/scss/main.scss',
+      'src/scss/_variables.scss',
+      'src/scss/_mixins.scss',
+      'src/scss/_common.scss',
+      'src/scss/_wordpress.scss',
+      'src/js/main.js',
+      'src/js/PIE.htc',
+      'wp/wp-content/themes'
     ];
 
     helpers.mockPrompt(this.app, {
       projectName: 'Test Project',
       useBranding: true,
-      cssPreprocessor: 'SCSS',
+      cssPreprocessor: 'LIBSASS',
       isWP: true,
       features: ['useBootstrap', 'useModernizr', 'useCSS3Pie']
     });

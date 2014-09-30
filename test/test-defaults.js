@@ -58,6 +58,7 @@ describe('XH generator Defaults', function () {
       reloader: 'BrowserSync',
       server: true,
       cssPreprocessor: 'LIBSASS',
+      ignoreDist: true,
       isWP: true,
       features: ['useBootstrap', 'useModernizr', 'useCSS3Pie']
     });

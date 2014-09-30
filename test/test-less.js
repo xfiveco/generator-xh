@@ -53,6 +53,7 @@ describe('XH generator Less', function () {
       reloader: 'LiveReload',
       server: true,
       cssPreprocessor: 'LESS',
+      ignoreDist: true,
       isWP: false,
       features: []
     });

@@ -56,11 +56,6 @@ var XhGenerator = yeoman.generators.Base.extend({
         message: 'Do you want to run development server?',
         default: true
       }, {
-        type: 'confirm',
-        name: 'ignoreDist',
-        message: 'Add dist folder to the Git ignore list?',
-        default: false
-      }, {
         type: 'list',
         name: 'cssPreprocessor',
         message: 'Which CSS preprocessor would you like to use?',
@@ -74,6 +69,13 @@ var XhGenerator = yeoman.generators.Base.extend({
           value: 'SCSS'
         }],
         default: 'LIBSASS'
+      }, {
+        type: 'confirm',
+        name: 'ignoreDist',
+        message: 'Add dist folder to the Git ignore list?',
+        default: function (response) {
+          return response.cssPreprocessor !== 'SCSS';
+        }
       }, {
         type: 'confirm',
         name: 'isWP',

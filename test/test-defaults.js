@@ -55,6 +55,8 @@ describe('XH generator Defaults', function () {
     helpers.mockPrompt(this.app, {
       projectName: 'Test Project',
       useBranding: true,
+      reloader: 'BrowserSync',
+      server: true,
       cssPreprocessor: 'LIBSASS',
       isWP: true,
       features: ['useBootstrap', 'useModernizr', 'useCSS3Pie']

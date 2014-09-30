@@ -50,6 +50,7 @@ describe('XH generator SCSS', function () {
     helpers.mockPrompt(this.app, {
       projectName: 'Test Project',
       useBranding: true,
+      reloader: 'None',
       server: false,
       cssPreprocessor: 'SCSS',
       isWP: false,

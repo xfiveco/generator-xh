@@ -116,7 +116,6 @@ module.exports = function (grunt) {
       dist: {
         options: {
           style: 'expanded',
-          sourcemap: true,
           loadPath: '<%%= xh.src %>/bower_components/'
         },
         files: {

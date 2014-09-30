@@ -205,6 +205,10 @@ var XhGenerator = yeoman.generators.Base.extend({
       }
     }
 
+    if (this.cssPreprocessor === 'SCSS') {
+      this.copy('Gemfile', 'Gemfile');
+    }
+
     // LESS
     if (this.cssPreprocessor === 'LESS') {
       this.mkdir('src/less');

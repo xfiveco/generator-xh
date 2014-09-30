@@ -51,6 +51,7 @@ describe('XH generator Less', function () {
       projectName: 'Test Project',
       useBranding: false,
       reloader: 'LiveReload',
+      server: true,
       cssPreprocessor: 'LESS',
       isWP: false,
       features: []

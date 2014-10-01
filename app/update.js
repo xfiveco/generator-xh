@@ -10,15 +10,15 @@ var notify = function () {
   var prompts = [{
     type: 'list',
     name: 'updateNotify',
-    message: 'Do you want to update?',
+    message: 'Do you want to update your current version?',
     choices: [{
-      name: 'Yes (and copy update command to my clipboard)',
+      name: 'Yes (stops the generator and copies the update command to clipboard)',
       value: 'yesandcopy'
     }, {
-      name: 'Yes',
+      name: 'Yes (stops the generator)',
       value: 'yes'
     }, {
-      name: 'No',
+      name: 'No (continues running the generator)',
       value: 'No'
     }],
     default: 'yesandcopy'
@@ -57,22 +57,22 @@ var notify = function () {
     var exec;
 
     switch (process.platform) {
-    case 'darwin':
-      proc = require('child_process').spawn('pbcopy');
-      break;
-    case 'win32':
-      proc = require('child_process').spawn('clip');
-      exec = require('child_process').exec;
-      exec('clip', function () {});
-      break;
-    case 'linux':
-      proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
-      break;
-    case 'openbsd':
-      proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
-      break;
-    default:
-      throw 'Tried to copy update command to your clipboard, but you are using unknown platform: ' + process.platform;
+      case 'darwin':
+        proc = require('child_process').spawn('pbcopy');
+        break;
+      case 'win32':
+        proc = require('child_process').spawn('clip');
+        exec = require('child_process').exec;
+        exec('clip', function () {});
+        break;
+      case 'linux':
+        proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
+        break;
+      case 'openbsd':
+        proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
+        break;
+      default:
+        throw 'Tried to copy update command to your clipboard, but you are using unknown platform: ' + process.platform;
     }
 
     proc.stdin.write(data);

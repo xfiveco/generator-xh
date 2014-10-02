@@ -189,14 +189,7 @@ module.exports = function (grunt) {
         cwd: '<%%= xh.src %>/bower_components/jquery/dist/',
         src: 'jquery.min.js',
         dest: '<%%= xh.dist %>/js/'
-      },<% if (!useModernizr) { %>
-
-      shiv: {
-        expand: true,
-        cwd: '<%%= xh.src %>/bower_components/html5shiv/dist/',
-        src: 'html5shiv.min.js',
-        dest: '<%%= xh.dist %>/js/'
-      },<% } %>
+      },
 
       assets: {
         files: [
@@ -258,6 +251,12 @@ module.exports = function (grunt) {
       }
     },
 
+    uglify: {
+      options: {
+        preserveComments: 'some'
+      }
+    },
+
     jshint: {
       options: {
         jshintrc: true,
@@ -266,15 +265,7 @@ module.exports = function (grunt) {
       dist: {
         src: ['<%%= xh.src %>/js/main.js']
       }
-    },<% if (useModernizr) { %>
-
-    uglify: {
-      modernizr: {
-        files: {
-          '<%%= xh.dist %>/js/modernizr.min.js': ['src/bower_components/modernizr/modernizr.js']
-        }
-      }
-    },<% } %>
+    },
 
     // Replacements in main.css and main.js
     replace: {
@@ -523,7 +514,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>
     'copy:normalize',<% } %>
-    <% if (useModernizr) { %>'uglify:modernizr',<% } else { %>'copy:shiv',<% } %>
     'copy:jquery'
   ]);
 

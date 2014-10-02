@@ -5,13 +5,21 @@
   <meta charset="utf-8">
   <title>@@pagename - <%= projectName %></title><% if (useBootstrap) { %>
   <!-- build:css css/libraries.min.css -->
-  <script src="bower_components/bootstrap/dist/css/bootstrap.min.css"></script>
+    <script src="bower_components/bootstrap/dist/css/bootstrap.min.css"></script>
   <!-- endbuild --><% } %>
   <link rel="stylesheet" media="all" href="css/main.css">
   <% if (useModernizr) { %>
-    <script src="js/modernizr.min.js"></script>
+  <!-- build:js js/modernizr.min.js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+  <!-- endbuild -->
+  <!--[if lt IE 9]>
+    <!-- build:js js/lt-ie9.min.js -->
+    <!-- endbuild -->
+  <![endif]-->
   <% } else { %><script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, 'js');</script>
   <!--[if lt IE 9]>
-    <script src="js/html5shiv.min.js"></script>
+    <!-- build:js js/lt-ie9.min.js -->
+      <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
+    <!-- endbuild -->
   <![endif]--><% } %>
 </head>

@@ -34,12 +34,22 @@ module.exports = function (grunt) {
         expand: true
       },
 
+      htmlmin: {
+        src: '<%%= xh.build %>',
+        cwd: '<%%= xh.includes %>',
+        expand: true
+      },
+
       options: {
         dest: '<%%= xh.dist %>',
         root: '<%%= xh.src %>',
         flow: {
           steps: {'js': ['concat'], 'css': ['concat'] },
-          post: {}
+          post: {},
+          htmlmin: {
+            steps: {'js': ['concat', 'uglifyjs'], 'css': ['concat'] },
+            post: {}
+          }
         }
       }
     },
@@ -455,15 +465,35 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('build-html', [
-    'useminPrepare',
-    'concat',
-    'copy:backup',
-    'usemin',
+  /**
+   * Just helper tasks, won't really work on it's own
+   */
+  grunt.registerTask('_before-build-html', [
+    'copy:backup'
+  ]);
+
+  grunt.registerTask('_after-build-html', [
     'includereplace',
     'copy:restore',
     'jsbeautifier:html',
     'clean:tmp'
+  ]);
+
+  grunt.registerTask('build-html', [
+    '_before-build-html',
+    'useminPrepare:html',
+    'concat:generated',
+    'usemin',
+    '_after-build-html'
+  ]);
+
+  grunt.registerTask('build-htmlmin', [
+    '_before-build-html',
+    'useminPrepare:htmlmin',
+    'concat:generated',
+    'uglify:generated',
+    'usemin',
+    '_after-build-html'
   ]);
 
   grunt.registerTask('build-assets', [
@@ -492,7 +522,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'postinstall',
 
-    'build-html',
+    'build-htmlmin',
     'build-assets',
     'build-css',
     'build-js',<% if (isWP) { %>

@@ -34,12 +34,22 @@ module.exports = function (grunt) {
         expand: true
       },
 
+      htmlmin: {
+        src: '<%%= xh.build %>',
+        cwd: '<%%= xh.includes %>',
+        expand: true
+      },
+
       options: {
         dest: '<%%= xh.dist %>',
         root: '<%%= xh.src %>',
         flow: {
           steps: {'js': ['concat'], 'css': ['concat'] },
-          post: {}
+          post: {},
+          htmlmin: {
+            steps: {'js': ['concat', 'uglifyjs'], 'css': ['concat'] },
+            post: {}
+          }
         }
       }
     },
@@ -189,14 +199,7 @@ module.exports = function (grunt) {
         cwd: '<%%= xh.src %>/bower_components/jquery/dist/',
         src: 'jquery.min.js',
         dest: '<%%= xh.dist %>/js/'
-      },<% if (!useModernizr) { %>
-
-      shiv: {
-        expand: true,
-        cwd: '<%%= xh.src %>/bower_components/html5shiv/dist/',
-        src: 'html5shiv.min.js',
-        dest: '<%%= xh.dist %>/js/'
-      },<% } %>
+      },
 
       assets: {
         files: [
@@ -258,6 +261,12 @@ module.exports = function (grunt) {
       }
     },
 
+    uglify: {
+      options: {
+        preserveComments: 'some'
+      }
+    },
+
     jshint: {
       options: {
         jshintrc: true,
@@ -266,15 +275,7 @@ module.exports = function (grunt) {
       dist: {
         src: ['<%%= xh.src %>/js/main.js']
       }
-    },<% if (useModernizr) { %>
-
-    uglify: {
-      modernizr: {
-        files: {
-          '<%%= xh.dist %>/js/modernizr.min.js': ['src/bower_components/modernizr/modernizr.js']
-        }
-      }
-    },<% } %>
+    },
 
     // Replacements in main.css and main.js
     replace: {
@@ -464,15 +465,35 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('build-html', [
-    'useminPrepare',
-    'concat',
-    'copy:backup',
-    'usemin',
+  /**
+   * Just helper tasks, won't really work on it's own
+   */
+  grunt.registerTask('_before-build-html', [
+    'copy:backup'
+  ]);
+
+  grunt.registerTask('_after-build-html', [
     'includereplace',
     'copy:restore',
     'jsbeautifier:html',
     'clean:tmp'
+  ]);
+
+  grunt.registerTask('build-html', [
+    '_before-build-html',
+    'useminPrepare:html',
+    'concat:generated',
+    'usemin',
+    '_after-build-html'
+  ]);
+
+  grunt.registerTask('build-htmlmin', [
+    '_before-build-html',
+    'useminPrepare:htmlmin',
+    'concat:generated',
+    'uglify:generated',
+    'usemin',
+    '_after-build-html'
   ]);
 
   grunt.registerTask('build-assets', [
@@ -501,7 +522,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'postinstall',
 
-    'build-html',
+    'build-htmlmin',
     'build-assets',
     'build-css',
     'build-js',<% if (isWP) { %>
@@ -523,7 +544,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>
     'copy:normalize',<% } %>
-    <% if (useModernizr) { %>'uglify:modernizr',<% } else { %>'copy:shiv',<% } %>
     'copy:jquery'
   ]);
 

@@ -28,11 +28,12 @@
     "test": "mocha"
   },
   "dependencies": {
-    "yeoman-generator": "~0.16.0",
+    "yeoman-generator": "^0.17.0",
     "update-notifier": "~0.2.0",
     "string-length": "^0.1.2",
     "chalk": "^0.5.1",
-    "simple-git": "^0.10.0"
+    "simple-git": "^0.10.0",
+    "q": "~1.0.0"
   },
   "devDependencies": {
     "mocha": "*"

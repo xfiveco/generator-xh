@@ -1,6 +1,6 @@
 'use strict';
 
-var fileName = '.yo-rc.json';
+var fileName = '.yo-rc.jsosn';
 var fs = require('fs');
 var Q = require('q');
 var deferred = Q.defer();
@@ -15,6 +15,40 @@ var checkConfig = {
       }
     });
     return deferred.promise;
+  },
+
+  result: function (result) {
+    var fileContentJSON = JSON.parse(result);
+    var props = fileContentJSON['generator-xh'].config;
+    var utils = require('./utils').utils;
+
+    this.configFound = true;
+
+    if (this.options.interactive === false) {
+      utils.setProps.apply(this, [props]);
+    } else {
+      var done = this.async();
+      var prompts = [{
+        name: 'projectName',
+        message: 'Please enter new project name',
+        validate: function (input) {
+          return !!input;
+        }
+      }];
+
+      this.log('Configuration file found in your project root folder with a name: \n' + props.projectName + '\n');
+
+      this.prompt(prompts, function (newProps) {
+        this.projectName = newProps.projectName;
+        props.projectName = this.projectName;
+        utils.setProps.apply(this, [props]);
+        done();
+      }.bind(this));
+    }
+  },
+
+  error: function(error) {
+    throw new Error(error + 'kaka');
   }
 };
 

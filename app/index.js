@@ -16,24 +16,17 @@ var XhGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  checkForConfig: function () {
-    var checkConfig = require('./configcheck').checkConfig;
-    var interactive = this.options.interactive;
+  // checkForConfig: function () {
+  //   var checkConfig = require('./configcheck').checkConfig;
 
-    checkConfig.fileContent()
-      .then(function (result) {
-        var fileContentJSON = JSON.parse(result);
-        var props = fileContentJSON['generator-xh'].config;
-
-        if (interactive === false) {
-          utils.setProps.apply(this, [props]);
-        }
-      }.bind(this));
-  },
+  //   checkConfig.fileContent()
+  //     .then(checkConfig.result.bind(this),
+  //           checkConfig.error);
+  // },
 
   askForUpdate: function () {
     var done = this.async();
-    if (this.options.interactive === false) {
+    if (this.options.interactive === false || this.configFound) {
       done();
     }
 
@@ -44,7 +37,7 @@ var XhGenerator = yeoman.generators.Base.extend({
   askFor: function () {
     var done = this.async();
 
-    if (this.options.interactive === false) {
+    if (this.options.interactive === false || this.configFound) {
       return;
     }
 
@@ -55,79 +48,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
     this.log(chalk.cyan(' ***********************************************************') + '\n');
 
-    var prompts = [{
-        name: 'projectName',
-        message: 'Please enter the project name',
-        validate: function (input) {
-          return !!input;
-        }
-      }, {
-        type: 'confirm',
-        name: 'useBranding',
-        message: 'Should XHTMLized branding be used?',
-        default: true
-      }, {
-        type: 'list',
-        name: 'reloader',
-        message: 'Which type of live reloader would you like to use?',
-        choices: ['LiveReload', 'BrowserSync', 'None'],
-        default: 'BrowserSync'
-      }, {
-        when: function (response) {
-          return response.reloader !== 'None';
-        },
-        type: 'confirm',
-        name: 'server',
-        message: 'Do you want to run development server?',
-        default: true
-      }, {
-        type: 'list',
-        name: 'cssPreprocessor',
-        message: 'Which CSS preprocessor would you like to use?',
-        choices: [{
-          name: 'SCSS (LibSass; not fully compatible with Ruby version but much faster)',
-          value: 'LIBSASS'
-        }, {
-          value: 'LESS'
-        }, {
-          name: 'SCSS (Ruby)',
-          value: 'SCSS'
-        }],
-        default: 'LIBSASS'
-      }, {
-        type: 'confirm',
-        name: 'ignoreDist',
-        message: 'Add dist folder to the Git ignore list?',
-        default: function (response) {
-          return response.cssPreprocessor !== 'SCSS';
-        }
-      }, {
-        type: 'confirm',
-        name: 'isWP',
-        message: 'Is this WordPress project?',
-        default: false
-      }, {
-        type: 'checkbox',
-        name: 'features',
-        message: 'Select additional features:',
-        choices: [{
-          name: 'Bootstrap',
-          value: 'useBootstrap',
-          checked: false
-        }, {
-          name: 'Modernizr',
-          value: 'useModernizr',
-          checked: false
-        }, {
-          name: 'CSS3 Pie',
-          value: 'useCSS3Pie',
-          checked: false
-        }]
-      }
-    ];
-
-    this.prompt(prompts, function (props) {
-      console.log(utils);
+    this.prompt(utils.prompts, function (props) {
       utils.setProps.apply(this, [props]);
       done();
     }.bind(this));

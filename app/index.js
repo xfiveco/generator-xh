@@ -3,6 +3,7 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var utils = require('./utils').utils;
 
 var XhGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -15,13 +16,37 @@ var XhGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  askForUpdate: function() {
+  checkForConfig: function () {
+    var checkConfig = require('./configcheck').checkConfig;
+    var interactive = this.options.interactive;
+
+    checkConfig.fileContent()
+      .then(function (result) {
+        var fileContentJSON = JSON.parse(result);
+        var props = fileContentJSON['generator-xh'].config;
+
+        if (interactive === false) {
+          utils.setProps.apply(this, [props]);
+        }
+      }.bind(this));
+  },
+
+  askForUpdate: function () {
+    var done = this.async();
+    if (this.options.interactive === false) {
+      done();
+    }
+
     var update = require('./update');
     update.notify.apply(this);
   },
 
   askFor: function () {
     var done = this.async();
+
+    if (this.options.interactive === false) {
+      return;
+    }
 
     // Welcome user
     this.log('');
@@ -102,50 +127,14 @@ var XhGenerator = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      this.projectName = props.projectName;
-      this.useBranding = props.useBranding;
-      this.ignoreDist = props.ignoreDist;
-      this.cssPreprocessor = props.cssPreprocessor;
-      this.isWP = props.isWP;
-      this.features = props.features;
-      this.reloader = props.reloader;
-      this.server = props.server;
-
-      var features = this.features;
-
-      function hasFeature(feat) {
-        return features.indexOf(feat) !== -1;
-      }
-
-      this.useBootstrap = hasFeature('useBootstrap');
-      this.useModernizr = hasFeature('useModernizr');
-      this.useCSS3Pie = hasFeature('useCSS3Pie');
-
-      if (this.useBranding) {
-        this.projectAuthor = 'XHTMLized';
-      } else {
-        this.projectAuthor = '';
-      }
-
-      // WP
-      if (this.isWP) {
-        this.wpFolder = 'wp';
-        this.wpThemeFolderName = this._.slugify(this.projectName);
-        this.wpThemeFolder = this.wpFolder + '/wp-content/themes/' + this.wpThemeFolderName;
-      }
-
-      this.props = props;
-      this.props.wpFolder = this.wpFolder;
-      this.props.wpThemeFolder = this.wpThemeFolder;
-
+      console.log(utils);
+      utils.setProps.apply(this, [props]);
       done();
-
     }.bind(this));
   },
 
   // Create project structure
   generate: function () {
-
     // Create config file
     this.config.set('config', this.props);
     this.config.save();
@@ -229,6 +218,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     if (this.useCSS3Pie) {
       this.copy('src/js/_PIE.htc', 'src/js/PIE.htc');
     }
+    console.log(new Date().getTime() + ' generate');
   }
 });
 

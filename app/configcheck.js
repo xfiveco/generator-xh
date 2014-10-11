@@ -1,9 +1,10 @@
 'use strict';
 
-var fileName = '.yo-rc.jsosn';
+var fileName = '.yo-rc.json';
 var fs = require('fs');
 var Q = require('q');
 var deferred = Q.defer();
+var chalk = require('chalk');
 
 var checkConfig = {
   fileContent: function () {
@@ -36,7 +37,8 @@ var checkConfig = {
         }
       }];
 
-      this.log('Configuration file found in your project root folder with a name: \n' + props.projectName + '\n');
+      utils.welcomeMessage();
+      this.log('Configuration file found in your project root folder with a name: \n  ' + chalk.yellow(props.projectName) + '\n');
 
       this.prompt(prompts, function (newProps) {
         this.projectName = newProps.projectName;
@@ -48,7 +50,7 @@ var checkConfig = {
   },
 
   error: function(error) {
-    throw new Error(error + 'kaka');
+    throw new Error(error);
   }
 };
 

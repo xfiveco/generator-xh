@@ -2,7 +2,6 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
 var utils = require('./utils').utils;
 
 var XhGenerator = yeoman.generators.Base.extend({
@@ -16,13 +15,13 @@ var XhGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  // checkForConfig: function () {
-  //   var checkConfig = require('./configcheck').checkConfig;
+  checkForConfig: function () {
+    var checkConfig = require('./configcheck').checkConfig;
 
-  //   checkConfig.fileContent()
-  //     .then(checkConfig.result.bind(this),
-  //           checkConfig.error);
-  // },
+    checkConfig.fileContent()
+      .then(checkConfig.result.bind(this),
+            checkConfig.error);
+  },
 
   askForUpdate: function () {
     var done = this.async();
@@ -42,11 +41,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     }
 
     // Welcome user
-    this.log('');
-    this.log(chalk.cyan(' ***********************************************************') + '\n');
-    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
-    this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
-    this.log(chalk.cyan(' ***********************************************************') + '\n');
+    utils.welcomeMessage();
 
     this.prompt(utils.prompts, function (props) {
       utils.setProps.apply(this, [props]);

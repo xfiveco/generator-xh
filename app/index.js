@@ -2,7 +2,7 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var utils = require('./utils').utils;
+var utils = require('./utils/utils');
 
 var XhGenerator = yeoman.generators.Base.extend({
   init: function () {

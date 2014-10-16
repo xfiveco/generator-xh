@@ -21,7 +21,7 @@ var checkConfig = {
   result: function (result) {
     var fileContentJSON = JSON.parse(result);
     var props = fileContentJSON['generator-xh'].config;
-    var utils = require('./utils').utils;
+    var utils = require('./utils/utils');
 
     this.configFound = true;
 

@@ -2,27 +2,11 @@
 var updateNotifier = require('update-notifier');
 var stringLength = require('string-length');
 var chalk = require('chalk');
+var utils = require('./utils/index');
 
 // notify user about updates
 var notify = function () {
   var done = this.async();
-
-  var prompts = [{
-    type: 'list',
-    name: 'updateNotify',
-    message: 'Do you want to update your current version?',
-    choices: [{
-      name: 'Yes (stops the generator and copies the update command to clipboard)',
-      value: 'yesandcopy'
-    }, {
-      name: 'Yes (stops the generator)',
-      value: 'yes'
-    }, {
-      name: 'No (continues running the generator)',
-      value: 'No'
-    }],
-    default: 'yesandcopy'
-  }];
 
   // update message rendering
   var updateMessage = function (update) {
@@ -83,7 +67,7 @@ var notify = function () {
     if (update && update.latest !== update.current) {
       updateMessage(update);
 
-      this.prompt(prompts, function (props) {
+      this.prompt(utils.prompts.update, function (props) {
         this.updateNotify = props.updateNotify;
 
         if (this.updateNotify === 'yesandcopy') {

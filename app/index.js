@@ -15,7 +15,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  askForUpdate: function() {
+  askForUpdate: function () {
     var update = require('./update');
     update.notify.apply(this);
   },

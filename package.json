@@ -1,6 +1,6 @@
 {
   "name": "generator-xh",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A Yeoman generator for scaffolding web projects.",
   "keywords": [
     "yeoman-generator",
@@ -25,8 +25,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha",
-    "debug": "node --debug app/index.js"
+    "test": "mocha"
   },
   "dependencies": {
     "yeoman-generator": "~0.17.0",

@@ -5,6 +5,7 @@ var fs = require('fs');
 var Q = require('q');
 var deferred = Q.defer();
 var chalk = require('chalk');
+var utils = require('./utils/index');
 
 var checkConfig = {
   fileContent: function () {
@@ -29,18 +30,11 @@ var checkConfig = {
       utils.setProps.apply(this, [props]);
     } else {
       var done = this.async();
-      var prompts = [{
-        name: 'projectName',
-        message: 'Please enter new project name',
-        validate: function (input) {
-          return !!input;
-        }
-      }];
 
-      utils.welcomeMessage();
+      utils.welcome();
       this.log('Configuration file found in your project root folder with a name: \n  ' + chalk.yellow(props.projectName) + '\n');
 
-      this.prompt(prompts, function (newProps) {
+      this.prompt(utils.prompts.newProjectName, function (newProps) {
         this.projectName = newProps.projectName;
         props.projectName = this.projectName;
         utils.setProps.apply(this, [props]);

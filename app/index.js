@@ -24,6 +24,7 @@ var XhGenerator = yeoman.generators.Base.extend({
 
   askForUpdate: function () {
     var done = this.async();
+
     if (this.options.interactive === false || this.configFound) {
       done();
     }
@@ -40,7 +41,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     }
 
     // Welcome user
-    utils.welcomeMessage();
+    utils.welcome();
 
     this.prompt(utils.prompts.generator, function (props) {
       utils.setProps.apply(this, [props]);

@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = [{
+module.exports = {
+  generator: [{
     name: 'projectName',
     message: 'Please enter the project name',
     validate: function (input) {
@@ -68,5 +69,22 @@ module.exports = [{
       value: 'useCSS3Pie',
       checked: false
     }]
-  }
-];
+  }],
+
+  update: [{
+    type: 'list',
+    name: 'updateNotify',
+    message: 'Do you want to update your current version?',
+    choices: [{
+      name: 'Yes (stops the generator and copies the update command to clipboard)',
+      value: 'yesandcopy'
+    }, {
+      name: 'Yes (stops the generator)',
+      value: 'yes'
+    }, {
+      name: 'No (continues running the generator)',
+      value: 'No'
+    }],
+    default: 'yesandcopy'
+  }]
+};

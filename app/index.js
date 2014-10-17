@@ -1,8 +1,7 @@
 'use strict';
-var util = require('util');
-var path = require('path');
+
 var yeoman = require('yeoman-generator');
-var utils = require('./utils/utils');
+var utils = require('./utils/index');
 
 var XhGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -43,7 +42,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     // Welcome user
     utils.welcomeMessage();
 
-    this.prompt(utils.prompts, function (props) {
+    this.prompt(utils.prompts.generator, function (props) {
       utils.setProps.apply(this, [props]);
       done();
     }.bind(this));

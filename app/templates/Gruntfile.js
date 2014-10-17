@@ -197,7 +197,7 @@ module.exports = function (grunt) {
       jquery: {
         expand: true,
         cwd: '<%%= xh.src %>/bower_components/jquery/dist/',
-        src: 'jquery.min.js',
+        src: ['jquery.min.js', 'jquery.min.map'],
         dest: '<%%= xh.dist %>/js/'
       },
 

@@ -41,22 +41,22 @@ var notify = function () {
     var exec;
 
     switch (process.platform) {
-      case 'darwin':
-        proc = require('child_process').spawn('pbcopy');
-        break;
-      case 'win32':
-        proc = require('child_process').spawn('clip');
-        exec = require('child_process').exec;
-        exec('clip', function () {});
-        break;
-      case 'linux':
-        proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
-        break;
-      case 'openbsd':
-        proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
-        break;
-      default:
-        throw 'Tried to copy update command to your clipboard, but you are using unknown platform: ' + process.platform;
+    case 'darwin':
+      proc = require('child_process').spawn('pbcopy');
+      break;
+    case 'win32':
+      proc = require('child_process').spawn('clip');
+      exec = require('child_process').exec;
+      exec('clip', function () {});
+      break;
+    case 'linux':
+      proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
+      break;
+    case 'openbsd':
+      proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
+      break;
+    default:
+      throw 'Tried to copy update command to your clipboard, but you are using unknown platform: ' + process.platform;
     }
 
     proc.stdin.write(data);
@@ -64,6 +64,9 @@ var notify = function () {
   };
 
   var notifyCallback = function (error, update) {
+    if (error) {
+      console.log('asd');
+    }
     if (update && update.latest !== update.current) {
       updateMessage(update);
 
@@ -85,11 +88,16 @@ var notify = function () {
     }
   }.bind(this);
 
-  var notifier = updateNotifier({
-    packageName: this.pkg.name,
-    packageVersion: this.pkg.version,
-    callback: notifyCallback
-  });
+  // try {
+    var notifier = updateNotifier({
+      packageName: this.pkg.name,
+      packageVersion: this.pkg.version,
+      callback: notifyCallback
+    });
+  // } catch (err) {
+    // console.error('Aborting update.');
+    // done();
+  // }
 };
 
 module.exports.notify = notify;

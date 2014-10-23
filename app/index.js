@@ -14,30 +14,25 @@ var XhGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  checkForConfig: function () {
-    var checkConfig = require('./configcheck').checkConfig;
-
-    checkConfig.fileContent()
-      .then(checkConfig.result.bind(this),
-            checkConfig.error);
+  askForUpdate: function () {
+    var update = require('./update');
+    update.apply(this);
   },
 
-  askForUpdate: function () {
-    var done = this.async();
-    if (this.options.interactive === false || this.configFound) {
-      done();
-    }
+  checkForConfig: function () {
+    var checkConfig = require('./configcheck');
 
-    var update = require('./update');
-    update.notify.apply(this);
+    checkConfig.fileContent.bind(this)()
+      .then(checkConfig.result.bind(this),
+            checkConfig.error.bind(this));
   },
 
   askFor: function () {
-    var done = this.async();
-
     if (this.options.interactive === false || this.configFound) {
       return;
     }
+
+    var done = this.async();
 
     // Welcome user
     utils.welcomeMessage();

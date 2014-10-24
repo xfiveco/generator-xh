@@ -5,7 +5,7 @@ var chalk = require('chalk');
 var utils = require('./utils/index');
 
 // notify user about updates
-var notify = function () {
+module.exports = function () {
   var done = this.async();
 
   // update message rendering
@@ -88,16 +88,18 @@ var notify = function () {
     }
   }.bind(this);
 
-  // try {
+  try {
+    if (this.options.interactive === false || this.configFound) {
+      done();
+    }
+
     var notifier = updateNotifier({
       packageName: this.pkg.name,
       packageVersion: this.pkg.version,
       callback: notifyCallback
     });
-  // } catch (err) {
-    // console.error('Aborting update.');
-    // done();
-  // }
+  } catch (err) {
+    console.error('Aborting update.');
+    done();
+  }
 };
-
-module.exports.notify = notify;

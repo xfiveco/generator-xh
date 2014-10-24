@@ -34,7 +34,7 @@ describe('XH generator Defaults', function () {
       'src/fonts/do_not_delete_me.png',
       'src/img/do_not_delete_me.png',
       'src/media/do_not_delete_me.png',
-      'src/xprecise/do_not_delete_me.png',
+      'src/designs/do_not_delete_me.png',
       'src/template.html',
       'src/includes/head.html',
       'src/includes/header.html',

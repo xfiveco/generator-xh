@@ -42,14 +42,24 @@ module.exports = {
 
   templateFiles: function (ext) {
     this.copy('src/_template.' + ext, 'src/template.' + ext);
+
     this.template('src/includes/_head.' + ext, 'src/includes/head.' + ext);
     this.copy('src/includes/_header.' + ext, 'src/includes/header.' + ext);
     this.copy('src/includes/_sidebar.' + ext, 'src/includes/sidebar.' + ext);
     this.copy('src/includes/_scripts.' + ext, 'src/includes/scripts.' + ext);
     this.copy('src/includes/_footer.' + ext, 'src/includes/footer.' + ext);
+
+    if (this.isWP) {
+      this.mkdir(this.wpThemeFolder);
+      this.copy('src/_wp.' + ext, 'src/wp.' + ext);
+    }
   },
 
   preprocessor: function (type, underscore) {
+    if (underscore === undefined) {
+      underscore = '';
+    }
+
     this.mkdir('src/' + type);
     this.template('src/' + type + '/_main.' + type, 'src/' + type + '/main.' + type);
     this.copy('src/' + type + '/_variables.' + type, 'src/' + type + '/' + underscore + 'variables.' + type);

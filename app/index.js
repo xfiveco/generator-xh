@@ -45,7 +45,6 @@ var XhGenerator = yeoman.generators.Base.extend({
 
   // Create project structure
   generate: function () {
-
     // Create config file
     utils.generate.config.bind(this)();
 
@@ -61,14 +60,8 @@ var XhGenerator = yeoman.generators.Base.extend({
     // Directory structure
     utils.generate.structure.bind(this)();
 
-    // HTML
+    // Template files (html only for now)
     utils.generate.templateFiles.bind(this)('html');
-
-    // HTML
-    if (this.isWP) {
-      this.mkdir(this.wpThemeFolder);
-      this.copy('src/_wp.html', 'src/wp.html');
-    }
 
     // SCSS
     if (this.cssPreprocessor === 'SCSS' || this.cssPreprocessor === 'LIBSASS') {
@@ -87,6 +80,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     // JS
     utils.generate.js.bind(this)();
 
+    // CSS3Pie
     if (this.useCSS3Pie) {
       this.copy('src/js/_PIE.htc', 'src/js/PIE.htc');
     }

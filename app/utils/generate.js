@@ -20,6 +20,22 @@ module.exports = {
     this.template('Gruntfile.js', 'Gruntfile.js');
   },
 
+  gruntModules: function () {
+    // render packages.json a bit early
+    var pkg = JSON.parse(this.engine(this.src.read('_package.json'), this.props)).devDependencies;
+    var p, m, f;
+
+    for (p in pkg) {
+      m = p.match(/^grunt-(.+)$/i);
+      if (m) {
+        f = 'grunt/' + m[1] + '.js';
+        if (this.src.exists(f)) {
+          this.template(f);
+        }
+      }
+    }
+  },
+
   projectIndex: function () {
     this.template('_index.html', 'index.html');
   },

@@ -54,6 +54,9 @@ var XhGenerator = yeoman.generators.Base.extend({
     // Application files
     utils.generate.appfiles.bind(this)();
 
+    // Grunt modules
+    utils.generate.gruntModules.bind(this)();
+
     // Project index
     utils.generate.projectIndex.bind(this)();
 

@@ -3,13 +3,6 @@ module.exports = function (grunt) {
 
   require('time-grunt')(grunt);
 
-  // require('jit-grunt')(grunt,  {
-  //   includereplace: 'grunt-include-replace',
-  //   useminPrepare: 'grunt-usemin',
-  //   validation: 'grunt-html-validation',
-  //   replace: 'grunt-text-replace'
-  // });
-
   // Project configuration.
   grunt.option('force', true);
 
@@ -84,7 +77,8 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('validate', [
-    'validation'
+    'validation',
+    'notify:validation'
   ]);
 
   grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>
@@ -109,6 +103,8 @@ module.exports = function (grunt) {
     'build-js',<% if (isWP) { %>
 
     'copy:wp',<% } %>
+
+    'notify:build'
   ]);
 
   grunt.registerTask('default', 'Start a live-reloading dev webserver on localhost', [

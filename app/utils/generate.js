@@ -32,12 +32,12 @@ module.exports = {
     this.mkdir('src/img');
     this.mkdir('src/img/common');
     this.mkdir('src/media');
-    this.mkdir('src/xprecise');
+    this.mkdir('src/designs');
 
     this.copy('src/img/do_not_delete_me.png', 'src/fonts/do_not_delete_me.png');
     this.copy('src/img/do_not_delete_me.png', 'src/img/do_not_delete_me.png');
     this.copy('src/img/do_not_delete_me.png', 'src/media/do_not_delete_me.png');
-    this.copy('src/img/do_not_delete_me.png', 'src/xprecise/do_not_delete_me.png');
+    this.copy('src/img/do_not_delete_me.png', 'src/designs/do_not_delete_me.png');
   },
 
   templateFiles: function (ext) {

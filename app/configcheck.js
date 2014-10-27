@@ -49,6 +49,13 @@ module.exports = {
   error: function() {
     //same as in result
     var done = this.async();
+
+    if (this.options.interactive === false && !this.configFound) {
+      console.error('Configuration file not found. Please use interactive mode.');
+      return;
+    }
+
     done();
+
   }
 };

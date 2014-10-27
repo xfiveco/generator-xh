@@ -24,7 +24,9 @@ module.exports = function (grunt) {
       tmp: '.tmp',
       build: ['head.html', 'scripts.html'],
       root: __dirname,
-      includes: '<%%= xh.src %>/includes'
+      includes: '<%%= xh.src %>/includes',
+      designs: 'designs',
+      assets: '{img,media,fonts,<%%= xh.designs %>}'
     },
 
     useminPrepare: {
@@ -76,8 +78,7 @@ module.exports = function (grunt) {
       dist: {
         options: {
           globals: {<% if (reloader !== 'None' && !server) { %>
-            reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:<% if (reloader === 'BrowserSync') { %>3000/browser-sync-client.js<% } else if (reloader === 'LiveReload') { %>35729/livereload.js?snipver=1<% } %>\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>',<% } %>
-            xprecise: '<script async src="http://xhtmlized.github.io/x-precise/xprecise.min.js"></script>'
+            reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:<% if (reloader === 'BrowserSync') { %>3000/browser-sync-client.js<% } else if (reloader === 'LiveReload') { %>35729/livereload.js?snipver=1<% } %>\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>'<% } %>
           },
           includesDir: '<%%= xh.includes %>'
         },
@@ -205,27 +206,9 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: '<%%= xh.src %>/img/',
-            src: ['**/*.*', '!do_not_delete_me.png'],
-            dest: '<%%= xh.dist %>/img/'
-          },
-          {
-            expand: true,
-            cwd: '<%%= xh.src %>/media/',
-            src: ['**/*.*', '!do_not_delete_me.png'],
-            dest: '<%%= xh.dist %>/media/'
-          },
-          {
-            expand: true,
-            cwd: '<%%= xh.src %>/fonts/',
-            src: ['**/*.*', '!do_not_delete_me.png'],
-            dest: '<%%= xh.dist %>/fonts/'
-          },
-          {
-            expand: true,
-            cwd: '<%%= xh.src %>/xprecise/',
-            src: ['**/*.*', '!do_not_delete_me.png'],
-            dest: '<%%= xh.dist %>/xprecise/'
+            cwd: '<%%= xh.src %>',
+            src: ['<%%= xh.assets %>/**/*.*', '!**/do_not_delete_me.png'],
+            dest: '<%%= xh.dist %>'
           }
         ]
       },
@@ -240,7 +223,7 @@ module.exports = function (grunt) {
       wp: {
         expand: true,
         cwd: '<%%= xh.dist %>/',
-        src: ['**', '!**/xprecise/**', '!*.html'],
+        src: ['**', '!**/<%%= xh.designs %>/**', '!*.html'],
         dest: '<%= wpThemeFolder  %>'
       },<% } %>
 
@@ -349,15 +332,6 @@ module.exports = function (grunt) {
           from: '@@timestamp',
           to: '<%%= grunt.template.today() %>'
         }]
-      },
-
-      xprecise: {
-        src: ['<%%= xh.includes %>/scripts.html'],
-        overwrite: true,
-        replacements: [{
-          from: '@@xprecise\n',
-          to: ''
-        }]
       }<% if (reloader !== 'None' && !server) { %>,
 
       reloader: {
@@ -391,7 +365,7 @@ module.exports = function (grunt) {
           src: [
             '<%%= xh.dist %>/css/*.css',
             '<%%= xh.dist %>/js/*.js',
-            '<%%= xh.dist %>/{img,media,fonts,xprecise}/**/*.*',
+            '<%%= xh.dist %>/<%%= xh.assets %>/**/*.*',
             '<%%= xh.dist %>/**/*.html'
           ]
         },
@@ -455,7 +429,7 @@ module.exports = function (grunt) {
       },
 
       assets: {
-        files: ['<%%= xh.src %>/{img,media,fonts,xprecise}/**/*'],
+        files: ['<%%= xh.src %>/<%%= xh.assets %>/**/*'],
         tasks: ['build-assets'<% if (isWP) { %>, 'copy:wp'<% } %>]<% if (reloader === 'LiveReload') { %>,
         options: {
           livereload: true
@@ -534,8 +508,7 @@ module.exports = function (grunt) {
     'validation'
   ]);
 
-  grunt.registerTask('qa', [
-    'replace:xprecise',<% if (reloader !== 'None' && !server) { %>
+  grunt.registerTask('qa', [<% if (reloader !== 'None' && !server) { %>
     'replace:reloader',<% } %>
     'build',
     'validate',

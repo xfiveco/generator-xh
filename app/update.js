@@ -64,9 +64,6 @@ module.exports = function () {
   };
 
   var notifyCallback = function (error, update) {
-    if (error) {
-      console.log('asd');
-    }
     if (update && update.latest !== update.current) {
       updateMessage(update);
 
@@ -91,6 +88,7 @@ module.exports = function () {
   try {
     if (this.options.interactive === false || this.configFound) {
       done();
+      return;
     }
 
     var notifier = updateNotifier({

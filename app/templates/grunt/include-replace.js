@@ -1,3 +1,6 @@
+/**
+ * IncludeReplace - enables simple partials & variables in HTML files.
+ */
 module.exports = function(grunt) {
   'use strict';
 

@@ -1,3 +1,7 @@
+/**
+ * Usemin - prepares CSS & JS files for concatenation & minification
+ * and replaces them when needed.
+ */
 module.exports = function(grunt) {
   'use strict';
 

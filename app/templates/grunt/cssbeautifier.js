@@ -1,3 +1,6 @@
+/**
+ * CSSBeautifier - prettifies outputted CSS files.
+ */
 module.exports = function(grunt) {
   'use strict';
 

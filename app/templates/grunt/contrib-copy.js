@@ -1,19 +1,29 @@
+/**
+ * Copy - copies files like assets or temporary build files.
+ */
 module.exports = function(grunt) {
   'use strict';
 
   grunt.config('copy', {
-    normalize: {
+    <% if (!useBootstrap) { %>normalize: {
       src: '<%%= xh.src %>/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
       dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
       dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.less'<% } %>
     },
 
-    jquery: {
+    <% } %>jquery: {
       expand: true,
       cwd: '<%%= xh.src %>/bower_components/jquery/dist/',
       src: ['jquery.min.js', 'jquery.min.map'],
       dest: '<%%= xh.dist %>/js/'
-    },
+    },<% if (useCSS3Pie) { %>
+
+    pie: {
+      expand: true,
+      cwd: '<%%= xh.src %>/js/',
+      src: ['PIE.htc'],
+      dest: '<%%= xh.dist %>/js/'
+    },<% } %>
 
     assets: {
       files: [
@@ -29,7 +39,7 @@ module.exports = function(grunt) {
     js: {
       expand: true,
       cwd: '<%%= xh.src %>/js/',
-      src: ['main.js'<% if (useCSS3Pie) { %>, 'PIE.htc'<% } %>],
+      src: ['main.js'],
       dest: '<%%= xh.dist %>/js/'
     },<% if (isWP) { %>
 

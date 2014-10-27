@@ -1,3 +1,7 @@
+/**
+ * Search - prepares a list of imports in main stylesheet in order to
+ * create table of contents.
+ */
 module.exports = function(grunt) {
   'use strict';
 

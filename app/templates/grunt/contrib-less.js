@@ -1,3 +1,6 @@
+/**
+ * Less - CSS preprocessor
+ */
 module.exports = function(grunt) {
   'use strict';
 

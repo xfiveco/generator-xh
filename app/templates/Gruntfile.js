@@ -32,7 +32,8 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>
-    'copy:normalize',<% } %>
+    'copy:normalize',<% } %><% if (useCSS3Pie) { %>
+    'copy:pie',<% } %>
     'copy:jquery'
   ]);
 

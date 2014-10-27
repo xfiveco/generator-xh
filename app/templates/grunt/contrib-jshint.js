@@ -1,3 +1,6 @@
+/**
+ * JSHint - validates JS files.
+ */
 module.exports = function(grunt) {
   'use strict';
 

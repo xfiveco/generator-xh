@@ -1,3 +1,6 @@
+/**
+ * Autoprefixer - adds vendor prefixes to CSS.
+ */
 module.exports = function(grunt) {
   'use strict';
 

@@ -1,3 +1,6 @@
+/**
+ * JSBeautifier - prettifies outputted JS & HTML files.
+ */
 module.exports = function(grunt) {
   'use strict';
 

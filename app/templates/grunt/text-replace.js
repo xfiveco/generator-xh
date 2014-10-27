@@ -1,3 +1,6 @@
+/**
+ * Text Replace - replaces timestamp and toc variables in JS & CSS files.
+ */
 module.exports = function(grunt) {
   'use strict';
 

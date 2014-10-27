@@ -1,3 +1,6 @@
+/**
+ * Clean - removes old build or temporary files.
+ */
 module.exports = function(grunt) {
   'use strict';
 

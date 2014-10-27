@@ -1,3 +1,6 @@
+/**
+ * Sass - CSS preprocessor (libsass version)
+ */
 module.exports = function(grunt) {
   'use strict';
 

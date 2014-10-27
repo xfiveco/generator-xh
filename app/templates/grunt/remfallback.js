@@ -1,3 +1,6 @@
+/**
+ * REMFallback - adds fallback form rem to px units in CSS files.
+ */
 module.exports = function(grunt) {
   'use strict';
 

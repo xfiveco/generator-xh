@@ -1,3 +1,6 @@
+/**
+ * Sass - CSS preprocessor (Ruby version)
+ */
 module.exports = function(grunt) {
   'use strict';
 

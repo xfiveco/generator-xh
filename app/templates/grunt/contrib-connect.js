@@ -1,3 +1,6 @@
+/**
+ * Connect - starts development server with LiveReload on localhost:3000.
+ */
 module.exports = function(grunt) {
   'use strict';
 

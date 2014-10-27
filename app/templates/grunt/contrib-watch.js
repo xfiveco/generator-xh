@@ -1,3 +1,6 @@
+/**
+ * Watch - observes changes in files and rebuild them as needed.
+ */
 module.exports = function(grunt) {
   'use strict';
 

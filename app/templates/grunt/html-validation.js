@@ -1,3 +1,6 @@
+/**
+ * HTML Validation - validates HTML files using inline W3C validator.
+ */
 module.exports = function(grunt) {
   'use strict';
 

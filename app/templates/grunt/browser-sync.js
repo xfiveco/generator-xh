@@ -1,3 +1,6 @@
+/**
+ * BrowserSync - live reload on steroids.
+ */
 module.exports = function(grunt) {
   'use strict';
 

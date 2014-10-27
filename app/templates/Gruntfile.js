@@ -26,56 +26,6 @@ module.exports = function (grunt) {
   // Load per-task config from separate files.
   grunt.loadTasks('grunt');
 
-  grunt.registerTask('_before-build-html', [
-    'copy:backup'
-  ]);
-
-  grunt.registerTask('_after-build-html', [
-    'includereplace',
-    'copy:restore',
-    'jsbeautifier:html',
-    'clean:tmp'
-  ]);
-
-  grunt.registerTask('build-html', [
-    '_before-build-html',
-    'useminPrepare:html',
-    'concat:generated',
-    'usemin',
-    '_after-build-html'
-  ]);
-
-  grunt.registerTask('build-htmlmin', [
-    '_before-build-html',
-    'useminPrepare:htmlmin',
-    'concat:generated',
-    'uglify:generated',
-    'usemin',
-    '_after-build-html'
-  ]);
-
-  grunt.registerTask('build-assets', [
-    'copy:assets'
-  ]);
-
-  grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
-    'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
-    'less',<% } %>
-    'autoprefixer',
-    'remfallback',
-    'cssbeautifier',
-    'search',
-    'replace:css',
-    'clean:tmp'
-  ]);
-
-  grunt.registerTask('build-js', [
-    'copy:js',
-    'jsbeautifier:js',
-    'replace:js',
-    'jshint'
-  ]);
-
   grunt.registerTask('validate', [
     'validation',
     'notify:validation'
@@ -107,10 +57,12 @@ module.exports = function (grunt) {
     'notify:build'
   ]);
 
-  grunt.registerTask('default', 'Start a live-reloading dev webserver on localhost', [
+  grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [
     'postinstall'<% if (reloader === 'BrowserSync') { %>,
     'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>,
     'connect:server'<% } %>,
     'watch'
   ]);
+
+  grunt.registerTask('default', ['dev']);
 };

@@ -47,6 +47,7 @@ describe('XH generator Defaults', function () {
       'grunt/search.js',
       'grunt/text-replace.js',
       'grunt/usemin.js',
+      'grunt/build-helpers.js',
       'index.html',
       'src/fonts/do_not_delete_me.png',
       'src/img/do_not_delete_me.png',

@@ -1,16 +1,24 @@
 'use strict';
 
-var fileName = '.yo-rc.json';
+var configFile = '.yo-rc.json';
 var fs = require('fs');
 var Q = require('q');
 var deferred = Q.defer();
 var chalk = require('chalk');
 
+var configFoundPrompt = 'Configuration file found with a project name: \n  ';
+
 module.exports = {
   fileContent: function () {
     this.async();
+    var hasConf = this.options.c || this.options.config;
 
-    fs.readFile(fileName, 'utf8', function (err, data) {
+    if (hasConf) {
+      configFile = this.args.slice(-1)[0];
+      configFoundPrompt = 'Using provided configuration with a project name: \n  ';
+    }
+
+    fs.readFile(configFile, 'utf8', function (err, data) {
       if (err) {
         deferred.reject(new Error(err));
       } else {
@@ -30,13 +38,13 @@ module.exports = {
 
     this.configFound = true;
 
+    utils.welcome();
+    this.log(configFoundPrompt + chalk.yellow(props.projectName) + '\n');
+
     if (this.options.interactive === false) {
       utils.setProps.apply(this, [props]);
       done();
     } else {
-      utils.welcome();
-      this.log('Configuration file found in your project root folder with a name: \n  ' + chalk.yellow(props.projectName) + '\n');
-
       this.prompt(utils.prompts.newProjectName, function (newProps) {
         this.projectName = newProps.projectName;
         props.projectName = this.projectName;

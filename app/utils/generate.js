@@ -56,17 +56,19 @@ module.exports = {
   },
 
   preprocessor: function (type, underscore) {
+    var srctype = 'src/' + type;
+
     if (underscore === undefined) {
       underscore = '';
     }
 
-    this.mkdir('src/' + type);
-    this.template('src/' + type + '/_main.' + type, 'src/' + type + '/main.' + type);
-    this.copy('src/' + type + '/_variables.' + type, 'src/' + type + '/' + underscore + 'variables.' + type);
-    this.copy('src/' + type + '/_mixins.' + type, 'src/' + type + '/' + underscore + 'mixins.' + type);
-    this.copy('src/' + type + '/_common.' + type, 'src/' + type + '/' + underscore + 'common.' + type);
+    this.mkdir(srctype);
+    this.template(srctype + '/_main.' + type, srctype + '/main.' + type);
+    this.copy(srctype + '/_variables.' + type, srctype + '/' + underscore + 'variables.' + type);
+    this.copy(srctype + '/_mixins.' + type, srctype + '/' + underscore + 'mixins.' + type);
+    this.copy(srctype + '/_common.' + type, srctype + '/' + underscore + 'common.' + type);
     if (this.isWP) {
-      this.copy('src/' + type + '/_wordpress.' + type, 'src/' + type + '/' + underscore + 'wordpress.' + type);
+      this.copy(srctype + '/_wordpress.' + type, srctype + '/' + underscore + 'wordpress.' + type);
     }
   },
 

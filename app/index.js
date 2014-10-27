@@ -84,7 +84,6 @@ var XhGenerator = yeoman.generators.Base.extend({
     if (this.useCSS3Pie) {
       this.copy('src/js/_PIE.htc', 'src/js/PIE.htc');
     }
-    console.log(new Date().getTime() + ' generate');
   }
 });
 

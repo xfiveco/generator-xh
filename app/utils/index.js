@@ -3,5 +3,6 @@
 module.exports = {
 	prompts: require('./prompts'),
 	setProps: require('./setProps'),
-	welcomeMessage: require('./welcomeMessage')
+	welcome: require('./welcome'),
+  generate: require('./generate')
 };

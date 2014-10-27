@@ -6,8 +6,10 @@ var Q = require('q');
 var deferred = Q.defer();
 var chalk = require('chalk');
 
-var checkConfig = {
+module.exports = {
   fileContent: function () {
+    this.async();
+
     fs.readFile(fileName, 'utf8', function (err, data) {
       if (err) {
         deferred.reject(new Error(err));
@@ -15,10 +17,13 @@ var checkConfig = {
         deferred.resolve(data);
       }
     });
+
     return deferred.promise;
   },
 
   result: function (result) {
+    // seems like promise ends async call, so the next one is needed
+    var done = this.async();
     var fileContentJSON = JSON.parse(result);
     var props = fileContentJSON['generator-xh'].config;
     var utils = require('./utils/index');
@@ -27,20 +32,12 @@ var checkConfig = {
 
     if (this.options.interactive === false) {
       utils.setProps.apply(this, [props]);
+      done();
     } else {
-      var done = this.async();
-      var prompts = [{
-        name: 'projectName',
-        message: 'Please enter new project name',
-        validate: function (input) {
-          return !!input;
-        }
-      }];
-
-      utils.welcomeMessage();
+      utils.welcome();
       this.log('Configuration file found in your project root folder with a name: \n  ' + chalk.yellow(props.projectName) + '\n');
 
-      this.prompt(prompts, function (newProps) {
+      this.prompt(utils.prompts.newProjectName, function (newProps) {
         this.projectName = newProps.projectName;
         props.projectName = this.projectName;
         utils.setProps.apply(this, [props]);
@@ -49,9 +46,16 @@ var checkConfig = {
     }
   },
 
-  error: function(error) {
-    throw new Error(error);
+  error: function() {
+    //same as in result
+    var done = this.async();
+
+    if (this.options.interactive === false && !this.configFound) {
+      console.error('Configuration file not found. Please use interactive mode.');
+      return;
+    }
+
+    done();
+
   }
 };
-
-module.exports.checkConfig = checkConfig;

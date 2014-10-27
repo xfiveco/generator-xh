@@ -14,33 +14,28 @@ var XhGenerator = yeoman.generators.Base.extend({
     });
   },
 
-  checkForConfig: function () {
-    var checkConfig = require('./configcheck').checkConfig;
-
-    checkConfig.fileContent()
-      .then(checkConfig.result.bind(this),
-            checkConfig.error);
+  askForUpdate: function () {
+    var update = require('./update');
+    update.apply(this);
   },
 
-  askForUpdate: function () {
-    var done = this.async();
-    if (this.options.interactive === false || this.configFound) {
-      done();
-    }
+  checkForConfig: function () {
+    var checkConfig = require('./configcheck');
 
-    var update = require('./update');
-    update.notify.apply(this);
+    checkConfig.fileContent.bind(this)()
+      .then(checkConfig.result.bind(this),
+            checkConfig.error.bind(this));
   },
 
   askFor: function () {
-    var done = this.async();
-
     if (this.options.interactive === false || this.configFound) {
       return;
     }
 
+    var done = this.async();
+
     // Welcome user
-    utils.welcomeMessage();
+    utils.welcome();
 
     this.prompt(utils.prompts.generator, function (props) {
       utils.setProps.apply(this, [props]);
@@ -51,64 +46,26 @@ var XhGenerator = yeoman.generators.Base.extend({
   // Create project structure
   generate: function () {
     // Create config file
-    this.config.set('config', this.props);
-    this.config.save();
+    utils.generate.config.bind(this)();
 
     // Configurations files
-    this.copy('bowerrc', '.bowerrc');
-    this.copy('editorconfig', '.editorconfig');
-    this.copy('gitattributes', '.gitattributes');
-    this.copy('jshintrc', '.jshintrc');
-    this.template('gitignore', '.gitignore');
+    utils.generate.dotfiles.bind(this)();
 
     // Application files
-    this.template('_package.json', 'package.json');
-    this.template('_bower.json', 'bower.json');
-    this.template('Gruntfile.js', 'Gruntfile.js');
+    utils.generate.appfiles.bind(this)();
 
     // Project index
-    this.template('_index.html', 'index.html');
+    utils.generate.projectIndex.bind(this)();
 
     // Directory structure
-    this.mkdir('src');
-    this.mkdir('src/includes');
-    this.mkdir('src/js');
-    this.mkdir('src/fonts');
-    this.mkdir('src/img');
-    this.mkdir('src/img/common');
-    this.mkdir('src/media');
-    this.mkdir('src/designs');
+    utils.generate.structure.bind(this)();
 
-    this.copy('src/img/do_not_delete_me.png', 'src/fonts/do_not_delete_me.png');
-    this.copy('src/img/do_not_delete_me.png', 'src/img/do_not_delete_me.png');
-    this.copy('src/img/do_not_delete_me.png', 'src/media/do_not_delete_me.png');
-    this.copy('src/img/do_not_delete_me.png', 'src/designs/do_not_delete_me.png');
-
-    // HTML
-    this.copy('src/_template.html', 'src/template.html');
-
-    this.template('src/includes/_head.html', 'src/includes/head.html');
-    this.copy('src/includes/_header.html', 'src/includes/header.html');
-    this.copy('src/includes/_sidebar.html', 'src/includes/sidebar.html');
-    this.copy('src/includes/_scripts.html', 'src/includes/scripts.html');
-    this.copy('src/includes/_footer.html', 'src/includes/footer.html');
-
-    // HTML
-    if (this.isWP) {
-      this.mkdir(this.wpThemeFolder);
-      this.copy('src/_wp.html', 'src/wp.html');
-    }
+    // Template files (html only for now)
+    utils.generate.templateFiles.bind(this)('html');
 
     // SCSS
     if (this.cssPreprocessor === 'SCSS' || this.cssPreprocessor === 'LIBSASS') {
-      this.mkdir('src/scss');
-      this.template('src/scss/_main.scss', 'src/scss/main.scss');
-      this.copy('src/scss/_variables.scss', 'src/scss/_variables.scss');
-      this.copy('src/scss/_mixins.scss', 'src/scss/_mixins.scss');
-      this.copy('src/scss/_common.scss', 'src/scss/_common.scss');
-      if (this.isWP) {
-        this.copy('src/scss/_wordpress.scss', 'src/scss/_wordpress.scss');
-      }
+      utils.generate.preprocessor.bind(this)('scss', '_');
     }
 
     if (this.cssPreprocessor === 'SCSS') {
@@ -117,23 +74,16 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     // LESS
     if (this.cssPreprocessor === 'LESS') {
-      this.mkdir('src/less');
-      this.template('src/less/_main.less', 'src/less/main.less');
-      this.copy('src/less/_variables.less', 'src/less/variables.less');
-      this.copy('src/less/_mixins.less', 'src/less/mixins.less');
-      this.copy('src/less/_common.less', 'src/less/common.less');
-      if (this.isWP) {
-        this.copy('src/less/_wordpress.less', 'src/less/wordpress.less');
-      }
+      utils.generate.preprocessor.bind(this)('less', '');
     }
 
     // JS
-    this.template('src/js/_main.js', 'src/js/main.js');
+    utils.generate.js.bind(this)();
 
+    // CSS3Pie
     if (this.useCSS3Pie) {
       this.copy('src/js/_PIE.htc', 'src/js/PIE.htc');
     }
-    console.log(new Date().getTime() + ' generate');
   }
 });
 

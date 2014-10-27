@@ -86,5 +86,13 @@ module.exports = {
       value: 'No'
     }],
     default: 'yesandcopy'
+  }],
+
+  newProjectName: [{
+    name: 'projectName',
+    message: 'Please enter new project name',
+    validate: function (input) {
+      return !!input;
+    }
   }]
 };

@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "grunt": "^0.4.5", <% if (cssPreprocessor === 'SCSS') { %>
-    "grunt-contrib-sass": "^0.7.3",<% } %><% if (cssPreprocessor === 'LESS') { %>
+    "grunt-contrib-sass": "^0.7.4",<% } %><% if (cssPreprocessor === 'LESS') { %>
     "grunt-contrib-less": "^0.11.4",<% } %><% if (cssPreprocessor === 'LIBSASS') { %>
     "grunt-sass": "^0.14.2",<% } %>
     "grunt-contrib-watch": "^0.6.1",
@@ -23,7 +23,7 @@
     "grunt-remfallback": "^0.0.5",
     "grunt-include-replace": "^1.2.0",
     "grunt-jsbeautifier": "^0.2.7",
-    "grunt-cssbeautifier": "^0.1.2",
+    "grunt-cssbeautifier": "^0.1.9",
     "grunt-html-validation": "^0.1.18",
     "grunt-usemin": "^2.4.0",<% if (reloader === 'BrowserSync') { %>
     "grunt-browser-sync": "^1.3.7",<% } else if (reloader === 'LiveReload' && server) { %>

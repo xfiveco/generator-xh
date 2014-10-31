@@ -6,16 +6,29 @@ var PageGenerator = yeoman.generators.Base.extend({
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
 
-    this.argument('pages', {
-      desc: 'List of names',
-      type: Array,
-      required: true
-    });
+    try {
+      this.config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
+    } catch (ex) {
+      this.log('You need to run this generator in a project directory.');
+      process.exit();
+    }
 
-    this.option('skip-build', {
-      type: Boolean,
-      defaults: false
-    });
+    try {
+      this.argument('pages', {
+        desc: 'List of names',
+        type: Array,
+        required: true
+      });
+
+      this.option('skip-build', {
+        desc: 'Do not run `grunt build` after pages are created',
+        type: Boolean,
+        defaults: false
+      });
+    } catch (ex) {
+      this.log('Page names list cannot be empty.');
+      process.exit();
+    }
   },
 
   initializing: function () {
@@ -26,17 +39,6 @@ var PageGenerator = yeoman.generators.Base.extend({
         return element;
       }
     };
-
-    try {
-      this.config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
-    } catch (ex) {
-      this.log('You need to run this generator in project directory.');
-    }
-
-    if (!this.pages.length) {
-      this.log('Name cannot be empty.');
-      process.exit();
-    }
 
     if (!this.pages.every(this.isNotReserved, this)) {
       this.log('You cannot use those reserved words as a page name: ' + this.reserved.join(', ') + '.');

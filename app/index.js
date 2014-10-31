@@ -4,6 +4,22 @@ var yeoman = require('yeoman-generator');
 var utils = require('./utils/index');
 
 var XhGenerator = yeoman.generators.Base.extend({
+  constructor: function () {
+    yeoman.generators.Base.apply(this, arguments);
+
+    this.option('interactive', {
+      desc: 'Prompt user for info',
+      type: Boolean,
+      defaults: true
+    });
+
+    this.option('config', {
+      desc: 'Path to configuration file',
+      type: String,
+      alias: 'c'
+    });
+  },
+
   init: function () {
     this.pkg = require('../package.json');
 

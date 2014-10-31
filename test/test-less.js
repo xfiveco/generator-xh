@@ -1,10 +1,10 @@
-/*global describe, beforeEach, it */
+/*global describe, before, it */
 'use strict';
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 
-describe('XH generator Less', function () {
-  beforeEach(function (done) {
+describe('XH Generator Less', function () {
+  before(function (done) {
     helpers.testDirectory(path.join(__dirname, 'temp', 'less'), function (err) {
       if (err) {
         return done(err);

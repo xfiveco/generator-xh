@@ -1,25 +1,34 @@
-/*global describe, beforeEach, it */
+/*global describe, before, it */
 'use strict';
 var path = require('path');
 var helpers = require('yeoman-generator').test;
+var assert = require('yeoman-generator').assert;
 
-describe('XH generator Defaults', function () {
-  beforeEach(function (done) {
-    helpers.testDirectory(path.join(__dirname, 'temp', 'defaults'), function (err) {
-      if (err) {
-        return done(err);
-      }
+describe('XH Generator Defaults', function () {
+  before(function (done) {
 
-      this.app = helpers.createGenerator('xh:app', [
-        '../../../app'
-      ]);
+    helpers
+      .run(path.join(__dirname, '../app'))
+      .inDir(path.join(__dirname, 'temp', 'defaults'))
+      .withOptions({
+        'skip-install': true
+      })
+      .withPrompt({
+        projectName: 'Test Project',
+        useBranding: true,
+        reloader: 'BrowserSync',
+        server: true,
+        cssPreprocessor: 'LIBSASS',
+        ignoreDist: true,
+        isWP: true,
+        features: ['useBootstrap', 'useModernizr', 'useCSS3Pie']
+      })
+      .on('end', done);
 
-      done();
-    }.bind(this));
   });
 
   it('creates expected files', function (done) {
-    var expected = [
+    var expectedFiles = [
       // add files you expect to exist here.
       '.yo-rc.json',
       '.bowerrc',
@@ -70,24 +79,29 @@ describe('XH generator Defaults', function () {
       'wp/wp-content/themes'
     ];
 
-    helpers.mockPrompt(this.app, {
-      projectName: 'Test Project',
-      useBranding: true,
-      reloader: 'BrowserSync',
-      server: true,
-      cssPreprocessor: 'LIBSASS',
-      ignoreDist: true,
-      isWP: true,
-      features: ['useBootstrap', 'useModernizr', 'useCSS3Pie']
-    });
+    assert.file(expectedFiles);
+    done();
+  });
 
-    this.app.options['skip-install'] = true;
+  it('creates pages', function (done) {
+    var expectedFiles = [
+      'src/home.html',
+      'src/test.html'
+    ];
 
-    this.app.run({}, function () {
-      helpers.assertFile(expected);
-      done();
-    });
-
+    helpers
+      .run(path.join(__dirname, '../page'))
+      .withArguments(['Home', 'Test'])
+      .withOptions({
+        'skip-build': true
+      })
+      .on('ready', function (generator) {
+        generator.conflicter.force = true;
+      })
+      .on('end', function () {
+        assert.file(expectedFiles);
+        done();
+      });
   });
 
 });

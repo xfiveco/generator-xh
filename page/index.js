@@ -1,12 +1,24 @@
 'use strict';
-var util = require('util');
 var yeoman = require('yeoman-generator');
-var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
 
-var PageGenerator = yeoman.generators.NamedBase.extend({
+var PageGenerator = yeoman.generators.Base.extend({
+
+  constructor: function () {
+    yeoman.generators.Base.apply(this, arguments);
+
+    this.argument('pages', {
+      desc: 'List of names',
+      type: Array,
+      required: true
+    });
+
+    this.option('skip-build', {
+      type: Boolean,
+      defaults: false
+    });
+  },
 
   initializing: function () {
-    this.pages = process.argv.slice(3);
     this.reserved = ['template', 'wp'];
 
     this.isNotReserved = function(element) {
@@ -14,6 +26,12 @@ var PageGenerator = yeoman.generators.NamedBase.extend({
         return element;
       }
     };
+
+    try {
+      this.config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
+    } catch (ex) {
+      this.log('You need to run this generator in project directory.');
+    }
 
     if (!this.pages.length) {
       this.log('Name cannot be empty.');
@@ -56,7 +74,9 @@ var PageGenerator = yeoman.generators.NamedBase.extend({
   },
 
   end: function () {
-    this.spawnCommand('grunt', ['build']);
+    if (!this.options['skip-build']) {
+      this.spawnCommand('grunt', ['build']);
+    }
   }
 
 });

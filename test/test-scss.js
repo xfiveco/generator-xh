@@ -1,10 +1,10 @@
-/*global describe, beforeEach, it */
+/*global describe, before, it */
 'use strict';
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 
-describe('XH generator SCSS', function () {
-  beforeEach(function (done) {
+describe('XH Generator SCSS', function () {
+  before(function (done) {
     helpers.testDirectory(path.join(__dirname, 'temp', 'scss'), function (err) {
       if (err) {
         return done(err);
@@ -29,6 +29,23 @@ describe('XH generator SCSS', function () {
       'package.json',
       'bower.json',
       'Gruntfile.js',
+      'grunt/autoprefixer.js',
+      'grunt/contrib-clean.js',
+      'grunt/contrib-concat.js',
+      'grunt/contrib-copy.js',
+      'grunt/contrib-jshint.js',
+      'grunt/contrib-sass.js',
+      'grunt/contrib-uglify.js',
+      'grunt/contrib-watch.js',
+      'grunt/cssbeautifier.js',
+      'grunt/html-validation.js',
+      'grunt/include-replace.js',
+      'grunt/jsbeautifier.js',
+      'grunt/remfallback.js',
+      'grunt/search.js',
+      'grunt/text-replace.js',
+      'grunt/usemin.js',
+      'grunt/build-helpers.js',
       'index.html',
       'src/fonts/do_not_delete_me.png',
       'src/img/do_not_delete_me.png',

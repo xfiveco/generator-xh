@@ -20,6 +20,26 @@ module.exports = {
     this.template('Gruntfile.js', 'Gruntfile.js');
   },
 
+  gruntModules: function () {
+    // read packages from packages.json
+    // and include neccessary task config files
+    var pkg = JSON.parse(this.engine(this.src.read('_package.json'), this.props)).devDependencies;
+    var p, m, f;
+
+    for (p in pkg) {
+      m = p.match(/^grunt-(.+)$/i);
+      if (m) {
+        f = 'grunt/' + m[1] + '.js';
+        if (this.src.exists(f)) {
+          this.copy(f);
+        }
+      }
+    }
+
+    // additional task files
+    this.copy('grunt/build-helpers.js');
+  },
+
   projectIndex: function () {
     this.template('_index.html', 'index.html');
   },
@@ -41,17 +61,17 @@ module.exports = {
   },
 
   templateFiles: function (ext) {
-    this.copy('src/_template.' + ext, 'src/template.' + ext);
+    this.copy('src/_template.html', 'src/template.' + ext);
 
-    this.template('src/includes/_head.' + ext, 'src/includes/head.' + ext);
-    this.copy('src/includes/_header.' + ext, 'src/includes/header.' + ext);
-    this.copy('src/includes/_sidebar.' + ext, 'src/includes/sidebar.' + ext);
-    this.copy('src/includes/_scripts.' + ext, 'src/includes/scripts.' + ext);
-    this.copy('src/includes/_footer.' + ext, 'src/includes/footer.' + ext);
+    this.template('src/includes/_head.html', 'src/includes/head.' + ext);
+    this.copy('src/includes/_header.html', 'src/includes/header.' + ext);
+    this.copy('src/includes/_sidebar.html', 'src/includes/sidebar.' + ext);
+    this.copy('src/includes/_scripts.html', 'src/includes/scripts.' + ext);
+    this.copy('src/includes/_footer.html', 'src/includes/footer.' + ext);
 
     if (this.isWP) {
       this.mkdir(this.wpThemeFolder);
-      this.copy('src/_wp.' + ext, 'src/wp.' + ext);
+      this.copy('src/_wp.html', 'src/wp.' + ext);
     }
   },
 

@@ -135,17 +135,19 @@ The meaning of files and folders are as follows:
 - **dist** - production / preview files are automatically generated here, this is where you check your work in a browser.
 - **node_modules** - Node.js modules for various Grunt tasks, usually you don’t have to do anything about this folder
 - **src** - source files, development is done here
- - **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
- - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
- - **scss / less** - SCSS or Less files
-    - `main.scss` / `main.less` - main file where other stylesheets are imported
-    - `_variables.scss` / `variables.less` - variables file
-    - `_mixins.scss` / `mixins.less` - mixins file
-    - `_common.scss` / `common.less` - common styles with some minimal default styling
-    - `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
- - **js**
-    - `main.js` is a main JS file in project
- - `home.html`, etc. - HTML files composed from HTML partials
+   - **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
+   - **designs** - place to store design previews, sprite source files & so on
+   - **grunt** - atomic grunt tasks configuration
+   - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
+   - **scss / less** - SCSS or Less files
+      - `main.scss` / `main.less` - main file where other stylesheets are imported
+      - `_variables.scss` / `variables.less` - variables file
+      - `_mixins.scss` / `mixins.less` - mixins file
+      - `_common.scss` / `common.less` - common styles with some minimal default styling
+      - `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+   - **js**
+      - `main.js` is a main JS file in project
+   - `home.html`, etc. - HTML files composed from HTML partials
 - `index.html` - project index with project pages listed
 - `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
 - `bower.json` - Bower dependencies in the project
@@ -351,11 +353,11 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
     <script src="bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
     <!-- endbuild -->
     <script src="js/main.js"></script>
-```
+    ```
 
-3. Download [Colorbox archive](https://github.com/jackmoore/colorbox/archive/master.zip) and copy images from `example1/images` folder to `src/img/colorbox` folder.
+3. Go to `src/bower_components/jquery-colorbox` and copy images from `example1/images` folder to `src/img/colorbox` folder.
 
-4. Get `colorbox.css` from the archive, rename it to `colorbox.scss` and store it in `src/scss` folder
+4. Get `example1/colorbox.css` from the same dir, rename it to `colorbox.scss` and store it in `src/scss` folder
 
 5. Import `colorbox.scss` in `main.scss`
 

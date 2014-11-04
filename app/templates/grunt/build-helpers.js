@@ -35,7 +35,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build-assets', [
-    'copy:assets'
+    'copy:assets',
+    'newer:imagemin:dist'
   ]);
 
   grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>

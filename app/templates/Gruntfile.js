@@ -19,7 +19,8 @@ module.exports = function (grunt) {
       root: __dirname,
       includes: '<%%= xh.src %>/includes',
       designs: 'designs',
-      assets: '{img,media,fonts,<%%= xh.designs %>}'
+      assets: '{img,media,fonts,<%%= xh.designs %>}',
+      images: '{img,media}/**/*.{png,jpg,gif,svg}' // used in imagemin
     }
   });
 

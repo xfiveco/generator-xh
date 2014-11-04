@@ -7,6 +7,7 @@ var deferred = Q.defer();
 var chalk = require('chalk');
 
 var configFoundPrompt = 'Configuration file found with a project name: \n  ';
+var configCorrupted = 'Configuration file found, but is missing some parts. Falling back to default behavior. \n';
 
 module.exports = {
   fileContent: function () {
@@ -30,15 +31,26 @@ module.exports = {
   },
 
   result: function (result) {
-    // seems like promise ends async call, so the next one is needed
     var done = this.async();
     var fileContentJSON = JSON.parse(result);
     var props = fileContentJSON['generator-xh'].config;
     var utils = require('./utils/index');
 
-    this.configFound = true;
-
     utils.welcome();
+
+    // check if config is corrupted
+    for (var i in utils.prompts.generator) {
+      var propertyName = utils.prompts.generator[i].name;
+
+      if (props[propertyName] === undefined) {
+        this.log(configCorrupted);
+        this.configCorrupted = true;
+        done();
+        return;
+      }
+    }
+
+    this.configFound = true;
     this.log(configFoundPrompt + chalk.yellow(props.projectName) + '\n');
 
     if (this.options.interactive === false) {
@@ -55,7 +67,6 @@ module.exports = {
   },
 
   error: function() {
-    //same as in result
     var done = this.async();
 
     if (this.options.interactive === false && !this.configFound) {
@@ -64,6 +75,5 @@ module.exports = {
     }
 
     done();
-
   }
 };

@@ -25,12 +25,14 @@ module.exports = function(grunt) {
       dest: '<%%= xh.dist %>/js/'
     },<% } %>
 
+    // copy assets other than images-to-be-optimized
+    // (imagemin & svg2png tasks will take care of that)
     assets: {
       files: [
         {
           expand: true,
           cwd: '<%%= xh.src %>',
-          src: ['<%%= xh.assets %>/**/*.*', '!<%%= xh.images %>', '!**/do_not_delete_me.png'],
+          src: ['<%%= xh.assets %>/**/*.*', '!<%%= xh.images %>/**/*.{png,jpg,gif,svg}', '!**/do_not_delete_me.png'],
           dest: '<%%= xh.dist %>'
         }
       ]

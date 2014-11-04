@@ -35,8 +35,14 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build-assets', [
-    'copy:assets',
-    'newer:imagemin:dist'
+    // optimze SVG & generate & optimize their fallbacks
+    'newer:imagemin:svg',
+    'newer:svg2png:dist',
+    'newer:imagemin:svgfallbacks',
+    // optimize non-SVG images (GIF, PNG, JPG)
+    'newer:imagemin:nosvg',
+    // copy other assets
+    'newer:copy:assets'
   ]);
 
   grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>

@@ -20,7 +20,7 @@ module.exports = function (grunt) {
       includes: '<%%= xh.src %>/includes',
       designs: 'designs',
       assets: '{img,media,fonts,<%%= xh.designs %>}',
-      images: '{img,media}/**/*.{png,jpg,gif,svg}' // used in imagemin
+      images: '{img,media}' // used in imagemin
     }
   });
 

@@ -31,8 +31,8 @@ module.exports = function (grunt) {
     'notify:validation'
   ]);
 
-  grunt.registerTask('postinstall', [<% if (!useBootstrap) { %>
-    'copy:normalize',<% } %><% if (useCSS3Pie) { %>
+  grunt.registerTask('postinstall', [<% if (!features.useBootstrap) { %>
+    'copy:normalize',<% } %><% if (features.useCSS3Pie) { %>
     'copy:pie',<% } %>
     'copy:jquery'
   ]);

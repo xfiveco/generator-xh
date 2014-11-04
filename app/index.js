@@ -51,7 +51,9 @@ var XhGenerator = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Welcome user
-    utils.welcome();
+    if (this.configCorrupted !== true) {
+      utils.welcome();
+    }
 
     this.prompt(utils.prompts.generator, function (props) {
       utils.setProps.apply(this, [props]);
@@ -100,7 +102,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     utils.generate.js.bind(this)();
 
     // CSS3Pie
-    if (this.useCSS3Pie) {
+    if (this.features.useCSS3Pie) {
       this.copy('src/js/_PIE.htc', 'src/js/PIE.htc');
     }
   }

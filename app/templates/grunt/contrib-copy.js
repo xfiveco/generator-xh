@@ -5,7 +5,7 @@ module.exports = function(grunt) {
   'use strict';
 
   grunt.config('copy', {
-    <% if (!useBootstrap) { %>normalize: {
+    <% if (!features.useBootstrap) { %>normalize: {
       src: '<%%= xh.src %>/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
       dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
       dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.less'<% } %>
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       cwd: '<%%= xh.src %>/bower_components/jquery/dist/',
       src: ['jquery.min.js', 'jquery.min.map'],
       dest: '<%%= xh.dist %>/js/'
-    },<% if (useCSS3Pie) { %>
+    },<% if (features.useCSS3Pie) { %>
 
     pie: {
       expand: true,

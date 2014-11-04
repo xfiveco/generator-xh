@@ -3,12 +3,12 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>@@pagename - <%= projectName %></title><% if (useBootstrap) { %>
+  <title>@@pagename - <%= projectName %></title><% if (features.useBootstrap) { %>
   <!-- build:css css/libraries.min.css -->
     <script src="bower_components/bootstrap/dist/css/bootstrap.min.css"></script>
   <!-- endbuild --><% } %>
   <link rel="stylesheet" media="all" href="css/main.css">
-  <% if (useModernizr) { %>
+  <% if (features.useModernizr) { %>
   <!-- build:js js/modernizr.min.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
   <!-- endbuild -->

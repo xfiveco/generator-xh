@@ -8,7 +8,7 @@ var XhGenerator = yeoman.generators.Base.extend({
     yeoman.generators.Base.apply(this, arguments);
 
     this.option('interactive', {
-      desc: 'Prompt user for info',
+      desc: 'Prompt user for info. Use --no-interactive for fully automated project genereation.',
       type: Boolean,
       defaults: true
     });

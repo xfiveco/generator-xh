@@ -54,10 +54,10 @@ module.exports = {
     this.mkdir('src/media');
     this.mkdir('src/designs');
 
-    this.copy('src/img/do_not_delete_me.png', 'src/fonts/do_not_delete_me.png');
-    this.copy('src/img/do_not_delete_me.png', 'src/img/do_not_delete_me.png');
-    this.copy('src/img/do_not_delete_me.png', 'src/media/do_not_delete_me.png');
-    this.copy('src/img/do_not_delete_me.png', 'src/designs/do_not_delete_me.png');
+    this.copy('src/img/.keep', 'src/fonts/.keep');
+    this.copy('src/img/.keep', 'src/img/.keep');
+    this.copy('src/img/.keep', 'src/media/.keep');
+    this.copy('src/img/.keep', 'src/designs/.keep');
   },
 
   templateFiles: function (ext) {

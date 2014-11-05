@@ -39,7 +39,7 @@ module.exports = function(grunt) {
       files: [{
         expand: true,
         cwd: '<%%= xh.src %>',
-        src: ['<%%= xh.images %>/**/*.{png,jpg,gif}', '!**/do_not_delete_me.png'],
+        src: ['<%%= xh.images %>/**/*.{png,jpg,gif}', '!**/.keep'],
         dest: '<%%= xh.dist %>'
       }]
     }

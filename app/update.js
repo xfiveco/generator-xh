@@ -39,21 +39,22 @@ module.exports = function () {
   var copyToClipboard = function (data) {
     var proc;
     var exec;
+    var childProcess = require('child_process');
 
     switch (process.platform) {
     case 'darwin':
-      proc = require('child_process').spawn('pbcopy');
+      proc = childProcess.spawn('pbcopy');
       break;
     case 'win32':
-      proc = require('child_process').spawn('clip');
-      exec = require('child_process').exec;
+      proc = childProcess.spawn('clip');
+      exec = childProcess.exec;
       exec('clip', function () {});
       break;
     case 'linux':
-      proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
+      proc = childProcess.spawn('xclip', ['-selection', 'clipboard']);
       break;
     case 'openbsd':
-      proc = require('child_process').spawn('xclip', ['-selection', 'clipboard']);
+      proc = childProcess.spawn('xclip', ['-selection', 'clipboard']);
       break;
     default:
       throw 'Tried to copy update command to your clipboard, but you are using unknown platform: ' + process.platform;

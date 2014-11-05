@@ -124,6 +124,36 @@ Once done, the generator will create the required files and folders and install 
 
 ![NPM & Bower installation](docs/img/installation.png)
 
+XH Generator allows you to generate projects based on provided configuration. If the `yo-rc.json` file is present in project root folder, you will be prompted to type new name for the project and the rest will be scaffolded automatically.
+
+With `--config` or `-c` option you can provide a path to your custom configuration file:
+
+```
+yo xh --config ~/your-xh-config.json
+```
+
+Example of valid configuration file:
+
+```
+{
+  "generator-xh": {
+    "config": {
+      "projectName": "Default Project Name",
+      "useBranding": true,
+      "reloader": "BrowserSync",
+      "server": true,
+      "cssPreprocessor": "LIBSASS",
+      "ignoreDist": true,
+      "isWP": false,
+      "features": [
+        "useModernizr",
+        "useCSS3Pie"
+      ]
+    }
+  }
+}
+```
+
 ### 2) Project structure
 
 The generated project structure will look like this:

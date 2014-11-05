@@ -26,12 +26,12 @@ module.exports = function(grunt) {
     svgfallbacks: {
       files: [{
         expand: true,
-        cwd: '<%= xh.dist %>', // optimized files are in dist dir
-        src: ['<%= xh.images %>/**/*.png'],
+        cwd: '<%%= xh.dist %>', // optimized files are in dist dir
+        src: ['<%%= xh.images %>/**/*.png'],
         filter: function(filepath) {
           return grunt.file.exists(filepath.replace(/\.png$/i, '.svg'));
         },
-        dest: '<%= xh.dist %>'
+        dest: '<%%= xh.dist %>'
       }]
     },
     // optimize non-SVG files

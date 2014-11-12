@@ -1,0 +1,17 @@
+@import "sprites@1x";
+@import "sprites@2x";
+
+.sprite-background-size(@sprite) {
+  @total-width: ~`"@{sprite}".split(', ')[6]`;
+  @total-height: ~`"@{sprite}".split(', ')[7]`;
+  background-size: @total-width @total-height;
+}
+
+.sprite-retina($sprite, $sprite2x) {
+  .sprite(@sprite);
+  .sprite-background-size(@sprite);
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 1.5) {
+    .sprite-image(@sprite2x);
+  }
+}

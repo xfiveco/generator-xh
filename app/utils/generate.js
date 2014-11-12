@@ -87,6 +87,7 @@ module.exports = {
     this.copy(srctype + '/_variables.' + type, srctype + '/' + underscore + 'variables.' + type);
     this.copy(srctype + '/_mixins.' + type, srctype + '/' + underscore + 'mixins.' + type);
     this.copy(srctype + '/_common.' + type, srctype + '/' + underscore + 'common.' + type);
+    this.copy(srctype + '/_sprites.' + type, srctype + '/' + underscore + 'sprites.' + type);
     if (this.isWP) {
       this.copy(srctype + '/_wordpress.' + type, srctype + '/' + underscore + 'wordpress.' + type);
     }

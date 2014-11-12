@@ -1,0 +1,15 @@
+@include "sprites@1x";
+@include "sprites@2x";
+
+@mixin sprite-background-size($sprite) {
+  background-size: nth($sprite, 7) nth($sprite, 8);
+}
+
+@mixin sprite-retina($sprite, $sprite2x) {
+  @include sprite($sprite);
+  @include sprite-background-size($sprite);
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 1.5) {
+    @include sprite-image($sprite2x);
+  }
+}

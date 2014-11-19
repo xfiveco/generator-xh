@@ -40,7 +40,11 @@ module.exports = function(grunt) {
     'newer:svg2png:dist',
     'newer:imagemin:svgfallbacks',
     // optimize non-SVG images (GIF, PNG, JPG)
-    'newer:imagemin:nosvg',
+    'newer:imagemin:nosvg',<% if (features.useSprites) { %>
+    // generate & optimize sprites
+    'sprite:dist1x',
+    'sprite:dist2x',
+    'newer:imagemin:sprites',<% } %>
     // copy other assets
     'newer:copy:assets'
   ]);

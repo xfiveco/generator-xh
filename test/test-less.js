@@ -44,12 +44,15 @@ describe('XH Generator Less', function () {
       'grunt/jsbeautifier.js',
       'grunt/remfallback.js',
       'grunt/search.js',
+      'grunt/spritesmith.js',
       'grunt/text-replace.js',
       'grunt/usemin.js',
       'grunt/build-helpers.js',
       'index.html',
       'src/fonts/.keep',
       'src/img/.keep',
+      'src/img/sprites/1x/.keep',
+      'src/img/sprites/2x/.keep',
       'src/media/.keep',
       'src/designs/.keep',
       'src/template.html',
@@ -59,9 +62,10 @@ describe('XH Generator Less', function () {
       'src/includes/scripts.html',
       'src/includes/footer.html',
       'src/less/main.less',
-      'src/less/variables.less',
-      'src/less/mixins.less',
+      'src/less/setup/variables.less',
+      'src/less/setup/mixins.less',
       'src/less/common.less',
+      'src/less/setup/sprites.less',
       'src/js/main.js'
     ];
 
@@ -73,7 +77,7 @@ describe('XH Generator Less', function () {
       cssPreprocessor: 'LESS',
       ignoreDist: true,
       isWP: false,
-      features: []
+      features: [ 'useSprites' ]
     });
 
     this.app.options['skip-install'] = true;

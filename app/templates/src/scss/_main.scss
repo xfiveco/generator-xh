@@ -13,8 +13,9 @@
    Custom Styling
    ========================================================================== */
 
-@import "variables";
-@import "mixins";
+@import "setup/variables";
+@import "setup/mixins";<% if (features.useSprites) { %>
+@import "setup/sprites";<% } %>
 @import "common";<% if (isWP) { %>
 @import "wordpress";<% } %><% if (cssPreprocessor === 'LIBSASS') { %>
 

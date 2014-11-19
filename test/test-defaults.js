@@ -21,7 +21,7 @@ describe('XH Generator Defaults', function () {
         cssPreprocessor: 'LIBSASS',
         ignoreDist: true,
         isWP: true,
-        features: ['useBootstrap', 'useModernizr', 'useCSS3Pie']
+        features: ['useBootstrap', 'useModernizr', 'useCSS3Pie', 'useSprites']
       })
       .on('end', done);
 
@@ -54,12 +54,15 @@ describe('XH Generator Defaults', function () {
       'grunt/remfallback.js',
       'grunt/sass.js',
       'grunt/search.js',
+      'grunt/spritesmith.js',
       'grunt/text-replace.js',
       'grunt/usemin.js',
       'grunt/build-helpers.js',
       'index.html',
       'src/fonts/.keep',
       'src/img/.keep',
+      'src/img/sprites/1x/.keep',
+      'src/img/sprites/2x/.keep',
       'src/media/.keep',
       'src/designs/.keep',
       'src/template.html',
@@ -70,10 +73,11 @@ describe('XH Generator Defaults', function () {
       'src/includes/footer.html',
       'src/wp.html',
       'src/scss/main.scss',
-      'src/scss/_variables.scss',
-      'src/scss/_mixins.scss',
+      'src/scss/setup/_variables.scss',
+      'src/scss/setup/_mixins.scss',
       'src/scss/_common.scss',
       'src/scss/_wordpress.scss',
+      'src/scss/setup/_sprites.scss',
       'src/js/main.js',
       'src/js/PIE.htc',
       'wp/wp-content/themes'

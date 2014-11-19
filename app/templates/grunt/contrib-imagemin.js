@@ -39,10 +39,19 @@ module.exports = function(grunt) {
       files: [{
         expand: true,
         cwd: '<%%= xh.src %>',
-        src: ['<%%= xh.images %>/**/*.{png,jpg,gif}', '!**/.keep'],
+        src: ['<%%= xh.images %>/**/*.{png,jpg,gif}', '!**/.keep'<% if (features.useSprites) { %>, '!img/sprites/**/*.{png,jpg,gif}'<% } %>],
         dest: '<%%= xh.dist %>'
       }]
-    }
+    }<% if (features.useSprites) { %>,
+    // sprite files
+    sprites: {
+      files: [{
+        expand: true,
+        cwd: '<%%= xh.dist %>', // sprite files are in dist dir
+        src: ['img/common/{sprites,sprites@2x}.png'],
+        dest: '<%%= xh.dist %>'
+      }]
+    }<% } %>
   });
 
   grunt.loadNpmTasks('grunt-contrib-imagemin');

@@ -1,9 +1,5 @@
-@include "sprites@1x";
-@include "sprites@2x";
-
-@mixin sprite-background-size($sprite) {
-  background-size: nth($sprite, 7) nth($sprite, 8);
-}
+@import "sprites@1x";
+@import "sprites@2x";
 
 @mixin sprite-retina($sprite, $sprite2x) {
   @include sprite($sprite);

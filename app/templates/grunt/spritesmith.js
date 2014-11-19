@@ -4,26 +4,31 @@
 module.exports = function(grunt) {
   'use strict';
 
-  // Ensure spritesmith will find PhantomJS
-  var path = require('path');
-  process.env.PATH += path.delimiter + path.join(process.cwd(), 'node_modules', 'phantomjs', 'lib', 'phantom', 'bin');
-
   grunt.config('sprite', {
     dist1x: {
-      src: '<%%= xh.src %>/img/common/sprites/1x/*.{png,jpg,gif}',
-      destImg: '<%%= xh.dist %>/img/common/sprites.png',
-      destCSS: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/_sprites@1x.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/sprites@1x.less'<% } %>,
+      src: '<%%= xh.src %>/img/sprites/1x/*.{png,jpg,gif}',
+      destImg: '<%%= xh.dist %>/img/common/sprites@1x.png',
+      destCSS: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/setup/_sprites@1x.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/setup/sprites@1x.less'<% } %>,
+      cssTemplate: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/setup/_sprites.scss.mustache'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/setup/sprites.less.mustache'<% } %>,
       algorithm: 'binary-tree',
-      engine: 'phantomjs',
-      padding: 2
+      engine: 'pngsmith',
+      padding: 2,
+      cssOpts: {
+        map: 'sprite-1x'
+      }
     },
     dist2x: {
-      src: '<%%= xh.src %>/img/common/sprites/2x/*.{png,jpg,gif}',
+      src: '<%%= xh.src %>/img/sprites/2x/*.{png,jpg,gif}',
       destImg: '<%%= xh.dist %>/img/common/sprites@2x.png',
-      destCSS: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/_sprites@2x.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/sprites@2x.less'<% } %>,
+      destCSS: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/setup/_sprites@2x.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/setup/sprites@2x.less'<% } %>,
+      cssTemplate: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/setup/_sprites.scss.mustache'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/setup/sprites.less.mustache'<% } %>,
       algorithm: 'binary-tree',
-      engine: 'phantomjs',
-      padding: 4
+      engine: 'pngsmith',
+      padding: 4,
+      cssOpts: {
+        map: 'sprite-2x',
+        functions: false
+      }
     }
   });
 

@@ -23,7 +23,7 @@ module.exports = {
   gruntModules: function () {
     // read packages from packages.json
     // and include neccessary task config files
-    var pkg = JSON.parse(this.engine(this.src.read('_package.json'), this.props)).devDependencies;
+    var pkg = JSON.parse(this.engine(this.src.read('_package.json'), this)).devDependencies;
     var p, m, f;
 
     for (p in pkg) {
@@ -58,6 +58,11 @@ module.exports = {
     this.copy('src/img/.keep', 'src/img/.keep');
     this.copy('src/img/.keep', 'src/media/.keep');
     this.copy('src/img/.keep', 'src/designs/.keep');
+
+    if (this.features.useSprites) {
+      this.copy('src/img/.keep', 'src/img/sprites/1x/.keep');
+      this.copy('src/img/.keep', 'src/img/sprites/2x/.keep');
+    }
   },
 
   templateFiles: function (ext) {
@@ -84,10 +89,13 @@ module.exports = {
 
     this.mkdir(srctype);
     this.template(srctype + '/_main.' + type, srctype + '/main.' + type);
-    this.copy(srctype + '/_variables.' + type, srctype + '/' + underscore + 'variables.' + type);
-    this.copy(srctype + '/_mixins.' + type, srctype + '/' + underscore + 'mixins.' + type);
+    this.copy(srctype + '/setup/_variables.' + type, srctype + '/setup/' + underscore + 'variables.' + type);
+    this.copy(srctype + '/setup/_mixins.' + type, srctype + '/setup/' + underscore + 'mixins.' + type);
     this.copy(srctype + '/_common.' + type, srctype + '/' + underscore + 'common.' + type);
-    this.copy(srctype + '/_sprites.' + type, srctype + '/' + underscore + 'sprites.' + type);
+    if (this.features.useSprites) {
+      this.copy(srctype + '/setup/_sprites.' + type, srctype + '/setup/' + underscore + 'sprites.' + type);
+      this.copy(srctype + '/setup/_sprites.' + type + '.mustache', srctype + '/setup/' + underscore + 'sprites.' + type + '.mustache');
+    }
     if (this.isWP) {
       this.copy(srctype + '/_wordpress.' + type, srctype + '/' + underscore + 'wordpress.' + type);
     }

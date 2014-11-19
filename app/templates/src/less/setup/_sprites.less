@@ -1,12 +1,6 @@
 @import "sprites@1x";
 @import "sprites@2x";
 
-.sprite-background-size(@sprite) {
-  @total-width: ~`"@{sprite}".split(', ')[6]`;
-  @total-height: ~`"@{sprite}".split(', ')[7]`;
-  background-size: @total-width @total-height;
-}
-
 .sprite-retina($sprite, $sprite2x) {
   .sprite(@sprite);
   .sprite-background-size(@sprite);

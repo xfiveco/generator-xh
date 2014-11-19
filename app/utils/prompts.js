@@ -57,6 +57,10 @@ module.exports = {
     name: 'features',
     message: 'Select additional features:',
     choices: [{
+      name: 'Automatic sprites',
+      value: 'useSprites',
+      checked: false
+    }, {
       name: 'Bootstrap',
       value: 'useBootstrap',
       checked: false

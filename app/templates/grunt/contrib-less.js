@@ -7,7 +7,7 @@ module.exports = function(grunt) {
   grunt.config('less', {
     dist: {
       options: {
-        path: '<%%= xh.src %>/bower_components/'
+        paths: ['<%%= xh.src %>/bower_components/']
       },
       files: {
         '<%%= xh.dist %>/css/main.css': '<%%= xh.src %>/less/main.less'

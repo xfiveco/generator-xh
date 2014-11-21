@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
   grunt.config('watch', {
     options: {
+      dot: true,
       spawn: false<% if (reloader === 'BrowserSync') { %>,
       interrupt: true<% } %>
     },

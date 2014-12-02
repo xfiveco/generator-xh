@@ -17,6 +17,4 @@
 @import "setup/mixins";<% if (features.useSprites) { %>
 @import "setup/sprites";<% } %>
 @import "common";<% if (isWP) { %>
-@import "wordpress";<% } %><% if (cssPreprocessor === 'LIBSASS') { %>
-
-/*# sourceMappingURL=main.css.map */<% } %>
+@import "wordpress";<% } %>

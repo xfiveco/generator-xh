@@ -410,11 +410,11 @@ Sprites generation is accomplished using [grunt-spritesmith](https://github.com/
 
 In the XH Generator default configuration you are expected to put yor files in `src/img/sprites/1x/` directory for normal-density screens and `src/img/sprites/2x/` for retina & similar ones. Filename of the image should be the same - let's say `home.png`. When task finishes running (it may take some time, which is why sprite generation is optional feature), you will be able to use sprite helper mixins in your code. The one you're most interested in can be found in `src/scss/setup/_sprites.{scss|less}` - `sprite-retina` mixin. It takes two arguments (for now, we're planning to further simplify that) - variable that holds normal sprite data & variable that holds retina sprite data. Those variables were generated for you when task ran. To make it clearer, using SCSS for our example home icon you would do:
 
-    ```css
-    .my-home-icon {
-    	@include sprite-retina($sprite-1x-home, $sprite-2x-home);
-    }
-    ```
+```css
+.my-home-icon {
+    @include sprite-retina($sprite-1x-home, $sprite-2x-home);
+}
+```
 
 The exact variable names can be found in `src/scss/setup/_sprites@N.{scss|less}` files if you need to check them.
 

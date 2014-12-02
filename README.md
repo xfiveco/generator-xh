@@ -13,24 +13,25 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
- - [Node.js](#1-nodejs)
- - [Sass](#2-sass)
- - [Grunt](#3-grunt)
- - [Bower](#4-bower)
- - [Yeoman](#5-yeoman)
- - [XH Generator](#6-xh-generator)
+   - [Node.js](#1-nodejs)
+   - [Sass](#2-sass)
+   - [Grunt](#3-grunt)
+   - [Bower](#4-bower)
+   - [Yeoman](#5-yeoman)
+   - [XH Generator](#6-xh-generator)
 - [Usage](#usage)
- - [Project scaffolding](#1-project-scaffolding)
- - [Project structure](#2-project-structure)
- - [Adding pages to the project](#3-adding-pages-to-the-project)
- - [Development](#4-development)
- - [WordPress Development](#5-wordpress-development)
- - [Collaborating](#6-collaborating)
+   - [Project scaffolding](#1-project-scaffolding)
+   - [Project structure](#2-project-structure)
+   - [Adding pages to the project](#3-adding-pages-to-the-project)
+   - [Development](#4-development)
+   - [WordPress Development](#5-wordpress-development)
+   - [Collaborating](#6-collaborating)
 - [Tips & Tricks](#tips--tricks)
- - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
- - [Writing styles](#writing-styles)
- - [LibSass notices](#libsass-notices)
- - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)
+   - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
+   - [Writing styles](#writing-styles)
+   - [LibSass notices](#libsass-notices)
+   - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)
+   - [Using Sprites](#using-sprites)
 - [Changelog](#changelog)
 - [Contributing](#contributing)
 - [Credits](#credits)
@@ -400,6 +401,24 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 7. Run the `grunt build` task or `grunt` task
 
 8. Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`
+
+### Using Sprites
+
+When relevant option is selected during setup, tasks for automatic sprite generation are added. Out-of-the-box only PNG files are supported, however if for some reason other source files are needed (like JPGs and GIFs) it is possible to add them (it will require installing some additional dependencies tough).
+
+Sprites generation is accomplished using [grunt-spritesmith](https://github.com/Ensighten/grunt-spritesmith). Detailed documentation regarding available options and generation engines is described there.
+
+In the XH Generator default configuration you are expected to put yor files in `src/img/sprites/1x/` directory for normal-density screens and `src/img/sprites/2x/` for retina & similar ones. Filename of the image should be the same - let's say `home.png`. When task finishes running (it may take some time, which is why sprite generation is optional feature), you will be able to use sprite helper mixins in your code. The one you're most interested in can be found in `src/scss/setup/_sprites.{scss|less}` - `sprite-retina` mixin. It takes two arguments (for now, we're planning to further simplify that) - variable that holds normal sprite data & variable that holds retina sprite data. Those variables were generated for you when task ran. To make it clearer, using SCSS for our example home icon you would do:
+
+    ```css
+    .my-home-icon {
+    	@include sprite-retina($sprite-1x-home, $sprite-2x-home);
+    }
+    ```
+
+The exact variable names can be found in `src/scss/setup/_sprites@N.{scss|less}` files if you need to check them.
+
+**Important!** Currently you need to provide **both** files (nomal & retina). If you do not, the output sprite images will differ and as a result generated `background-position` values will be incorrect.
 
 ## Changelog
 

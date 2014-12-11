@@ -10,6 +10,4 @@ module.exports = function(grunt) {
       indent: '  '
     }
   });
-
-  grunt.loadNpmTasks('grunt-cssbeautifier');
 };

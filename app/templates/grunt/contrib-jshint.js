@@ -13,6 +13,4 @@ module.exports = function(grunt) {
       src: ['<%%= xh.src %>/js/main.js']
     }
   });
-
-  grunt.loadNpmTasks('grunt-contrib-jshint');
 };

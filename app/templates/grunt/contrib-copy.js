@@ -68,6 +68,4 @@ module.exports = function(grunt) {
       dest: '<%%= xh.includes %>/'
     }
   });
-
-  grunt.loadNpmTasks('grunt-contrib-copy');
 };

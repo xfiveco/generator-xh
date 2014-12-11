@@ -43,6 +43,4 @@ module.exports = function(grunt) {
       assetsDirs: ['<%%= xh.includes %>/']
     }
   });
-
-  grunt.loadNpmTasks('grunt-usemin');
 };

@@ -3,6 +3,13 @@ module.exports = function (grunt) {
 
   require('time-grunt')(grunt);
 
+  // jit-grunt with static mappings
+  require('jit-grunt')(grunt, {
+    useminPrepare: 'grunt-usemin',
+    includereplace: 'grunt-include-replace',
+    replace: 'grunt-text-replace'
+  });
+
   // Project configuration.
   grunt.option('force', true);
 

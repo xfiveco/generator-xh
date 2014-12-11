@@ -22,6 +22,4 @@ module.exports = function(grunt) {
       src: '<%%= xh.dist %>/js/main.js'
     }
   });
-
-  grunt.loadNpmTasks('grunt-jsbeautifier');
 };

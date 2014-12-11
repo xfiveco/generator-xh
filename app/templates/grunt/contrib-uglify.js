@@ -11,6 +11,4 @@ module.exports = function(grunt) {
       preserveComments: 'some'
     }
   });
-
-  grunt.loadNpmTasks('grunt-contrib-uglify');
 };

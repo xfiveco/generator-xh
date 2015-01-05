@@ -60,7 +60,7 @@ describe('XH Generator SCSS', function () {
       'src/scss/main.scss',
       'src/scss/setup/_variables.scss',
       'src/scss/setup/_mixins.scss',
-      'src/scss/_common.scss',
+      'src/scss/common/_layout.scss',
       'src/js/main.js',
       'Gemfile'
     ];

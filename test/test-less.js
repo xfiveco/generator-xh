@@ -64,7 +64,7 @@ describe('XH Generator Less', function () {
       'src/less/main.less',
       'src/less/setup/variables.less',
       'src/less/setup/mixins.less',
-      'src/less/common.less',
+      'src/less/common/layout.less',
       'src/less/setup/sprites.less',
       'src/js/main.js'
     ];

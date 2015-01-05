@@ -75,8 +75,8 @@ describe('XH Generator Defaults', function () {
       'src/scss/main.scss',
       'src/scss/setup/_variables.scss',
       'src/scss/setup/_mixins.scss',
-      'src/scss/_common.scss',
-      'src/scss/_wordpress.scss',
+      'src/scss/common/_layout.scss',
+      'src/scss/common/_wordpress.scss',
       'src/scss/setup/_sprites.scss',
       'src/js/main.js',
       'src/js/PIE.htc',
@@ -93,9 +93,9 @@ describe('XH Generator Defaults', function () {
       'src/test.html'
     ];
 
-    helpers
-      .run(path.join(__dirname, '../page'))
-      .withArguments(['Home', 'Test'])
+    helpers.run(path.join(__dirname, '../page'), {
+      tmpdir: false
+    }).withArguments(['Home', 'Test'])
       .withOptions({
         'skip-build': true
       })

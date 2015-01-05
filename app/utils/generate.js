@@ -3,7 +3,6 @@
 module.exports = {
   config: function () {
     this.config.set('config', this.props);
-    this.config.save();
   },
 
   dotfiles: function () {
@@ -82,22 +81,49 @@ module.exports = {
 
   preprocessor: function (type, underscore) {
     var srctype = 'src/' + type;
+    var stylesStructure = this.src.readJSON('stylesStructure.json');
+
+    var createStructure = function (structure, base) {
+      var item, i, n, tn, dn;
+
+      for (i = 0; i < structure.length; i++) {
+        item = structure[i];
+
+        if (item.dirname) {
+          n = base + '/' + item.dirname;
+          this.src.mkdir(n);
+          if (!item.children || !item.children.length) {
+            this.fs.copy(this.templatePath('src/img/.keep'), this.destinationPath(n + '/.keep'));
+          } else {
+            createStructure.bind(this)(item.children, n, type, underscore);
+          }
+        } else {
+          n = (base + '/' + item.name).replace('{{type}}', type);
+          tn = this.templatePath(n);
+          dn = this.destinationPath(n.replace('_', underscore));
+
+          if (item.raw) {
+            this.fs.copy(tn, dn);
+          } else {
+            this.fs.copyTpl(tn, dn, this);
+          }
+        }
+      }
+    };
 
     if (underscore === undefined) {
       underscore = '';
     }
 
-    this.mkdir(srctype);
-    this.template(srctype + '/_main.' + type, srctype + '/main.' + type);
-    this.copy(srctype + '/setup/_variables.' + type, srctype + '/setup/' + underscore + 'variables.' + type);
-    this.copy(srctype + '/setup/_mixins.' + type, srctype + '/setup/' + underscore + 'mixins.' + type);
-    this.copy(srctype + '/_common.' + type, srctype + '/' + underscore + 'common.' + type);
+    this.src.mkdir(srctype);
+    createStructure.bind(this)(stylesStructure.defaultStructure, srctype, type, underscore);
+
     if (this.features.useSprites) {
-      this.copy(srctype + '/setup/_sprites.' + type, srctype + '/setup/' + underscore + 'sprites.' + type);
-      this.copy(srctype + '/setup/_sprites.' + type + '.mustache', srctype + '/setup/' + underscore + 'sprites.' + type + '.mustache');
+      createStructure.bind(this)(stylesStructure.sprites, srctype, type, underscore);
     }
+
     if (this.isWP) {
-      this.copy(srctype + '/_wordpress.' + type, srctype + '/' + underscore + 'wordpress.' + type);
+      createStructure.bind(this)(stylesStructure.wp, srctype, type, underscore);
     }
   },
 

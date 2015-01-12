@@ -7,7 +7,8 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     includereplace: 'grunt-include-replace',
-    replace: 'grunt-text-replace'
+    replace: 'grunt-text-replace',
+    validation: 'grunt-html-validation'
   });
 
   // Project configuration.

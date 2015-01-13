@@ -41,10 +41,7 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     this.on('end', function () {
       this.installDependencies({
-        skipInstall: this.options['skip-install'],
-        callback: function () {
-          console.log('ready');
-        }
+        skipInstall: this.options['skip-install']
       });
     });
   },
@@ -126,8 +123,6 @@ var XhGenerator = yeoman.generators.Base.extend({
     if (this.features.useCSS3Pie) {
       this.copy('src/js/_PIE.htc', 'src/js/PIE.htc');
     }
-
-    console.log(arguments);
   }
 });
 

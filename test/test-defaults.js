@@ -12,7 +12,7 @@ describe('XH Generator Defaults', function () {
       .inDir(path.join(__dirname, 'temp', 'defaults'))
       .withOptions({
         'skip-install': true,
-        'skip-update': true
+        'update-check': false
       })
       .withPrompt({
         projectName: 'Test Project',

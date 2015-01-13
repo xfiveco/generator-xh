@@ -12,7 +12,7 @@ describe('XH Generator SCSS', function () {
       .inDir(path.join(__dirname, 'temp', 'scss'))
       .withOptions({
         'skip-install': true,
-        'skip-update': true
+        'update-check': false
       })
       .withPrompt({
         projectName: 'Test Project',

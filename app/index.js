@@ -19,10 +19,10 @@ var XhGenerator = yeoman.generators.Base.extend({
       alias: 'c'
     });
 
-    this.option('skip-update', {
-      desc: 'Skip update check.',
+    this.option('update-check', {
+      desc: 'Do update check. Use --no-update-check to skip.',
       type: Boolean,
-      defaults: false
+      defaults: true
     });
   },
 
@@ -41,7 +41,7 @@ var XhGenerator = yeoman.generators.Base.extend({
   },
 
   askForUpdate: function () {
-    if (this.options.skipUpdate === false || this.options.interactive === false) {
+    if (this.options['update-check'] === true && this.options.interactive !== false) {
       var update = require('./update');
       update.apply(this);
     }

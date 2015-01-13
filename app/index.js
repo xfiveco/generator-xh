@@ -18,10 +18,20 @@ var XhGenerator = yeoman.generators.Base.extend({
       type: String,
       alias: 'c'
     });
+
+    this.option('skip-update', {
+      desc: 'Skip update check.',
+      type: Boolean,
+      defaults: false
+    });
   },
 
   init: function () {
     this.pkg = require('../package.json');
+
+    if (this.options.interactive === false) {
+      this.conflicter.force = true;
+    }
 
     this.on('end', function () {
       this.installDependencies({
@@ -31,8 +41,10 @@ var XhGenerator = yeoman.generators.Base.extend({
   },
 
   askForUpdate: function () {
-    var update = require('./update');
-    update.apply(this);
+    if (this.options.skipUpdate === false || this.options.interactive === false) {
+      var update = require('./update');
+      update.apply(this);
+    }
   },
 
   checkForConfig: function () {
@@ -52,7 +64,7 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     // Welcome user
     if (this.configCorrupted !== true) {
-      utils.welcome();
+      utils.welcome.bind(this)();
     }
 
     this.prompt(utils.prompts.generator, function (props) {

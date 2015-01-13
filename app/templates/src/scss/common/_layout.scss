@@ -1,6 +1,5 @@
-
-/* Common
-   ========================================================================== */
+/* Layout
+   ========================================================================= */
 
 /* Acessibility navigation */
 .accessibility-nav {
@@ -18,28 +17,6 @@
   a:active,
   a:focus {
     left: 9999em;
-  }
-}
-
-.hide {
-  position: absolute !important;
-  left: -9999em !important;
-}
-
-/* Image Replacement */
-.ir {
-  display: block;
-  position: relative;
-  overflow: hidden;
-
-  span {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
   }
 }
 

@@ -2,9 +2,9 @@
 
 module.exports = function () {
   var chalk = require('chalk');
-  console.log('');
-  console.log(chalk.cyan(' ***********************************************************') + '\n');
-  console.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
-  console.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
-  console.log(chalk.cyan(' ***********************************************************') + '\n');
+  this.log('');
+  this.log(chalk.cyan(' ***********************************************************') + '\n');
+  this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
+  this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
+  this.log(chalk.cyan(' ***********************************************************') + '\n');
 };

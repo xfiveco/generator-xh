@@ -36,7 +36,7 @@ module.exports = {
     var props = fileContentJSON['generator-xh'].config;
     var utils = require('./utils/index');
 
-    utils.welcome();
+    utils.welcome.bind(this)();
 
     // check if config is corrupted
     for (var i in utils.prompts.generator) {

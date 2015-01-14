@@ -12,7 +12,7 @@ describe('XH Generator Less', function () {
       .inDir(path.join(__dirname, 'temp', 'less'))
       .withOptions({
         'skip-install': true,
-        'update-check': false
+        'skip-update': true
       })
       .withPrompt({
         projectName: 'Test Project',

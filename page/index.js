@@ -7,7 +7,7 @@ var PageGenerator = yeoman.generators.Base.extend({
     yeoman.generators.Base.apply(this, arguments);
 
     try {
-      this.config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
+      this.config = this.fs.readJSON(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
     } catch (ex) {
       this.log('You need to run this generator in a project directory.');
       process.exit();

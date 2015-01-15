@@ -2,24 +2,34 @@
 'use strict';
 var path = require('path');
 var helpers = require('yeoman-generator').test;
+var assert = require('yeoman-generator').assert;
 
 describe('XH Generator SCSS', function () {
   before(function (done) {
-    helpers.testDirectory(path.join(__dirname, 'temp', 'scss'), function (err) {
-      if (err) {
-        return done(err);
-      }
 
-      this.app = helpers.createGenerator('xh:app', [
-        '../../../app'
-      ]);
-      done();
-    }.bind(this));
+    helpers
+      .run(path.join(__dirname, '../app'))
+      .inDir(path.join(__dirname, 'temp', 'scss'))
+      .withOptions({
+        'skip-install': true,
+        'skip-update': true
+      })
+      .withPrompt({
+        projectName: 'Test Project',
+        useBranding: true,
+        reloader: 'None',
+        server: false,
+        cssPreprocessor: 'SCSS',
+        ignoreDist: false,
+        isWP: false,
+        features: []
+      })
+      .on('end', done);
+
   });
 
-  it('creates expected files', function (done) {
-    var expected = [
-      // add files you expect to exist here.
+  it('creates configuration files', function (done) {
+    var expectedFiles = [
       '.yo-rc.json',
       '.bowerrc',
       '.editorconfig',
@@ -28,6 +38,15 @@ describe('XH Generator SCSS', function () {
       '.gitignore',
       'package.json',
       'bower.json',
+      'Gemfile'
+    ];
+
+    assert.file(expectedFiles);
+    done();
+  });
+
+  it('creates Grunt files', function (done) {
+    var expectedFiles = [
       'Gruntfile.js',
       'grunt/autoprefixer.js',
       'grunt/contrib-clean.js',
@@ -45,42 +64,62 @@ describe('XH Generator SCSS', function () {
       'grunt/search.js',
       'grunt/text-replace.js',
       'grunt/usemin.js',
-      'grunt/build-helpers.js',
+      'grunt/build-helpers.js'
+    ];
+
+    assert.file(expectedFiles);
+    done();
+  });
+
+  it('creates HTML structure', function (done) {
+    var expectedFiles = [
       'index.html',
-      'src/fonts/.keep',
-      'src/img/.keep',
-      'src/media/.keep',
-      'src/designs/.keep',
       'src/template.html',
       'src/includes/head.html',
       'src/includes/header.html',
       'src/includes/sidebar.html',
       'src/includes/scripts.html',
-      'src/includes/footer.html',
+      'src/includes/footer.html'
+    ];
+
+    assert.file(expectedFiles);
+    done();
+  });
+
+  it('creates SCSS structure', function (done) {
+    var expectedFiles = [
       'src/scss/main.scss',
       'src/scss/setup/_variables.scss',
       'src/scss/setup/_mixins.scss',
-      'src/scss/_common.scss',
-      'src/js/main.js',
-      'Gemfile'
+      'src/scss/common/_utilities.scss',
+      'src/scss/common/_layout.scss',
+      'src/scss/components/.keep',
+      'src/scss/vendor/.keep'
     ];
 
-    helpers.mockPrompt(this.app, {
-      projectName: 'Test Project',
-      useBranding: true,
-      reloader: 'None',
-      server: false,
-      cssPreprocessor: 'SCSS',
-      isWP: false,
-      features: []
-    });
+    assert.file(expectedFiles);
+    done();
+  });
 
-    this.app.options['skip-install'] = true;
+  it('creates JS structure', function (done) {
+    var expectedFiles = [
+      'src/js/main.js'
+    ];
 
-    this.app.run({}, function () {
-      helpers.assertFile(expected);
-      done();
-    });
+    assert.file(expectedFiles);
+    done();
+  });
+
+  it('creates assets structure', function (done) {
+    var expectedFiles = [
+      'src/fonts/.keep',
+      'src/img/.keep',
+      'src/media/.keep',
+      'src/designs/.keep'
+    ];
+
+    assert.file(expectedFiles);
+    done();
   });
 });
 

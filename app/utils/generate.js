@@ -1,9 +1,45 @@
 'use strict';
 
-module.exports = {
+var helpers = {
+  getStructure: function () {
+    if (!helpers._stylesStructure) {
+      helpers._stylesStructure = this.src.readJSON('stylesStructure.json');
+    }
+
+    return helpers._stylesStructure;
+  },
+
+  createStructure: function (structure, base, type, underscore) {
+    var item, i, n, tn, dn;
+
+    for (i = 0; i < structure.length; i++) {
+      item = structure[i];
+
+      if (item.dirname) {
+        n = base + '/' + item.dirname;
+        if (!item.children || !item.children.length) {
+          this.fs.copy(this.templatePath('src/img/.keep'), this.destinationPath(n + '/.keep'));
+        } else {
+          helpers.createStructure.bind(this)(item.children, n, type, underscore);
+        }
+      } else {
+        n = (base + '/' + item.name).replace('{{type}}', type);
+        tn = this.templatePath(n);
+        dn = this.destinationPath(n.replace('_', underscore));
+
+        if (item.raw) {
+          this.fs.copy(tn, dn);
+        } else {
+          this.fs.copyTpl(tn, dn, this);
+        }
+      }
+    }
+  }
+};
+
+var generate = {
   config: function () {
     this.config.set('config', this.props);
-    this.config.save();
   },
 
   dotfiles: function () {
@@ -17,10 +53,15 @@ module.exports = {
   appfiles: function () {
     this.template('_package.json', 'package.json');
     this.template('_bower.json', 'bower.json');
-    this.template('Gruntfile.js', 'Gruntfile.js');
+
+    if (this.cssPreprocessor === 'SCSS') {
+      this.copy('Gemfile');
+    }
   },
 
   gruntModules: function () {
+    this.template('Gruntfile.js');
+
     // read packages from packages.json
     // and include neccessary task config files
     var pkg = JSON.parse(this.engine(this.src.read('_package.json'), this)).devDependencies;
@@ -44,64 +85,48 @@ module.exports = {
     this.template('_index.html', 'index.html');
   },
 
-  structure: function () {
-    this.mkdir('src');
-    this.mkdir('src/includes');
-    this.mkdir('src/js');
-    this.mkdir('src/fonts');
-    this.mkdir('src/img');
-    this.mkdir('src/img/common');
-    this.mkdir('src/media');
-    this.mkdir('src/designs');
-
+  assets: function () {
     this.copy('src/img/.keep', 'src/fonts/.keep');
     this.copy('src/img/.keep', 'src/img/.keep');
     this.copy('src/img/.keep', 'src/media/.keep');
     this.copy('src/img/.keep', 'src/designs/.keep');
-
-    if (this.features.useSprites) {
-      this.copy('src/img/.keep', 'src/img/sprites/1x/.keep');
-      this.copy('src/img/.keep', 'src/img/sprites/2x/.keep');
-    }
   },
 
   templateFiles: function (ext) {
     this.copy('src/_template.html', 'src/template.' + ext);
-
-    this.template('src/includes/_head.html', 'src/includes/head.' + ext);
     this.copy('src/includes/_header.html', 'src/includes/header.' + ext);
     this.copy('src/includes/_sidebar.html', 'src/includes/sidebar.' + ext);
-    this.copy('src/includes/_scripts.html', 'src/includes/scripts.' + ext);
     this.copy('src/includes/_footer.html', 'src/includes/footer.' + ext);
 
-    if (this.isWP) {
-      this.mkdir(this.wpThemeFolder);
-      this.copy('src/_wp.html', 'src/wp.' + ext);
-    }
+    this.template('src/includes/_head.html', 'src/includes/head.' + ext);
+    this.template('src/includes/_scripts.html', 'src/includes/scripts.' + ext);
   },
 
   preprocessor: function (type, underscore) {
-    var srctype = 'src/' + type;
-
-    if (underscore === undefined) {
-      underscore = '';
-    }
-
-    this.mkdir(srctype);
-    this.template(srctype + '/_main.' + type, srctype + '/main.' + type);
-    this.copy(srctype + '/setup/_variables.' + type, srctype + '/setup/' + underscore + 'variables.' + type);
-    this.copy(srctype + '/setup/_mixins.' + type, srctype + '/setup/' + underscore + 'mixins.' + type);
-    this.copy(srctype + '/_common.' + type, srctype + '/' + underscore + 'common.' + type);
-    if (this.features.useSprites) {
-      this.copy(srctype + '/setup/_sprites.' + type, srctype + '/setup/' + underscore + 'sprites.' + type);
-      this.copy(srctype + '/setup/_sprites.' + type + '.mustache', srctype + '/setup/' + underscore + 'sprites.' + type + '.mustache');
-    }
-    if (this.isWP) {
-      this.copy(srctype + '/_wordpress.' + type, srctype + '/' + underscore + 'wordpress.' + type);
-    }
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().defaultStructure, 'src/' + type, type, underscore);
   },
 
   js: function () {
     this.template('src/js/_main.js', 'src/js/main.js');
+  },
+
+  wp: function (type, underscore, ext) {
+    this.dest.mkdir(this.wpThemeFolder);
+    this.copy('src/_wp.html', 'src/wp.' + ext);
+
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().wp, 'src/' + type, type, underscore);
+  },
+
+  sprites: function (type, underscore) {
+    this.copy('src/img/.keep', 'src/img/sprites/1x/.keep');
+    this.copy('src/img/.keep', 'src/img/sprites/2x/.keep');
+
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().sprites, 'src/' + type, type, underscore);
+  },
+
+  css3pie: function () {
+    this.copy('src/js/_PIE.htc', 'src/js/PIE.htc');
   }
 };
+
+module.exports = generate;

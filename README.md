@@ -32,6 +32,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
    - [LibSass notices](#libsass-notices)
    - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)
    - [Using Sprites](#using-sprites)
+   - [Automatic SVG fallbacks](#automatic-svg-fallbacks)
 - [Changelog](#changelog)
 - [Contributing](#contributing)
 - [Credits](#credits)
@@ -171,13 +172,20 @@ The meaning of files and folders are as follows:
    - **grunt** - atomic grunt tasks configuration
    - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
    - **scss / less** - SCSS or Less files
-      - `main.scss` / `main.less` - main file where other stylesheets are imported
-      - `_variables.scss` / `variables.less` - variables file
-      - `_mixins.scss` / `mixins.less` - mixins file
-      - `_common.scss` / `common.less` - common styles with some minimal default styling
-      - `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+     - `main.scss` / `main.less` - main file where other stylesheets are imported
+     - **common** - common styles for most of pages
+       - `_layout.scss` / `layout.less` - main page structure
+       - `_utilites.scss` / `utilities.less` - utility classes (image replacement, hide, etc.)
+       - `_wordpress.scss` / `wordpress.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+     - **components** - styles for page modules/components; this is where most of your styles will go
+     - **setup** - various configurations and preprocesor helpers
+       - `_variables.scss` / `variables.less` - variables file
+       - `_mixins.scss` / `mixins.less` - mixins file
+       - `_sprites.scss` / `sprites.less` - sprite mixin when 'Automatic sprites' feature is used
+       - `_sprites.scss.mustache` / `sprites.less.mustache` - template file for generating actual sprites code
+     - **vendor** - styles overwriting/replacing library ones
    - **js**
-      - `main.js` is a main JS file in project
+     - `main.js` is a main JS file in project
    - `home.html`, etc. - HTML files composed from HTML partials
 - `index.html` - project index with project pages listed
 - `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
@@ -191,7 +199,7 @@ The meaning of files and folders are as follows:
 - `.jshitrc` - [JSHint](http://www.jshint.com/) configuration
 
 
-On a typical project, you will work in `src` folder and check your work in `dist` folder so you don’t have to touch other files.
+On a typical project, you will work in `src` folder and check your work in `dist` folder so you don’t have to touch other files. For more info about working with styles structure go to [Writing styles section](#writing-styles).
 
 ### 3) Adding pages to the project
 
@@ -337,7 +345,7 @@ Now the project is set up and you can continue like described in the [Developmen
 
 ### Working with files in the dist folder
 
-In general, it’s not recommended that you work directly with files in the `dist`. The files in `dist` folder are automatically generated from the source files in `src` folder. However, once you hand over the project to your client, they can work directly with plain HTML and CSS files if they wish.
+In general, it’s not recommended that you work directly with files in the `dist`. The files in `dist` folder are automatically generated from the source files in `src` folder and by default `dist` folder is ignored in version control system. However, once you hand over the project to your client, they can work directly with plain HTML and CSS files if they wish.
 
 HTML and CSS files are prettified for consistent formatting and a table of contents from imported SCSS or Less stylesheets is generated at the beginning of `main.css` for better overview.
 
@@ -346,18 +354,26 @@ HTML and CSS files are prettified for consistent formatting and a table of conte
 XH Generator supports SCSS or Less. Sass syntax is not recommended. The following source files are generated in `src/scss` or `src/less` folders:
 
 - `main.scss` / `main.less` - main file where other stylesheets are imported
-- `_variables.scss` / `variables.less` - variables file
-- `_mixins.scss` / `mixins.less` - mixins file
-- `_common.scss` / `common.less` - some minimal common styling
-- `_wp.scss` / `wp.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+- **common** - common styles for most of pages
+  - `_layout.scss` / `layout.less` - main page structure
+  - `_utilites.scss` / `utilities.less` - utility classes (image replacement, hide, etc.)
+  - `_wordpress.scss` / `wordpress.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+- **components** - styles for page modules/components; this is where most of your styles will go
+- **setup** - various configurations and preprocesor helpers
+  - `_variables.scss` / `variables.less` - variables file
+  - `_mixins.scss` / `mixins.less` - mixins file
+  - `_sprites.scss` / `sprites.less` - sprite mixin when 'Automatic sprites' feature is used
+  - `_sprites.scss.mustache` / `sprites.less.mustache` - template file for generating actual sprites code
+- **vendor** - styles overwriting/replacing library ones
 
 The following approach is recommended when creating styles:
 
 1. Use `main.scss` or `main.less` only for importing other stylesheets. Do not write styles directly to these files!
 2. Use variables and mixins files to store your variables and mixins.
-3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended), or pages.
-4. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
-5. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use the default LibSass or Less as they are [faster than Ruby Sass](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
+3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in `scss/components/_article.scss` file instead of ~~`scss/components/_text.scss`~~.
+4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
+5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
+6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use the default LibSass or Less as they are [faster than Ruby Sass](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
 
 ### LibSass notices
 
@@ -388,12 +404,12 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 
 3. Go to `src/bower_components/jquery-colorbox` and copy images from `example1/images` folder to `src/img/colorbox` folder.
 
-4. Get `example1/colorbox.css` from the same dir, rename it to `colorbox.scss` and store it in `src/scss` folder
+4. Get `example1/colorbox.css` from the same dir, rename it to `_colorbox.scss`, store it in `src/scss/vendor` folder and adjust to your needs if needed.
 
 5. Import `colorbox.scss` in `main.scss`
 
     ```css
-    @import "colorbox";
+    @import "vendor/colorbox";
     ```
 
 6. Replace all instances of `images/` in `colorbox.scss` with `../img/colorbox/`
@@ -419,6 +435,10 @@ In the XH Generator default configuration you are expected to put yor files in `
 The exact variable names can be found in `src/scss/setup/_sprites@N.{scss|less}` files if you need to check them.
 
 **Important!** Currently you need to provide **both** files (nomal & retina). If you do not, the output sprite images will differ and as a result generated `background-position` values will be incorrect.
+
+### Automatic SVG fallbacks
+
+Vector graphics is increasingly more popular in web development due to its prefect look no matter the scale. As such you will probably find yourself using SVG files or icon fonts more and more often. However, not all browsers support SVGs out of the box, so fallbacks are needed. Currently XH Generator supports automatic optimization of SVG files (along with various other raster image formats) and PNG fallbacks creation. The caveat for correct automatic fallbacks is that SVG viewport needs to have proper size (PNG wile will have the same dimensions). Also, if something seems off you can [play with optimization settings](https://github.com/sindresorhus/grunt-svgmin#available-optionsplugins) in `grunt/contrib-imagemin.js` task.
 
 ## Changelog
 

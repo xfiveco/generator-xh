@@ -1,0 +1,44 @@
+{
+  "defaultStructure": [
+    { "name": "main.{{type}}" },
+    {
+      "dirname": "common",
+      "children": [
+        { "name": "_utilities.{{type}}" },
+        { "name": "_layout.{{type}}" }
+      ]
+    }, {
+      "dirname": "setup",
+      "children": [
+        { "name": "_variables.{{type}}" },
+        { "name": "_mixins.{{type}}" }
+      ]
+    }, {
+      "dirname": "components"
+    }, {
+      "dirname": "vendor"
+    }
+  ],
+
+  "sprites": [
+    {
+      "dirname": "setup",
+      "children": [
+        { "name": "_sprites.{{type}}" },
+        {
+          "name": "_sprites.{{type}}.mustache",
+          "raw": true
+        }
+      ]
+    }
+  ],
+
+  "wp": [
+    {
+      "dirname": "common",
+      "children": [
+        { "name": "_wordpress.{{type}}" }
+      ]
+    }
+  ]
+}

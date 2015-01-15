@@ -55,12 +55,12 @@ var generate = {
     this.template('_bower.json', 'bower.json');
 
     if (this.cssPreprocessor === 'SCSS') {
-      this.copy('Gemfile', 'Gemfile');
+      this.copy('Gemfile');
     }
   },
 
   gruntModules: function () {
-    this.template('Gruntfile.js', 'Gruntfile.js');
+    this.template('Gruntfile.js');
 
     // read packages from packages.json
     // and include neccessary task config files

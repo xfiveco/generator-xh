@@ -52,20 +52,13 @@ module.exports = function(grunt) {
       dest: '<%= wpThemeFolder  %>'
     },<% } %>
 
-    // Backup include files
-    backup: {
+    // copy all include files to temporary folder
+    // so that original includes aren't ever modified
+    includes: {
       expand: true,
       cwd: '<%%= xh.includes %>',
-      src: '<%%= xh.build %>',
+      src: [ '*.*' ],
       dest: '<%%= xh.tmp %>'
-    },
-
-    // Restore include files
-    restore: {
-      expand: true,
-      cwd: '<%%= xh.tmp %>',
-      src: '<%%= xh.build %>',
-      dest: '<%%= xh.includes %>/'
     }
   });
 };

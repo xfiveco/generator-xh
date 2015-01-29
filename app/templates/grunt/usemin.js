@@ -8,13 +8,13 @@ module.exports = function(grunt) {
   grunt.config('useminPrepare', {
     html: {
       src: '<%%= xh.build %>',
-      cwd: '<%%= xh.includes %>',
+      cwd: '<%%= xh.tmp %>',
       expand: true
     },
 
     htmlmin: {
       src: '<%%= xh.build %>',
-      cwd: '<%%= xh.includes %>',
+      cwd: '<%%= xh.tmp %>',
       expand: true
     },
 
@@ -35,12 +35,12 @@ module.exports = function(grunt) {
   grunt.config('usemin', {
     html: {
       src: '<%%= xh.build %>',
-      cwd: '<%%= xh.includes %>',
+      cwd: '<%%= xh.tmp %>',
       expand: true
     },
 
     options: {
-      assetsDirs: ['<%%= xh.includes %>/']
+      assetsDirs: ['<%%= xh.tmp %>']
     }
   });
 };

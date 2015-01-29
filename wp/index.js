@@ -1,5 +1,4 @@
 'use strict';
-var util = require('util');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
@@ -29,11 +28,11 @@ function getCurrentWpVersion(callback) {
     callback(null, latestVersion);
   });
 
-};
+}
 
 var WPGenerator = yeoman.generators.Base.extend({
 
-  init: function () {
+  initializing: function () {
 
     if (!config.isWP) {
       this.log('This project was not set up as a WordPress project');
@@ -46,7 +45,7 @@ var WPGenerator = yeoman.generators.Base.extend({
     }
   },
 
-  askFor: function () {
+  prompting: function () {
     var done = this.async();
 
     // Welcome user
@@ -58,19 +57,19 @@ var WPGenerator = yeoman.generators.Base.extend({
     var prompts = [{
         name: 'databaseHost',
         message: 'Please enter the database host:',
-        default: "$_SERVER['XTEAM_DB_HOST']"
+        default: '$_SERVER[\'XTEAM_DB_HOST\']'
       }, {
         name: 'databaseName',
         message: 'Please enter the database name:',
-        default: "$_SERVER['XTEAM_DB_NAME']"
+        default: '$_SERVER[\'XTEAM_DB_NAME\']'
       }, {
         name: 'databaseUser',
         message: 'Please enter the database user:',
-        default: "$_SERVER['XTEAM_DB_USER']"
+        default: '$_SERVER[\'XTEAM_DB_USER\']'
       }, {
         name: 'databasePassword',
         message: 'Please enter the database password:',
-        default: "$_SERVER['XTEAM_DB_PASSWORD']"
+        default: '$_SERVER[\'XTEAM_DB_PASSWORD\']'
       }, {
         type: 'checkbox',
         name: 'features',
@@ -113,139 +112,143 @@ var WPGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  installWordPress: function () {
-    var done = this.async();
-    var me = this;
+  default: {
+    installWordPress: function () {
+      var done = this.async();
+      var me = this;
 
-    getCurrentWpVersion(function(err, ver) {
+      getCurrentWpVersion(function(err, ver) {
 
-      me.remote('wordpress', 'wordpress', ver, function (err, remote) {
+        me.remote('wordpress', 'wordpress', ver, function (err, remote) {
+
+          if (err) {
+            return done(err);
+          }
+
+          me.log('\nCopying WordPress ' + ver + '\n');
+
+          remote.bulkDirectory('.', config.wpFolder);
+
+          done();
+        });
+      });
+
+    },
+
+    installWPizedLight: function () {
+      if (!this.installWPizedLight) {
+        return;
+      }
+
+      var done = this.async();
+      var me = this;
+
+      this.remote('xhtmlized', 'wpized-light', 'master', function (err, remote) {
 
         if (err) {
           return done(err);
         }
 
-        me.log('\nCopying WordPress ' + ver + '\n');
+        me.log('\nCopying WPized Light Theme\n');
 
-        remote.bulkDirectory('.', config.wpFolder);
+        remote.bulkDirectory('.', config.wpThemeFolder);
+
+        done();
+      }, true);
+
+    },
+
+    installWpSyncDb: function () {
+      if (!this.installWpSyncDb) {
+        return;
+      }
+
+      var done = this.async();
+      var me = this;
+
+      this.remote('wp-sync-db', 'wp-sync-db', 'master', function (err, remote) {
+
+        if (err) {
+          return done(err);
+        }
+
+        me.log('\nCopying WP Sync DB Plugin\n');
+
+        remote.bulkDirectory('.', 'wp/wp-content/plugins/wp-sync-db');
 
         done();
       });
-    });
+    },
 
-  },
-
-  addConfig: function () {
-    var wpConfigFile = this.readFileAsString(config.wpFolder + '/wp-config-sample.php');
-    var prefix = this._.slugify(config.projectName);
-    prefix = prefix.replace(/-/g, '_');
-
-
-    function getDbSetting(setting) {
-      if (setting.indexOf("$_SERVER") !== -1) {
-        return setting;
-      } else {
-        return "'" + setting + "'";
-      }
-    }
-
-    wpConfigFile = wpConfigFile.replace("'localhost'", getDbSetting(this.databaseHost));
-    wpConfigFile = wpConfigFile.replace("'database_name_here'", getDbSetting(this.databaseName));
-    wpConfigFile = wpConfigFile.replace("'username_here'", getDbSetting(this.databaseUser));
-    wpConfigFile = wpConfigFile.replace("'password_here'", getDbSetting(this.databasePassword));
-    wpConfigFile = wpConfigFile.replace("wp_", prefix + '_');
-
-    this.write(config.wpFolder + '/wp-config.php', wpConfigFile);
-  },
-
-  createVhostFile: function () {
-    var name = this._.slugify(config.projectName);
-    this.documentRoot = process.cwd();
-    this.serverName = "dev-" + name + ".previewized.com";
-    this.dbName = name;
-    this.template('dev-vhost.conf', 'dev-vhost.conf');
-  },
-
-  installWPizedLight: function () {
-    if (!this.installWPizedLight) {
-      return;
-    }
-
-    var done = this.async();
-    var me = this;
-
-    this.remote('xhtmlized', 'wpized-light', 'master', function (err, remote) {
-
-      if (err) {
-        return done(err);
+    installWpStream: function () {
+      if (!this.installWpStream) {
+        return;
       }
 
-      me.log('\nCopying WPized Light Theme\n');
+      var done = this.async();
+      var me = this;
 
-      remote.bulkDirectory('.', config.wpThemeFolder);
+      this.remote('x-team', 'wp-stream', 'master', function (err, remote) {
 
-      done();
-    }, true);
+        if (err) {
+          return done(err);
+        }
 
+        me.log('\nCopying Stream Plugin\n');
+
+        remote.bulkDirectory('.', 'wp/wp-content/plugins/stream');
+
+        done();
+      });
+    }
   },
 
-  updateThemeStyles: function () {
-    if (!this.installWPizedLight) {
-      return;
-    }
+  writing: {
+    addConfig: function () {
+      var wpConfigFile = this.readFileAsString(config.wpFolder + '/wp-config-sample.php');
+      var prefix = this._.slugify(config.projectName);
+      prefix = prefix.replace(/-/g, '_');
 
-    // Update theme stylesheet
-    var themeStylesheetFile = config.wpThemeFolder + '/style.css';
-    var themeStylesheet = this.readFileAsString(themeStylesheetFile);
-    themeStylesheet = themeStylesheet.replace('WPized Light', config.projectName);
-    this.write(themeStylesheetFile, themeStylesheet);
-  },
 
-  installWpSyncDb: function () {
-    if (!this.installWpSyncDb) {
-      return;
-    }
-
-    var done = this.async();
-    var me = this;
-
-    this.remote('wp-sync-db', 'wp-sync-db', 'master', function (err, remote) {
-
-      if (err) {
-        return done(err);
+      function getDbSetting(setting) {
+        if (setting.indexOf('$_SERVER') !== -1) {
+          return setting;
+        } else {
+          return '\'' + setting + '\'';
+        }
       }
 
-      me.log('\nCopying WP Sync DB Plugin\n');
+      wpConfigFile = wpConfigFile.replace('\'localhost\'', getDbSetting(this.databaseHost));
+      wpConfigFile = wpConfigFile.replace('\'database_name_here\'', getDbSetting(this.databaseName));
+      wpConfigFile = wpConfigFile.replace('\'username_here\'', getDbSetting(this.databaseUser));
+      wpConfigFile = wpConfigFile.replace('\'password_here\'', getDbSetting(this.databasePassword));
+      wpConfigFile = wpConfigFile.replace('wp_', prefix + '_');
 
-      remote.bulkDirectory('.', 'wp/wp-content/plugins/wp-sync-db');
+      this.write(config.wpFolder + '/wp-config.php', wpConfigFile);
+    },
 
-      done();
-    });
-  },
+    createVhostFile: function () {
+      var name = this._.slugify(config.projectName);
+      this.documentRoot = process.cwd();
+      this.serverName = 'dev-' + name + '.previewized.com';
+      this.dbName = name;
+      this.template('dev-vhost.conf', 'dev-vhost.conf');
+    },
 
-  installWpStream: function () {
-    if (!this.installWpStream) {
-      return;
-    }
-
-    var done = this.async();
-    var me = this;
-
-    this.remote('x-team', 'wp-stream', 'master', function (err, remote) {
-
-      if (err) {
-        return done(err);
+    updateThemeStyles: function () {
+      if (!this.installWPizedLight) {
+        return;
       }
 
-      me.log('\nCopying Stream Plugin\n');
-
-      remote.bulkDirectory('.', 'wp/wp-content/plugins/stream');
-
-      done();
-    });
+      // Update theme stylesheet
+      var themeStylesheetFile = config.wpThemeFolder + '/style.css';
+      var themeStylesheet = this.readFileAsString(themeStylesheetFile);
+      themeStylesheet = themeStylesheet.replace('WPized Light', config.projectName);
+      this.write(themeStylesheetFile, themeStylesheet);
+    }
   },
 
-  informUser: function () {
+  end: function () {
     this.log('\nAll done!');
   }
 

@@ -2,38 +2,10 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
-
-/**
- * Find out current WordPress version from repository tags
- */
-function getCurrentWpVersion(callback) {
-
-  var latestVersion = '3.9';
-
-  require('simple-git')().listRemote('--tags git://github.com/WordPress/WordPress.git', function (err, tagsList) {
-
-    if (err) {
-      return callback(err, latestVersion);
-    }
-
-    var tagList = ('' + tagsList).split('\n');
-    tagList.pop();
-
-    var lastTag = /\d\.\d(\.\d)?/ig.exec(tagList.pop());
-
-    if (lastTag !== null) {
-      latestVersion = lastTag[0];
-    }
-
-    callback(null, latestVersion);
-  });
-
-}
+var path = require('path');
 
 var WPGenerator = yeoman.generators.Base.extend({
-
   initializing: function () {
-
     if (!config.isWP) {
       this.log('This project was not set up as a WordPress project');
       process.exit();
@@ -112,22 +84,22 @@ var WPGenerator = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-  default: {
+  writing: {
     installWordPress: function () {
       var done = this.async();
-      var me = this;
+      var self = this;
 
-      getCurrentWpVersion(function(err, ver) {
-
-        me.remote('wordpress', 'wordpress', ver, function (err, remote) {
+      this._getCurrentWpVersion(function(err, ver) {
+        self.remote('wordpress', 'wordpress', ver, function (err, remote) {
 
           if (err) {
             return done(err);
           }
 
-          me.log('\nCopying WordPress ' + ver + '\n');
+          self.log('\nCopying WordPress ' + ver + '\n');
 
           remote.bulkDirectory('.', config.wpFolder);
+          self._createConfig(remote);
 
           done();
         });
@@ -141,7 +113,7 @@ var WPGenerator = yeoman.generators.Base.extend({
       }
 
       var done = this.async();
-      var me = this;
+      var self = this;
 
       this.remote('xhtmlized', 'wpized-light', 'master', function (err, remote) {
 
@@ -149,9 +121,14 @@ var WPGenerator = yeoman.generators.Base.extend({
           return done(err);
         }
 
-        me.log('\nCopying WPized Light Theme\n');
+        self.log('\nCopying WPized Light Theme\n');
 
-        remote.bulkDirectory('.', config.wpThemeFolder);
+        // cannot use remote.bulkDirectory here
+        // since we need to specify 'process' argument to update file contents
+        var root = self.sourceRoot();
+        self.sourceRoot(remote.cachePath);
+        self.bulkDirectory('.', config.wpThemeFolder, self._updateThemeStyles);
+        self.sourceRoot(root);
 
         done();
       }, true);
@@ -164,7 +141,7 @@ var WPGenerator = yeoman.generators.Base.extend({
       }
 
       var done = this.async();
-      var me = this;
+      var self = this;
 
       this.remote('wp-sync-db', 'wp-sync-db', 'master', function (err, remote) {
 
@@ -172,7 +149,7 @@ var WPGenerator = yeoman.generators.Base.extend({
           return done(err);
         }
 
-        me.log('\nCopying WP Sync DB Plugin\n');
+        self.log('\nCopying WP Sync DB Plugin\n');
 
         remote.bulkDirectory('.', 'wp/wp-content/plugins/wp-sync-db');
 
@@ -186,7 +163,7 @@ var WPGenerator = yeoman.generators.Base.extend({
       }
 
       var done = this.async();
-      var me = this;
+      var self = this;
 
       this.remote('x-team', 'wp-stream', 'master', function (err, remote) {
 
@@ -194,37 +171,12 @@ var WPGenerator = yeoman.generators.Base.extend({
           return done(err);
         }
 
-        me.log('\nCopying Stream Plugin\n');
+        self.log('\nCopying Stream Plugin\n');
 
         remote.bulkDirectory('.', 'wp/wp-content/plugins/stream');
 
         done();
       });
-    }
-  },
-
-  writing: {
-    addConfig: function () {
-      var wpConfigFile = this.readFileAsString(config.wpFolder + '/wp-config-sample.php');
-      var prefix = this._.slugify(config.projectName);
-      prefix = prefix.replace(/-/g, '_');
-
-
-      function getDbSetting(setting) {
-        if (setting.indexOf('$_SERVER') !== -1) {
-          return setting;
-        } else {
-          return '\'' + setting + '\'';
-        }
-      }
-
-      wpConfigFile = wpConfigFile.replace('\'localhost\'', getDbSetting(this.databaseHost));
-      wpConfigFile = wpConfigFile.replace('\'database_name_here\'', getDbSetting(this.databaseName));
-      wpConfigFile = wpConfigFile.replace('\'username_here\'', getDbSetting(this.databaseUser));
-      wpConfigFile = wpConfigFile.replace('\'password_here\'', getDbSetting(this.databasePassword));
-      wpConfigFile = wpConfigFile.replace('wp_', prefix + '_');
-
-      this.write(config.wpFolder + '/wp-config.php', wpConfigFile);
     },
 
     createVhostFile: function () {
@@ -233,23 +185,78 @@ var WPGenerator = yeoman.generators.Base.extend({
       this.serverName = 'dev-' + name + '.previewized.com';
       this.dbName = name;
       this.template('dev-vhost.conf', 'dev-vhost.conf');
-    },
-
-    updateThemeStyles: function () {
-      if (!this.installWPizedLight) {
-        return;
-      }
-
-      // Update theme stylesheet
-      var themeStylesheetFile = config.wpThemeFolder + '/style.css';
-      var themeStylesheet = this.readFileAsString(themeStylesheetFile);
-      themeStylesheet = themeStylesheet.replace('WPized Light', config.projectName);
-      this.write(themeStylesheetFile, themeStylesheet);
     }
   },
 
   end: function () {
     this.log('\nAll done!');
+  },
+
+  /**
+   * Find out current WordPress version from repository tags.
+   */
+  _getCurrentWpVersion: function (callback) {
+
+    var latestVersion = '4.1';
+
+    require('simple-git')().listRemote('--tags git://github.com/WordPress/WordPress.git', function (err, tagsList) {
+
+      if (err) {
+        return callback(err, latestVersion);
+      }
+
+      var tagList = ('' + tagsList).split('\n');
+      tagList.pop();
+
+      var lastTag = /\d\.\d(\.\d)?/ig.exec(tagList.pop());
+
+      if (lastTag !== null) {
+        latestVersion = lastTag[0];
+      }
+
+      callback(null, latestVersion);
+    });
+
+  },
+
+  /**
+   * Wrap setting in quotes if needed.
+   */
+  _getDbSetting: function (setting) {
+    if (setting.indexOf('$_SERVER') !== -1) {
+      return setting;
+    } else {
+      return '\'' + setting + '\'';
+    }
+  },
+
+  /**
+   * Create WP config file based on config sample from cache
+   * (actual files won't be written to disk until conflicter finishes,
+   * so we cannot just grab one from theme dir).
+   */
+  _createConfig: function (remote) {
+    var prefix = this._.slugify(config.projectName).replace(/-/g, '_');
+
+    var contents = this.fs.read(remote.cachePath + '/wp-config-sample.php')
+      .replace('\'localhost\'', this._getDbSetting(this.databaseHost))
+      .replace('\'database_name_here\'', this._getDbSetting(this.databaseName))
+      .replace('\'username_here\'', this._getDbSetting(this.databaseUser))
+      .replace('\'password_here\'', this._getDbSetting(this.databasePassword))
+      .replace('wp_', prefix + '_');
+
+    this.fs.write(config.wpFolder + '/wp-config.php', contents);
+  },
+
+  /**
+   * Replace theme name in styles file before copy.
+   */
+  _updateThemeStyles: function (body, source, destination) {
+    if (path.basename(destination) === 'style.css') {
+      body = body.replace('WPized Light', config.projectName);
+    }
+
+    return body;
   }
 
 });

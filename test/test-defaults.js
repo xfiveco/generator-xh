@@ -161,9 +161,11 @@ describe('XH Generator Defaults', function () {
       'src/test.html'
     ];
 
-    helpers.run(path.join(__dirname, '../page'), {
-      tmpdir: false
-    }).withArguments(['Home', 'Test'])
+    helpers
+      .run(path.join(__dirname, '../page'), {
+        tmpdir: false
+      })
+      .withArguments(['Home', 'Test'])
       .withOptions({
         'skip-build': true
       })

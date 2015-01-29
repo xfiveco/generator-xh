@@ -8,8 +8,8 @@ module.exports = function (grunt) {
     useminPrepare: 'grunt-usemin',
     includereplace: 'grunt-include-replace',
     replace: 'grunt-text-replace',
-    validation: 'grunt-html-validation',
-    sprite: 'grunt-spritesmith',
+    validation: 'grunt-html-validation',<% if (features.useSprites) { %>
+    sprite: 'grunt-spritesmith',<% } %>
   });
 
   // Project configuration.

@@ -38,7 +38,8 @@ wp/wp-content/themes/**/img
 wp/wp-content/themes/**/fonts
 wp/wp-content/themes/**/js
 wp/wp-content/themes/**/css
-wp/wp-content/themes/**/media<% } %><% } %>
+wp/wp-content/themes/**/media
+wp/wp-content/uploads<% } %><% } %>
 
 # Other
 validation-report.json

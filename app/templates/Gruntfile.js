@@ -13,8 +13,6 @@ module.exports = function (grunt) {
   });
 
   // Project configuration.
-  grunt.option('force', true);
-
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),

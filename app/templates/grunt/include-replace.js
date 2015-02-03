@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         globals: {<% if (reloader !== 'None' && !server) { %>
           reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:<% if (reloader === 'BrowserSync') { %>3000/browser-sync-client.js<% } else if (reloader === 'LiveReload') { %>35729/livereload.js?snipver=1<% } %>\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>'<% } %>
         },
-        includesDir: '<%%= xh.includes %>'
+        includesDir: '<%%= xh.tmp %>'
       },
       files: [{
         expand: true,

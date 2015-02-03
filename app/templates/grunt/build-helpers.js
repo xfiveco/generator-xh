@@ -7,12 +7,11 @@ module.exports = function(grunt) {
   'use strict';
 
   grunt.registerTask('_before-build-html', [
-    'copy:backup'
+    'copy:includes'
   ]);
 
   grunt.registerTask('_after-build-html', [
     'includereplace',
-    'copy:restore',
     'jsbeautifier:html',
     'clean:tmp'
   ]);

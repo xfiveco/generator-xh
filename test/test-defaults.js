@@ -146,6 +146,11 @@ describe('XH Generator Defaults', function () {
     done();
   });
 
+  it('adds WordPress theme assets directories to .gitignore', function (done) {
+    assert.fileContent('.gitignore', /(\nwp\/wp-content\/themes\/\*\*\/)img\1fonts\1js\1css\1media\n/gim);
+    done();
+  });
+
   it('creates CSS PIE file', function (done) {
     var expectedFiles = [
       'src/js/PIE.htc'

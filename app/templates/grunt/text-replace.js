@@ -79,7 +79,7 @@ module.exports = function(grunt) {
     }<% if (reloader !== 'None' && !server) { %>,
 
     reloader: {
-      src: ['<%%= xh.includes %>/scripts.html'],
+      src: ['<%%= xh.includes %>/scripts.<%= extension %>'],
       overwrite: true,
       replacements: [{
         from: '@@reloader\n',

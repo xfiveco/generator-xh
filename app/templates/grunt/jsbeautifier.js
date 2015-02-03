@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     },
 
     html: {
-      src: '<%%= xh.dist %>/*.html'
+      src: '<%%= xh.dist %>/*.<%= extension %>'
     },
 
     js: {

@@ -5,7 +5,7 @@ module.exports = function(grunt) {
   'use strict';
 
   grunt.config('validation', {
-    src: ['<%%= xh.dist %>/*.html'],
+    src: ['<%%= xh.dist %>/*.<%= extension %>'],
     options: {
       reset: true,
       relaxerror: [

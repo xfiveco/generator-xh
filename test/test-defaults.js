@@ -151,6 +151,11 @@ describe('XH Generator Defaults', function () {
     done();
   });
 
+  it('adds WordPress uploads directory to .gitignore', function (done) {
+    assert.fileContent('.gitignore', /\nwp\/wp-content\/uploads\n/gim);
+    done();
+  });
+
   it('creates CSS PIE file', function (done) {
     var expectedFiles = [
       'src/js/PIE.htc'

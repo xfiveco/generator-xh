@@ -27,6 +27,14 @@ module.exports = {
     message: 'Do you want to run development server?',
     default: true
   }, {
+    when: function (response) {
+      return !response.server;
+    },
+    type: 'string',
+    name: 'extension',
+    message: 'Please provide default pages extension:',
+    default: 'html'
+  }, {
     type: 'list',
     name: 'cssPreprocessor',
     message: 'Which CSS preprocessor would you like to use?',

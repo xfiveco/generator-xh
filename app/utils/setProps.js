@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = function (props) {
+  props.extension = props.extension !== undefined ? props.extension.toLowerCase() : 'html';
+
   this.projectName = props.projectName;
   this.useBranding = props.useBranding;
   this.reloader = props.reloader;
@@ -9,6 +11,7 @@ module.exports = function (props) {
   this.ignoreDist = props.ignoreDist;
   this.isWP = props.isWP;
   this.features = {};
+  this.extension = props.extension;
 
   for (var i in props.features) {
     this.features[props.features[i]] = true;

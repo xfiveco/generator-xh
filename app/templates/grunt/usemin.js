@@ -2,31 +2,45 @@
  * Usemin - prepares CSS & JS files for concatenation & minification
  * and replaces them when needed.
  */
+var _ = require('lodash');
+
 module.exports = function(grunt) {
   'use strict';
 
-  /**
-   * Ensure there are no duplicates in generated concat config.
-   *
-   * This is needed because concat configuration is always extended,
-   * not replaced, in useminPrepare task, which results in multiplication
-   * when running watch.
-   */
-  function simplifyGeneratedConfig(context) {
-    var files = context.options.generated.files;
-    var uniqueFiles = [];
+  grunt.registerTask('useminReset', 'Resets :generated configuration', function () {
 
-    uniqueFiles = files.reduceRight(function (result, fileObj) {
-      if (!result.some(function (fo) { return fo.dest === fileObj.dest; })) {
-        result.push(fileObj);
+    var useminPrepareConfig = grunt.config('useminPrepare') || {};
+    var targets = arguments.length ? grunt.utils.toArray(arguments) : _.filter(_.keys(useminPrepareConfig), function (val) {
+        return val !== 'options';
+      });
+    var steps = [];
+    var modified = [];
+
+    if (useminPrepareConfig.options && useminPrepareConfig.options.flow) {
+      steps = _.flatten(_.values(useminPrepareConfig.options.flow.steps));
+      _.forEach(targets, function (val) {
+        var c = useminPrepareConfig.options.flow[val];
+        if ( c && c.steps ) {
+          steps = steps.concat(_.flatten(_.values(c.steps)));
+        }
+      });
+    }
+    steps = _.uniq(steps);
+
+    _.forEach(steps, function (name) {
+      var config = grunt.config(name) || {};
+
+      if (config.generated) {
+        delete config.generated.files;
+        grunt.config(name, config);
+        modified.push(name);
       }
+    });
 
-      return result;
-    }, []).reverse();
-
-    context.options.generated.files = uniqueFiles;
-    return context.options.generated;
-  }
+    if (modified.length) {
+      grunt.log.writeln('Configuration reset for', grunt.log.wordlist(modified));
+    }
+  });
 
   grunt.config('useminPrepare', {
     html: {
@@ -49,16 +63,7 @@ module.exports = function(grunt) {
           js: ['concat'],
           css: ['concat']
         },
-        post: {
-          js: [{
-            name: 'concat',
-            createConfig: simplifyGeneratedConfig
-          }],
-          css: [{
-            name: 'concat',
-            createConfig: simplifyGeneratedConfig
-          }]
-        },
+        post: {},
         htmlmin: {
           steps: {
             js: ['concat', 'uglifyjs'],

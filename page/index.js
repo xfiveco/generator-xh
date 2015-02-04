@@ -78,6 +78,7 @@ var PageGenerator = yeoman.generators.Base.extend({
   end: function () {
     if (!this.options['skip-build']) {
       this.spawnCommand('grunt', ['build']);
+      this.log('All done!');
     }
   }
 

@@ -7,7 +7,8 @@ module.exports = function(grunt) {
   'use strict';
 
   grunt.registerTask('_before-build-html', [
-    'copy:includes'
+    'copy:includes',
+    'useminReset'
   ]);
 
   grunt.registerTask('_after-build-html', [

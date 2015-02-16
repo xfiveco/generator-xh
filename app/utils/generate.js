@@ -72,7 +72,7 @@ var generate = {
       if (m) {
         f = 'grunt/' + m[1] + '.js';
         if (this.src.exists(f)) {
-          this.copy(f);
+          this.template(f);
         }
       }
     }

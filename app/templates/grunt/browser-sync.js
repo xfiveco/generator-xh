@@ -20,7 +20,8 @@ module.exports = function(grunt) {
         server: {
           baseDir: './',
           port: 3000
-        },<% } %>
+        },<% } else { %>
+        proxy: '<%= proxy %>',<% } %>
         notify: false
       }
     }

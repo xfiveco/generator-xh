@@ -13,6 +13,11 @@ module.exports = {
     message: 'Should XHTMLized branding be used?',
     default: true
   }, {
+    type: 'string',
+    name: 'extension',
+    message: 'Please provide default pages extension (use \'html\' if you want to run developments server):',
+    default: 'html'
+  }, {
     type: 'list',
     name: 'reloader',
     message: 'Which type of live reloader would you like to use?',
@@ -20,7 +25,7 @@ module.exports = {
     default: 'BrowserSync'
   }, {
     when: function (response) {
-      return response.reloader !== 'None';
+      return response.reloader !== 'None' && response.extension.toLowerCase() === 'html';
     },
     type: 'confirm',
     name: 'server',
@@ -28,12 +33,15 @@ module.exports = {
     default: true
   }, {
     when: function (response) {
-      return !response.server;
+      return response.reloader === 'BrowserSync' && !response.server;
     },
     type: 'string',
-    name: 'extension',
-    message: 'Please provide default pages extension:',
-    default: 'html'
+    name: 'proxy',
+    message: 'What URL will be used by your server?',
+    default: 'localhost',
+    validate: function (input) {
+      return !!input;
+    }
   }, {
     type: 'list',
     name: 'cssPreprocessor',

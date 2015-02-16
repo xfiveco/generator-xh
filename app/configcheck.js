@@ -41,8 +41,9 @@ module.exports = {
     // check if config is corrupted
     for (var i in utils.prompts.generator) {
       var propertyName = utils.prompts.generator[i].name;
+      var propertyWhen = utils.prompts.generator[i].when;
 
-      if (props[propertyName] === undefined) {
+      if (props[propertyName] === undefined && (!propertyWhen || (propertyWhen && propertyWhen(props)))) {
         this.log(configCorrupted);
         this.configCorrupted = true;
         done();

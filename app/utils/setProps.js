@@ -12,6 +12,7 @@ module.exports = function (props) {
   this.isWP = props.isWP;
   this.features = {};
   this.extension = props.extension;
+  this.proxy = props.proxy;
 
   for (var i in props.features) {
     this.features[props.features[i]] = true;

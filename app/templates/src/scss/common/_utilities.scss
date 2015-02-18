@@ -1,5 +1,6 @@
-/* Utilities
-   ========================================================================= */
+
+// Common - Utilities
+//------------------------------------------------------------------------------
 
 /* Hide visually but not from screen readers */
 .hide {
@@ -21,5 +22,24 @@
     top: 0;
     left: 0;
     z-index: 1;
+  }
+}
+
+/* Acessibility navigation */
+.accessibility-nav {
+  position: absolute;
+  top: 0;
+  left: -9999em;
+  z-index: 1000;
+
+  a {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+  }
+
+  a:active,
+  a:focus {
+    left: 9999em;
   }
 }

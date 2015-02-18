@@ -4,6 +4,7 @@
     {
       "dirname": "common",
       "children": [
+        { "name": "_base.{{type}}" },
         { "name": "_utilities.{{type}}" },
         { "name": "_layout.{{type}}" }
       ]

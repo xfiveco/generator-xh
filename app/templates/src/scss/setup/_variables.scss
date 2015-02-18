@@ -18,5 +18,5 @@ $font-size: 1em !default;
 $font-line-height: 1.4 !default;
 <% if (isWP) { %>
 // Floated images margins
-$wp-small-margin: 5px;
-$wp-big-margin: 20px;<% } %>
+$wp-small-margin: 5px !default;
+$wp-big-margin: 20px !default;<% } %>

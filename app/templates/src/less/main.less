@@ -6,16 +6,19 @@
 @@toc
 
    ========================================================================= */
-<% if (!features.useBootstrap) { %>
+
+// Vendor Dependencies<% if (!features.useBootstrap) { %>
 @import "normalize.css/normalize.less";<% } %>
 
-/* =========================================================================
-   Custom Styling
-   ========================================================================= */
-
+// Authored Dependencies
 @import "setup/variables";
 @import "setup/mixins";<% if (features.useSprites) { %>
 @import "setup/sprites";<% } %>
+
+// Common styles & layouts
+@import "common/base";
 @import "common/utilities";
 @import "common/layout";<% if (isWP) { %>
 @import "common/wordpress";<% } %>
+
+// Components

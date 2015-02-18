@@ -1,29 +1,12 @@
-/* Layout
-   ========================================================================= */
 
-/* Acessibility navigation */
-.accessibility-nav {
-  position: absolute;
-  top: 0;
-  left: -9999em;
-  z-index: 1000;
-
-  a {
-    position: absolute;
-    top: 0;
-    white-space: nowrap;
-  }
-
-  a:active,
-  a:focus {
-    left: 9999em;
-  }
-}
+// Common - Layout
+//------------------------------------------------------------------------------
 
 /* Container */
 .container {
   position: relative;
-  width: 960px;
+  width: $container-width + 2 * $container-padding;
+  padding: 0 $container-padding;
   margin: 0 auto;
 }
 

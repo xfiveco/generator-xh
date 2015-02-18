@@ -1,4 +1,22 @@
 
+// Variables
+//------------------------------------------------------------------------------
+
+// Color definitions
+$color-red: #EF4C23 !default;
+
+// Container definitions
+$container-width: 960px !default;
+$container-padding: 20px !default;
+
+// Z-indexes
+$zindex-base: 1 !default;
+
+// Font definitions
+$font-arial: "Arial", "Helvetica Neue", Helvetica, serif !default;
+$font-size: 1em !default;
+$font-line-height: 1.4 !default;
+<% if (isWP) { %>
 // Floated images margins
-$wp-small-margin: 5px;
-$wp-big-margin: 20px;
+$wp-small-margin: 5px !default;
+$wp-big-margin: 20px !default;<% } %>

@@ -3,6 +3,10 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
 var path = require('path');
+var Download = require('download');
+var fs = require('fs');
+var tar = require('tar');
+var zlib = require('zlib');
 
 var WPGenerator = yeoman.generators.Base.extend({
   initializing: function () {
@@ -90,18 +94,71 @@ var WPGenerator = yeoman.generators.Base.extend({
       var self = this;
 
       this._getCurrentWpVersion(function(err, ver) {
-        self.remote('wordpress', 'wordpress', ver, function (err, remote) {
 
+        var username = 'wordpress';
+        var repo = 'wordpress';
+        var url = 'https://github.com/' + [username, repo, 'archive', ver].join('/') + '.tar.gz';
+        var cache = path.join(self.cacheRoot(), username, repo);
+        var file = path.join(cache, ver + '.tar.gz');
+        var extractPath = path.join(cache, ver);
+
+        self.log.write()
+          .info('... Fetching %s ...', url)
+          .info(chalk.yellow('This might take a few moments'));
+
+        var cb = function (err) {
           if (err) {
-            return done(err);
+            return done();
           }
+
+          var onError = function (err) {
+            done(err);
+          };
+
+          var onEnd = function () {
+            self.bulkDirectory(extractPath, config.wpFolder);
+
+            self.cachePath = extractPath;
+            self._createConfig(self);
+
+            done();
+          };
 
           self.log('\nCopying WordPress ' + ver + '\n');
 
-          remote.bulkDirectory('.', config.wpFolder);
-          self._createConfig(remote);
+          var extractor = tar.Extract({
+            path: extractPath,
+            strip: 1
+          })
+            .on('error', onError)
+            .on('end', onEnd);
 
-          done();
+          fs.createReadStream(file)
+            .on('error', onError)
+            .pipe(zlib.createGunzip())
+            .pipe(extractor);
+        };
+
+        fs.stat(file, function (err) {
+          // already cached
+          if (!err) {
+            self.log.write().ok('Found cached archive in ' + cache).write();
+            return cb(null, self);
+          }
+
+          var opts = { extract: false };
+          var download = new Download(opts)
+            .get(url)
+            .dest(cache);
+
+          download.run(function (err) {
+            if (err) {
+              return cb(err, self);
+            }
+
+            self.log.write().ok('Done in ' + cache).write();
+            return cb(null, self);
+          });
         });
       });
 

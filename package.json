@@ -33,7 +33,9 @@
     "string-length": "~1.0.0",
     "chalk": "^0.5.1",
     "simple-git": "^0.10.0",
-    "q": "~1.0.0"
+    "q": "~1.0.0",
+    "download": "~4.0.0",
+    "tar": "~1.0.3"
   },
   "devDependencies": {
     "mocha": "*"

@@ -90,15 +90,27 @@ var WPGenerator = yeoman.generators.Base.extend({
       var self = this;
 
       this._getCurrentWpVersion(function(err, ver) {
-        self.remote('wordpress', 'wordpress', ver, function (err, remote) {
+        var username = 'wordpress';
+        var repo = 'wordpress';
+        var url = 'https://github.com/' + [username, repo, 'archive', ver].join('/') + '.zip';
 
+        self.log.write()
+          .info('... Fetching %s ...', url)
+          .info(chalk.yellow('This might take a few moments'));
+
+        // cannot use yeoman's remote() method
+        // with user / repo / branch notation
+        // since it downloads .tar.gz
+        // and since WP tar.gz seems to have some weird files in it
+        // there's an error during unpacking
+        self.remote(url, function (err, remote) {
           if (err) {
-            return done(err);
+            return done();
           }
 
           self.log('\nCopying WordPress ' + ver + '\n');
 
-          remote.bulkDirectory('.', config.wpFolder);
+          self.bulkDirectory(remote.cachePath, config.wpFolder);
           self._createConfig(remote);
 
           done();

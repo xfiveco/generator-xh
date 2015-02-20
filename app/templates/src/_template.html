@@ -1,17 +1,17 @@
-@@include('head.html', {"pagename": "<%= name %>"})
+@@include('head.<%= extension %>', {"pagename": "<%= name %>"})
 
 <body>
 
-@@include('header.html')
+@@include('header.<%= extension %>')
 
   <div class="content" id="content">
     <p>content</p>
   </div>
   <!-- / content -->
 
-@@include('sidebar.html')
-@@include('footer.html')
-@@include('scripts.html')
+@@include('sidebar.<%= extension %>')
+@@include('footer.<%= extension %>')
+@@include('scripts.<%= extension %>')
 
 </body>
 </html>

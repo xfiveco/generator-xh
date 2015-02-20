@@ -8,17 +8,17 @@ module.exports = function(grunt) {
   grunt.config('includereplace', {
     dist: {
       options: {
-        globals: {<% if (reloader !== 'None' && !server) { %>
-          reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:<% if (reloader === 'BrowserSync') { %>3000/browser-sync-client.js<% } else if (reloader === 'LiveReload') { %>35729/livereload.js?snipver=1<% } %>\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>'<% } %>
+        globals: {<% if (reloader === 'LiveReload' && !server) { %>
+          reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:35729/livereload.js?snipver=1\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>'<% } %>
         },
         includesDir: '<%%= xh.tmp %>'
       },
       files: [{
         expand: true,
         cwd: '<%%= xh.src %>',
-        src: ['*.html', '!template.html'],
+        src: ['*.<%= extension %>', '!template.<%= extension %>'],
         dest: '<%%= xh.dist %>',
-        ext: '.html'
+        ext: '.<%= extension %>'
       }]
     }
   });

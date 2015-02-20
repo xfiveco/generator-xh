@@ -1,5 +1,6 @@
 'use strict';
 var yeoman = require('yeoman-generator');
+var path = require('path');
 
 var PageGenerator = yeoman.generators.Base.extend({
 
@@ -49,11 +50,14 @@ var PageGenerator = yeoman.generators.Base.extend({
   writing: function () {
     // Create pages from template
     this.generatePage = function(element) {
-      this.templateFile = this.readFileAsString('src/template.html');
-      this.filename = this._.slugify(element) + '.html';
+      var filename = this._.slugify(element) + '.' + this.config.extension;
+      var root = path.join(this.destinationRoot(), 'src');
 
       // Write file
-      this.write('src/' + this.filename, this.templateFile.replace('<%= name %>', element));
+      this.fs.copyTpl(path.join(root, 'template.' + this.config.extension), path.join(root, filename), {
+        extension: this.config.extension,
+        name: element
+      });
     };
 
     // Update index template
@@ -62,7 +66,7 @@ var PageGenerator = yeoman.generators.Base.extend({
       this.link = '';
 
       array.forEach(function(element) {
-        this.filename = this._.slugify(element) + '.html';
+        this.filename = this._.slugify(element) + '.' + this.config.extension;
         this.link += '<li><i class="fa fa-file-o"></i><a href="dist/' + this.filename + '"><strong>' +
           element + '</strong> ' + this.filename + '</a><i class="fa fa-check"></i></li>\n';
       }, this);

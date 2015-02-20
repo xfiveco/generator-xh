@@ -72,7 +72,7 @@ var generate = {
       if (m) {
         f = 'grunt/' + m[1] + '.js';
         if (this.src.exists(f)) {
-          this.copy(f);
+          this.template(f);
         }
       }
     }
@@ -94,11 +94,11 @@ var generate = {
 
   templateFiles: function (ext) {
     this.copy('src/_template.html', 'src/template.' + ext);
-    this.copy('src/includes/_header.html', 'src/includes/header.' + ext);
-    this.copy('src/includes/_sidebar.html', 'src/includes/sidebar.' + ext);
-    this.copy('src/includes/_footer.html', 'src/includes/footer.' + ext);
 
     this.template('src/includes/_head.html', 'src/includes/head.' + ext);
+    this.template('src/includes/_header.html', 'src/includes/header.' + ext);
+    this.template('src/includes/_sidebar.html', 'src/includes/sidebar.' + ext);
+    this.template('src/includes/_footer.html', 'src/includes/footer.' + ext);
     this.template('src/includes/_scripts.html', 'src/includes/scripts.' + ext);
   },
 

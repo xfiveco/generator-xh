@@ -11,7 +11,7 @@ module.exports = function(grunt) {
           '<%%= xh.dist %>/css/*.css',
           '<%%= xh.dist %>/js/*.js',
           '<%%= xh.dist %>/<%%= xh.assets %>/**/*.*',
-          '<%%= xh.dist %>/**/*.html'
+          '<%%= xh.dist %>/**/*.<%= extension %>'
         ]
       },
 
@@ -20,7 +20,8 @@ module.exports = function(grunt) {
         server: {
           baseDir: './',
           port: 3000
-        },<% } %>
+        },<% } else { %>
+        proxy: '<%= proxy %>',<% } %>
         notify: false
       }
     }

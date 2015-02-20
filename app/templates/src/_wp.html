@@ -1,8 +1,8 @@
-@@include('head.html', {"pagename": "Sample WordPress Page"})
+@@include('head.<%= extension %>', {"pagename": "Sample WordPress Page"})
 
 <body>
 
-@@include('header.html')
+@@include('header.<%= extension %>')
 
   <div class="content">
     <h1>Sample WordPress Page</h1>
@@ -80,9 +80,9 @@
   </div>
   <!-- / content -->
 
-@@include('sidebar.html')
-@@include('footer.html')
-@@include('scripts.html')
+@@include('sidebar.<%= extension %>')
+@@include('footer.<%= extension %>')
+@@include('scripts.<%= extension %>')
 
 </body>
 </html>

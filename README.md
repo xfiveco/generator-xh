@@ -32,7 +32,9 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
    - [LibSass notices](#libsass-notices)
    - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)
    - [Using Sprites](#using-sprites)
-   - [Automatic SVG fallbacks](#automatic-svg-fallbacks)
+   - [Automatic SVG Fallbacks](#automatic-svg-fallbacks)
+   - [Working with Files Other than \*.html](#working-with-files-other-than-*.html)
+   - [Live Reloading Tips](#live-reloading-tips)
 - [Changelog](#changelog)
 - [Contributing](#contributing)
 - [Credits](#credits)
@@ -436,9 +438,31 @@ The exact variable names can be found in `src/scss/setup/_sprites@N.{scss|less}`
 
 **Important!** Currently you need to provide **both** files (nomal & retina). If you do not, the output sprite images will differ and as a result generated `background-position` values will be incorrect.
 
-### Automatic SVG fallbacks
+### Automatic SVG Fallbacks
 
 Vector graphics is increasingly more popular in web development due to its prefect look no matter the scale. As such you will probably find yourself using SVG files or icon fonts more and more often. However, not all browsers support SVGs out of the box, so fallbacks are needed. Currently XH Generator supports automatic optimization of SVG files (along with various other raster image formats) and PNG fallbacks creation. The caveat for correct automatic fallbacks is that SVG viewport needs to have proper size (PNG file will have the same dimensions). Also, if something seems off you can [play with optimization settings](https://github.com/sindresorhus/grunt-svgmin#available-optionsplugins) in `grunt/contrib-imagemin.js` task.
+
+### Working with Files Other than \*.html
+
+During project setup there is an option to specify default pages extension. It will automatically configure some tasks like `watch` or `usemin` to work with files other than \*.html (like \*.php or \*.jade). However, it will disable development server - it is assumed that when you need other file types it also means you need to configure something that will be responsible for processing them, be it local server (like [Apache](http://httpd.apache.org/) or [Nginx](http://wiki.nginx.org/Main)) or some template processing engine.
+
+This setting will be remembered in the project configuration, so when you run `yo xh:page` it will create files with correct extension.
+
+### Live Reloading Tips
+
+#### Disable Index Page Auto-opening
+
+##### For BrowserSync
+
+In `grunt/browser-sync.js` file find `options` section and add `open: false`.
+
+##### For LiveReload
+
+In `grunt/contrib-connect.js` file find `options` section and either remove `open: true` or change it to `false`.
+
+#### BrowserSync Proxy
+
+During setup, when you choose not to run development server (or are unable to run it), you will be asked about URL of the page you will work with. By default this is `localhost`, but you can change it to something like `project.previewized.dev` or anything you like. When running development (default) grunt task, BrowserSync will then set up proxy server (by default on port 3000), that will allow you to use live reloading while for example simultaneously serving pages via Apache (and using PHP).
 
 ## Changelog
 

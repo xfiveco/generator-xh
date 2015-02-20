@@ -68,13 +68,13 @@ var XhGenerator = yeoman.generators.Base.extend({
     }
 
     this.prompt(utils.prompts.generator, function (props) {
-      utils.setProps.apply(this, [props]);
+      utils.setProps.apply(this, [ props ]);
       done();
     }.bind(this));
   },
 
   configuring: function () {
-    this._templateArgs = ['html'];
+    this._templateArgs = [ this.extension ];
     this._preprocessorArgs = (this.cssPreprocessor === 'SCSS' || this.cssPreprocessor === 'LIBSASS') ? ['scss', '_'] : ['less', ''];
 
     // Yeoman config file

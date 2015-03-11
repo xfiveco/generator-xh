@@ -65,6 +65,7 @@ module.exports = function (grunt) {
 
     'copy:wp',<% } %>
 
+    'clean:tmp',
     'notify:build'
   ]);
 

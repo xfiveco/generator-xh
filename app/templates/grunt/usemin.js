@@ -44,13 +44,13 @@ module.exports = function(grunt) {
 
   grunt.config('useminPrepare', {
     html: {
-      src: '<%%= xh.build %>',
+      src: '<%%= xh.usemin %>',
       cwd: '<%%= xh.tmp %>',
       expand: true
     },
 
     htmlmin: {
-      src: '<%%= xh.build %>',
+      src: '<%%= xh.usemin %>',
       cwd: '<%%= xh.tmp %>',
       expand: true
     },
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 
   grunt.config('usemin', {
     html: {
-      src: '<%%= xh.build %>',
+      src: '<%%= xh.usemin %>',
       cwd: '<%%= xh.tmp %>',
       expand: true
     },

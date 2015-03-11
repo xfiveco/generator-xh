@@ -22,7 +22,7 @@ module.exports = function (grunt) {
       src: 'src',
       dist: 'dist',
       tmp: '.tmp',
-      build: ['head.<%= extension %>', 'scripts.<%= extension %>'],
+      usemin: ['{head,scripts}.<%= extension %>'],
       root: __dirname,
       includes: '<%%= xh.src %>/includes',
       designs: 'designs',
@@ -56,10 +56,12 @@ module.exports = function (grunt) {
     'clean:dist',
     'postinstall',
 
-    'build-htmlmin',
+    'build-usemin-min',
+    'build-html',
     'build-assets',
     'build-css',
-    'build-js',<% if (isWP) { %>
+    'build-js',
+    'build-beautify',<% if (isWP) { %>
 
     'copy:wp',<% } %>
 
@@ -70,6 +72,7 @@ module.exports = function (grunt) {
     'postinstall'<% if (reloader === 'BrowserSync') { %>,
     'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>,
     'connect:server'<% } %>,
+    'build-usemin',
     'watch'
   ]);
 

@@ -6,32 +6,30 @@
 module.exports = function(grunt) {
   'use strict';
 
-  grunt.registerTask('_before-build-html', [
-    'copy:includes',
-    'useminReset'
-  ]);
-
-  grunt.registerTask('_after-build-html', [
-    'includereplace',
-    'jsbeautifier:html',
-    'clean:tmp'
-  ]);
-
   grunt.registerTask('build-html', [
-    '_before-build-html',
+    'includereplace',
+    'jsbeautifier:html'
+  ]);
+
+  grunt.registerTask('_before-build-usemin', [
+    'clean:tmp',
+    'copy:includes',
+    'useminReset',
+  ]);
+
+  grunt.registerTask('build-usemin', [
+    '_before-build-usemin',
     'useminPrepare:html',
     'concat:generated',
     'usemin',
-    '_after-build-html'
   ]);
 
-  grunt.registerTask('build-htmlmin', [
-    '_before-build-html',
+  grunt.registerTask('build-usemin-min', [
+    '_before-build-usemin',
     'useminPrepare:htmlmin',
     'concat:generated',
     'uglify:generated',
     'usemin',
-    '_after-build-html'
   ]);
 
   grunt.registerTask('build-assets', [
@@ -53,17 +51,20 @@ module.exports = function(grunt) {
     'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
     'less',<% } %>
     'autoprefixer',
-    'remfallback',
-    'cssbeautifier',
-    'search',
-    'replace:css',
-    'clean:tmp'
+    'remfallback'
   ]);
 
   grunt.registerTask('build-js', [
     'copy:js',
+    'jshint'
+  ]);
+
+  grunt.registerTask('build-beautify', [
+    'cssbeautifier',
+    'search',
+    'replace:css',
+
     'jsbeautifier:js',
     'replace:js',
-    'jshint'
   ]);
 };

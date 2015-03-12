@@ -93,7 +93,7 @@ var XhGenerator = yeoman.generators.Base.extend({
       utils.generate.gruntModules.bind(this)();
 
       // Project index
-      utils.generate.projectIndex.bind(this)();
+      utils.generate.projectInfo.bind(this)();
 
       // Assets directories
       utils.generate.assets.bind(this)();

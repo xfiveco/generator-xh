@@ -81,8 +81,9 @@ var generate = {
     this.copy('grunt/build-helpers.js');
   },
 
-  projectIndex: function () {
+  projectInfo: function () {
     this.template('_index.html', 'index.html');
+    this.template('README.md');
   },
 
   assets: function () {

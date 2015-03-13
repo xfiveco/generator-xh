@@ -376,6 +376,7 @@ The following approach is recommended when creating styles:
 4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
 5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
 6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use the default LibSass or Less as they are [faster than Ruby Sass](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
+7. By default [grunt-autoprefixer](https://github.com/nDmitry/grunt-autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
 
 ### LibSass notices
 

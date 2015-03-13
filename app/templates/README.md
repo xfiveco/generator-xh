@@ -192,11 +192,12 @@ The following source files are generated in <% if (cssPreprocessor === 'SCSS' ||
 
 The following approach is recommended when creating styles:
 
-1. Use <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`main.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`main.less`<% } %> only for importing other stylesheets. Do not write styles directly to these files!
+1. Use <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`main.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`main.less`<% } %> only for importing other stylesheets. Do not write styles directly in this file!
 2. Use variables and mixins files to store your variables and mixins.
 3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`scss/components/_article.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`less/components/article.less`<% } %> file instead of ~~<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`scss/components/_text.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`less/components/text.less`<% } %>~~.
 4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
 5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
+6. By default [grunt-autoprefixer](https://github.com/nDmitry/grunt-autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
 
 <% if (cssPreprocessor === 'LIBSASS') { %>### LibSass notices
 

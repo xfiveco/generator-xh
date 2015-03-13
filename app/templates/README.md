@@ -11,15 +11,15 @@
     - [Bower](#3-bower)<% if (cssPreprocessor === 'SCSS') { %>
     - [Sass](#4-sass)<% } %>
 - [Usage](#usage)
-    - [Project structure](#1-project-structure)
+    - [Project Structure](#1-project-structure)
     - [Getting Started](#2-getting-started)
     - [Development](#3-development)
     - [WordPress Development](#4-wordpress-development)
 - [Tips & Tricks](#tips--tricks)
-    - [Working with files in the dist folder](#working-with-files-in-the-dist-folder)
-    - [Writing styles](#writing-styles)<% if (cssPreprocessor === 'LIBSASS') { %>
-    - [LibSass notices](#libsass-notices)<% } %>
-    - [Adding 3rd party dependency via Bower](#adding-3rd-party-dependency-via-bower)<% if (features.useSprites) { %>
+    - [Working with Files in the dist Folder](#working-with-files-in-the-dist-folder)
+    - [Writing Syles](#writing-styles)<% if (cssPreprocessor === 'LIBSASS') { %>
+    - [LibSass Notices](#libsass-notices)<% } %>
+    - [Adding 3rd-party Dependency via Bower](#adding-3rd-party-dependency-via-bower)<% if (features.useSprites) { %>
     - [Using Sprites](#using-sprites)<% } %>
     - [Automatic SVG Fallbacks](#automatic-svg-fallbacks)
 
@@ -64,7 +64,7 @@ bundle install
 
 ## Usage
 
-### 1) Project structure
+### 1) Project Structure
 
 The meaning of files and folders in generated project structure are as follows:
 
@@ -167,13 +167,13 @@ When running Grunt tasks the front-end `dist` files are automatically copied to 
 
 ## Tips & Tricks
 
-### Working with files in the dist folder
+### Working with Files in the `dist` Folder
 
 In general, it’s not recommended that you work directly with files in the `dist`. The files in `dist` folder are automatically generated from the source files in `src` folder and by default `dist` folder is ignored in version control system.
 
-HTML and CSS files are prettified for consistent formatting and a table of contents from imported SCSS or Less stylesheets is generated at the beginning of `main.css` for better overview.
+HTML and CSS files are prettified for consistent formatting and a table of contents from imported <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>SCSS<% } %><% if (cssPreprocessor === 'LESS') { %>Less<% } %> stylesheets is generated at the beginning of `main.css` for better overview.
 
-### Writing styles
+### Writing Styles
 
 The following source files are generated in <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`src/scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`src/less`<% } %> folders:
 
@@ -204,7 +204,7 @@ LibSass is much faster than Ruby Sass, however some features of Ruby Sass [may n
 
 You can browse or add LibSass issues at [LibSass GitHub](https://github.com/sass/libsass/issues) page.<% } %>
 
-### Adding 3rd party dependency via Bower
+### Adding 3rd-party Dependency via Bower
 
 Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to your project. The following example shows how you can add it as a Bower package and merge its JS file into common `plugins.min.js` file.
 

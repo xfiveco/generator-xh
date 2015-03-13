@@ -107,7 +107,7 @@ Let's imagine you have cloned/unpacked <%= projectName %> project into `<%= proj
 First, change the directory to your cloned project:
 
 ```
-cd <%= projectName %>
+cd "<%= projectName %>"
 ```
 
 <% if (cssPreprocessor === 'SCSS') { %>Install Ruby dependencies:

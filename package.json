@@ -28,7 +28,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "yeoman-generator": "~0.18.6",
+    "yeoman-generator": "~0.18.10",
     "update-notifier": "~0.2.2",
     "string-length": "~1.0.0",
     "chalk": "^0.5.1",

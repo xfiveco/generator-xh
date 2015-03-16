@@ -38,7 +38,8 @@ describe('XH Generator SCSS', function () {
       '.gitignore',
       'package.json',
       'bower.json',
-      'Gemfile'
+      'Gemfile',
+      'README.md'
     ];
 
     assert.file(expectedFiles);

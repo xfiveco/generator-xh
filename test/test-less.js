@@ -37,7 +37,8 @@ describe('XH Generator Less', function () {
       '.jshintrc',
       '.gitignore',
       'package.json',
-      'bower.json'
+      'bower.json',
+      'README.md'
     ];
 
     assert.file(expectedFiles);

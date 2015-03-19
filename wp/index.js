@@ -110,7 +110,12 @@ var WPGenerator = yeoman.generators.Base.extend({
 
           self.log('\nCopying WordPress ' + ver + '\n');
 
-          self.bulkDirectory(remote.cachePath, config.wpFolder);
+          self.conflicter.checkForCollision(config.wpFolder, null, function (err, status) {
+            if (/force|create/.test(status)) {
+              self._directory(remote.cachePath, config.wpFolder, process, true);
+            }
+          }.bind(self));
+
           self._createConfig(remote);
 
           done();

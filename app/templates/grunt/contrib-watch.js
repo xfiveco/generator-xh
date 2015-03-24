@@ -35,6 +35,14 @@ module.exports = function(grunt) {
       }<% } %>
     },
 
+    newIncludes: {
+      files: ['<%%= xh.includes %>/*.<%= extension %>'],
+      tasks: ['newer:copy:includes'],
+      options: {
+        event: ['added']
+      }
+    },
+
     js: {
       files: ['<%%= xh.src %>/js/*.js'],
       tasks: ['build-js'<% if (isWP) { %>, 'copy:wp'<% } %>]<% if (reloader === 'LiveReload') { %>,

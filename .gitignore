@@ -6,3 +6,5 @@ temp/
 *.sublime-workspace
 
 npm-debug.log
+
+.idea

@@ -23,8 +23,8 @@ module.exports = function(grunt) {
             return '';
           }
 
-          var toc_file = grunt.file.readJSON(tmp + '/csstoc.json');
-          var files = toc_file.results;
+          var tocFile = grunt.file.readJSON(tmp + '/csstoc.json');
+          var files = tocFile.results;
           var toc = '';
           var i = 1;
           var match;
@@ -33,16 +33,15 @@ module.exports = function(grunt) {
             return s[0].toUpperCase() + s.slice(1);
           }
 
-          for (var key in files) {
-            if (files.hasOwnProperty(key)) {
+          for (var file in files) {
+            if (files.hasOwnProperty(file)) {
+              var results = files[file];
 
-              var results = files[key];
+              for (var res in results) {
+                if (results.hasOwnProperty(res)) {
 
-              for (var key in results) {
-                if (results.hasOwnProperty(key)) {
-
-                  match = results[key]['match'];
-                  match = match.replace(/"|'|@import|;|.scss|.less/gi, "").trim();
+                  match = results[res].match;
+                  match = match.replace(/"|'|@import|;|.scss|.less/gi, '').trim();
                   match = match.split('/').pop();
                   match = capitalize(match);
 

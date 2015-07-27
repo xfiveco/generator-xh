@@ -6,7 +6,9 @@ module.exports = function(grunt) {
 
   grunt.config('autoprefixer', {
     options: {
-      map: true
+      map: {
+        inline: false
+      }
     },
     main: {
       src: '<%%= xh.dist %>/css/main.css',

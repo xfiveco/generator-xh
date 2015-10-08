@@ -1,5 +1,5 @@
 {
-  "defaultStructure": [
+  "default": [
     { "name": "main.{{type}}" },
     {
       "dirname": "common",

@@ -9,7 +9,7 @@ var helpers = {
     return helpers._stylesStructure;
   },
 
-  createStructure: function (structure, base, type, underscore) {
+  createStructure: function (structure, base) {
     var item, i, n, tn, dn;
 
     for (i = 0; i < structure.length; i++) {
@@ -20,12 +20,12 @@ var helpers = {
         if (!item.children || !item.children.length) {
           this.fs.copy(this.templatePath('src/img/.keep'), this.destinationPath(n + '/.keep'));
         } else {
-          helpers.createStructure.bind(this)(item.children, n, type, underscore);
+          helpers.createStructure.bind(this)(item.children, n);
         }
       } else {
-        n = (base + '/' + item.name).replace('{{type}}', type);
+        n = (base + '/' + item.name).replace('{{type}}', this.cssPreprocessor);
         tn = this.templatePath(n);
-        dn = this.destinationPath(n.replace('_', underscore));
+        dn = this.destinationPath(n);
 
         if (item.raw) {
           this.fs.copy(tn, dn);
@@ -89,42 +89,42 @@ var generate = {
     this.copy('src/img/.keep', 'src/designs/.keep');
   },
 
-  templateFiles: function (ext) {
-    this.copy('src/_template.html', 'src/template.' + ext);
+  templateFiles: function () {
+    this.copy('src/_template.html', 'src/template.' + this.extension);
 
-    this.template('src/includes/_head.html', 'src/includes/head.' + ext);
-    this.template('src/includes/_header.html', 'src/includes/header.' + ext);
-    this.template('src/includes/_sidebar.html', 'src/includes/sidebar.' + ext);
-    this.template('src/includes/_footer.html', 'src/includes/footer.' + ext);
-    this.template('src/includes/_scripts.html', 'src/includes/scripts.' + ext);
+    this.template('src/includes/_head.html', 'src/includes/head.' + this.extension);
+    this.template('src/includes/_header.html', 'src/includes/header.' + this.extension);
+    this.template('src/includes/_sidebar.html', 'src/includes/sidebar.' + this.extension);
+    this.template('src/includes/_footer.html', 'src/includes/footer.' + this.extension);
+    this.template('src/includes/_scripts.html', 'src/includes/scripts.' + this.extension);
   },
 
   preprocessor: function (type, underscore) {
-    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().defaultStructure, 'src/' + type, type, underscore);
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().default, 'src/' + this.cssPreprocessor);
   },
 
   js: function () {
     this.template('src/js/_main.js', 'src/js/main.js');
   },
 
-  wp: function (type, underscore, ext) {
+  wp: function () {
     this.dest.mkdir(this.wpThemeFolder);
-    this.copy('src/_wp.html', 'src/wp.' + ext);
+    this.copy('src/_wp.html', 'src/wp.' + this.extension);
 
-    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().wp, 'src/' + type, type, underscore);
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().wp, 'src/' + this.cssPreprocessor);
   },
 
-  sprites: function (type, underscore) {
+  sprites: function () {
     this.copy('src/img/.keep', 'src/img/sprites/1x/.keep');
     this.copy('src/img/.keep', 'src/img/sprites/2x/.keep');
 
-    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().sprites, 'src/' + type, type, underscore);
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().sprites, 'src/' + this.cssPreprocessor);
   },
 
-  bootstrap: function (type, underscore, ext) {
-    this.template('src/_bootstrap.html', 'src/bootstrap.' + ext);
+  bootstrap: function () {
+    this.template('src/_bootstrap.html', 'src/bootstrap.' + this.extension);
 
-    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().bootstrap, 'src/' + type, type, underscore);
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().bootstrap, 'src/' + this.cssPreprocessor);
   }
 };
 

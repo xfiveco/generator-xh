@@ -8,8 +8,8 @@ module.exports = function(grunt) {
     dist1x: {
       src: '<%%= xh.src %>/img/sprites/1x/*.{png,jpg,gif}',
       dest: '<%%= xh.dist %>/img/common/sprites@1x.png',
-      destCss: '<%%= xh.src %>/<%= this.cssPreprocessor %>/setup/_sprites@1x.<%= this.cssPreprocessor %>',
-      cssTemplate: '<%%= xh.src %>/<%= this.cssPreprocessor %>/setup/_sprites.<%= this.cssPreprocessor %>.mustache',
+      destCss: '<%%= xh.src %>/<%= cssPreprocessor %>/setup/_sprites@1x.<%= cssPreprocessor %>',
+      cssTemplate: '<%%= xh.src %>/<%= cssPreprocessor %>/setup/_sprites.<%= cssPreprocessor %>.mustache',
       algorithm: 'binary-tree',
       engine: 'pngsmith',
       padding: 2,
@@ -20,8 +20,8 @@ module.exports = function(grunt) {
     dist2x: {
       src: '<%%= xh.src %>/img/sprites/2x/*.{png,jpg,gif}',
       dest: '<%%= xh.dist %>/img/common/sprites@2x.png',
-      destCss: '<%%= xh.src %>/<%= this.cssPreprocessor %>/setup/_sprites@2x.<%= this.cssPreprocessor %>',
-      cssTemplate: '<%%= xh.src %>/<%= this.cssPreprocessor %>/setup/_sprites.<%= this.cssPreprocessor %>.mustache',
+      destCss: '<%%= xh.src %>/<%= cssPreprocessor %>/setup/_sprites@2x.<%= cssPreprocessor %>',
+      cssTemplate: '<%%= xh.src %>/<%= cssPreprocessor %>/setup/_sprites.<%= cssPreprocessor %>.mustache',
       algorithm: 'binary-tree',
       engine: 'pngsmith',
       padding: 4,

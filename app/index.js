@@ -124,13 +124,6 @@ var XhGenerator = yeoman.generators.Base.extend({
       if (this.features.useSprites) {
         utils.generate.sprites.apply(this, this._preprocessorArgs);
       }
-    },
-
-    // CSS3Pie
-    css3pie: function () {
-      if (this.features.useCSS3Pie) {
-        utils.generate.css3pie.bind(this)();
-      }
     }
   },
 

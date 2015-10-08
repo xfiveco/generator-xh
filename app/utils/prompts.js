@@ -84,10 +84,6 @@ module.exports = {
       name: 'Modernizr',
       value: 'useModernizr',
       checked: false
-    }, {
-      name: 'CSS3 Pie',
-      value: 'useCSS3Pie',
-      checked: false
     }]
   }],
 

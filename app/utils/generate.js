@@ -129,10 +129,6 @@ var generate = {
     this.template('src/_bootstrap.html', 'src/bootstrap.' + ext);
 
     helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().bootstrap, 'src/' + type, type, underscore);
-  },
-
-  css3pie: function () {
-    this.copy('src/js/_PIE.htc', 'src/js/PIE.htc');
   }
 };
 

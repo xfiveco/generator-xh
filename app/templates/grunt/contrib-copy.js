@@ -11,14 +11,7 @@ module.exports = function(grunt) {
       dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.less'<% } %>
     },
 
-    <% } %><% if (features.useCSS3Pie) { %>
-
-    pie: {
-      expand: true,
-      cwd: '<%%= xh.src %>/js/',
-      src: ['PIE.htc'],
-      dest: '<%%= xh.dist %>/js/'
-    },<% } %>
+    <% } %>
 
     // copy assets other than images-to-be-optimized
     // (imagemin & svg2png tasks will take care of that)

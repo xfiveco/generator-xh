@@ -67,4 +67,3 @@ describe('XH Generator with PHP option', function () {
       });
   });
 });
-

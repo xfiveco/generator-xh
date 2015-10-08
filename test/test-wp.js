@@ -23,7 +23,7 @@ describe('XH WP Defaults + XH Generator Defaults', function () {
         cssPreprocessor: 'LIBSASS',
         ignoreDist: true,
         isWP: true,
-        features: ['useBootstrap', 'useModernizr', 'useCSS3Pie', 'useSprites']
+        features: ['useJquery', 'useBootstrap', 'useModernizr', 'useSprites']
       })
       .on('end', function () {
         helpers
@@ -63,4 +63,3 @@ describe('XH WP Defaults + XH Generator Defaults', function () {
     assert.file(expectedFiles);
   });
 });
-

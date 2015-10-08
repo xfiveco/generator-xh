@@ -22,7 +22,7 @@ describe('XH Generator Defaults', function () {
         cssPreprocessor: 'LIBSASS',
         ignoreDist: true,
         isWP: true,
-        features: ['useBootstrap', 'useModernizr', 'useCSS3Pie', 'useSprites']
+        features: ['useJquery', 'useBootstrap', 'useModernizr', 'useSprites']
       })
       .on('end', done);
 
@@ -167,15 +167,6 @@ describe('XH Generator Defaults', function () {
     done();
   });
 
-  it('creates CSS PIE file', function (done) {
-    var expectedFiles = [
-      'src/js/PIE.htc'
-    ];
-
-    assert.file(expectedFiles);
-    done();
-  });
-
   it('creates pages using \'page\' subgenerator', function (done) {
     var expectedFiles = [
       'src/home.html',
@@ -199,4 +190,3 @@ describe('XH Generator Defaults', function () {
       });
   });
 });
-

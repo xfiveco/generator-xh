@@ -1,5 +1,6 @@
 {
   "strict": true,
+  "globalstrict": true,
   "browser": true,
   "jquery": true,
   "indent": 2,

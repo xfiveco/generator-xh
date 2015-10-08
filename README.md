@@ -150,8 +150,8 @@ Example of valid configuration file:
       "ignoreDist": true,
       "isWP": false,
       "features": [
-        "useModernizr",
-        "useCSS3Pie"
+        "useJquery",
+        "useModernizr"
       ]
     }
   }

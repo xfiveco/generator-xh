@@ -1,9 +1,14 @@
 'use strict';
 
+var _ = require('lodash');
+
 module.exports = function (props) {
   props.extension = props.extension !== undefined ? props.extension.toLowerCase() : 'html';
 
   this.projectName = props.projectName;
+  this.projectNameSlug = _.kebabCase(props.projectName);
+  this.projectNameCamel = _.capitalize(_.camelCase(props.projectName));
+
   this.useBranding = props.useBranding;
   this.reloader = props.reloader;
   this.server = props.server;
@@ -27,7 +32,7 @@ module.exports = function (props) {
   // WP
   if (this.isWP) {
     this.wpFolder = 'wp';
-    this.wpThemeFolderName = this._.slugify(this.projectName);
+    this.wpThemeFolderName = _.kebabCase(this.projectName);
     this.wpThemeFolder = this.wpFolder + '/wp-content/themes/' + this.wpThemeFolderName;
   }
 

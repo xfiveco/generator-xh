@@ -6,38 +6,24 @@
 
    ========================================================================== */
 
-(function($) {
+var <%= projectNameCamel %> = {
 
-  'use strict';
+  /**
+   * Init function
+   */
+  init: function() {
+    <%= projectNameCamel %>.exampleFn();
+  },
 
-  var App = {
+  /**
+   * Example function
+   */
+  exampleFn: function() {
+    console.log('Ready!');
+  }
 
-    /**
-     * Init Function
-     */
-    init: function() {
-      // App.feature1();
-      // App.feature2();
-    },
+};
 
-    /**
-     * Custom feature 1
-     */
-    feature1: function() {
-
-    },
-
-    /**
-     * Custom feature 2
-     */
-    feature2: function() {
-
-    }
-
-  };
-
-  $(function() {
-    App.init();
-  });
-
-})(jQuery);
+document.addEventListener('DOMContentLoaded', function() {
+  <%= projectNameCamel %>.init();
+});

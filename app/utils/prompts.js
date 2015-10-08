@@ -73,6 +73,10 @@ module.exports = {
     name: 'features',
     message: 'Select additional features:',
     choices: [{
+      name: 'jQuery',
+      value: 'useJquery',
+      checked: true
+    }, {
       name: 'Automatic sprites',
       value: 'useSprites',
       checked: false

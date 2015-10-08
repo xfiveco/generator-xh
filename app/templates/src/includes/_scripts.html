@@ -1,5 +1,5 @@
-<!-- build:js js/plugins.min.js -->
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- build:js js/plugins.min.js --><% if (features.useJquery) { %>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script><% } %>
 <!-- endbuild -->
 
 <script src="js/main.js"></script><% if (reloader === 'LiveReload' && !server) { %>

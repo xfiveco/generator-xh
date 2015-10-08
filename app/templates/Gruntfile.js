@@ -50,7 +50,8 @@ module.exports = function (grunt) {
     'clean:dist',
 
     'build-usemin-min',
-    'build-html',
+    'build-html',<% if (features.useModernizr) { %>
+    'build-modernizr',<% } %>
     'build-assets',
     'build-css',
     'build-js',
@@ -65,7 +66,8 @@ module.exports = function (grunt) {
   grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [<% if (reloader === 'BrowserSync') { %>,
     'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>,
     'connect:server'<% } %>,
-    'build-usemin',
+    'build-usemin',<% if (features.useModernizr) { %>
+    'build-modernizr',<% } %>
     'watch'
   ]);
 

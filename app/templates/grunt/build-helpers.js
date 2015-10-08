@@ -51,7 +51,11 @@ module.exports = function(grunt) {
     'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
     'less',<% } %>
     'postcss'
-  ]);
+  ]);<% if (features.useModernizr) { %>
+
+  grunt.registerTask('build-modernizr', [
+    'modernizr'
+  ]);<% } %>
 
   grunt.registerTask('build-js', [
     'copy:js',

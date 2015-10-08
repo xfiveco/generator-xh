@@ -48,9 +48,11 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - Industry standard [normalize.css](http://necolas.github.io/normalize.css/) as a base stylesheet
 - CSS Preprocessing with [SCSS](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
 - Support for both [LibSass](http://libsass.org/) (default) and [Ruby version](http://sass-lang.com/install) when using SCSS
-- Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [CSS3 Pie](http://css3pie.com/)
-- Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/nDmitry/grunt-autoprefixer)
-- Add fallback for rem units automatically with [remfallback](https://github.com/thomasdobber/grunt-remfallback) (set base font size for `<html>` tag - 100% is default 16px)
+- Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [jQuery](http://jquery.com/)
+- Building customized Modernizr version using only the tests you've used in your JavaScript or (S)CSS files.
+- Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/postcss/autoprefixer) - PostCSS plugin
+- Add fallback for rem units automatically with [pixrem](https://github.com/robwierzbowski/node-pixrem) - PostCSS plugin (set base font size for `<html>` tag - 100% is default 16px)
+- Support for importing vanilla CSS files (eg. from Bower) directly into SCSS with [postcss-import](https://github.com/postcss/postcss-import) - PostCSS plugin
 - Live reload and browsers syncing with [BrowserSync](http://www.browsersync.io/) or LiveReload
 - Optional development server
 - Grunt tasks for prettifying built HTML / CSS / JS

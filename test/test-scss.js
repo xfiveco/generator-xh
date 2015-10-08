@@ -49,7 +49,6 @@ describe('XH Generator SCSS', function () {
   it('creates Grunt files', function (done) {
     var expectedFiles = [
       'Gruntfile.js',
-      'grunt/autoprefixer.js',
       'grunt/contrib-clean.js',
       'grunt/contrib-concat.js',
       'grunt/contrib-copy.js',
@@ -61,7 +60,7 @@ describe('XH Generator SCSS', function () {
       'grunt/html-validation.js',
       'grunt/include-replace.js',
       'grunt/jsbeautifier.js',
-      'grunt/remfallback.js',
+      'grunt/postcss.js',
       'grunt/search.js',
       'grunt/text-replace.js',
       'grunt/usemin.js',
@@ -123,4 +122,3 @@ describe('XH Generator SCSS', function () {
     done();
   });
 });
-

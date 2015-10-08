@@ -5,14 +5,6 @@ module.exports = function(grunt) {
   'use strict';
 
   grunt.config('copy', {
-    <% if (!features.useBootstrap) { %>normalize: {
-      src: '<%%= xh.src %>/bower_components/normalize.css/normalize.css',<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
-      dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>
-      dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.less'<% } %>
-    },
-
-    <% } %>
-
     // copy assets other than images-to-be-optimized
     // (imagemin & svg2png tasks will take care of that)
     assets: {

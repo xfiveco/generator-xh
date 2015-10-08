@@ -39,10 +39,6 @@ module.exports = function (grunt) {
     'notify:validation'
   ]);
 
-  grunt.registerTask('postinstall', [<% if (!features.useBootstrap) { %>
-    'copy:normalize',<% } %>
-  ]);
-
   grunt.registerTask('qa', 'Assure quality', [<% if (reloader !== 'None' && !server) { %>
     'replace:reloader',<% } %>
     'build',
@@ -52,7 +48,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', 'Build site files', [
     'clean:dist',
-    'postinstall',
 
     'build-usemin-min',
     'build-html',
@@ -67,8 +62,7 @@ module.exports = function (grunt) {
     'notify:build'
   ]);
 
-  grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [
-    'postinstall'<% if (reloader === 'BrowserSync') { %>,
+  grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [<% if (reloader === 'BrowserSync') { %>,
     'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>,
     'connect:server'<% } %>,
     'build-usemin',

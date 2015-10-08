@@ -48,7 +48,6 @@ describe('XH Generator Less', function () {
   it('creates Grunt files', function (done) {
     var expectedFiles = [
       'Gruntfile.js',
-      'grunt/autoprefixer.js',
       'grunt/contrib-clean.js',
       'grunt/contrib-concat.js',
       'grunt/contrib-connect.js',
@@ -61,7 +60,7 @@ describe('XH Generator Less', function () {
       'grunt/html-validation.js',
       'grunt/include-replace.js',
       'grunt/jsbeautifier.js',
-      'grunt/remfallback.js',
+      'grunt/postcss.js',
       'grunt/search.js',
       'grunt/spritesmith.js',
       'grunt/text-replace.js',
@@ -136,4 +135,3 @@ describe('XH Generator Less', function () {
     done();
   });
 });
-

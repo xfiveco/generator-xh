@@ -50,8 +50,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
     'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
     'less',<% } %>
-    'autoprefixer',
-    'remfallback'
+    'postcss'
   ]);
 
   grunt.registerTask('build-js', [

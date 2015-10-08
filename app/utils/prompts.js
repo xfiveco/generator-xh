@@ -53,13 +53,13 @@ module.exports = {
       name: 'Less',
       value: 'less'
     }],
-    default: 'sass'
+    default: 'scss'
   }, {
     type: 'confirm',
     name: 'ignoreDist',
     message: 'Add dist folder to the Git ignore list?',
     default: function (response) {
-      return response.cssPreprocessor !== 'sass';
+      return response.cssPreprocessor !== 'scss';
     }
   }, {
     type: 'confirm',
@@ -73,6 +73,10 @@ module.exports = {
     choices: [{
       name: 'jQuery',
       value: 'useJquery',
+      checked: true
+    }, {
+      name: 'Image optimisation',
+      value: 'useOptim',
       checked: true
     }, {
       name: 'Automatic sprites',

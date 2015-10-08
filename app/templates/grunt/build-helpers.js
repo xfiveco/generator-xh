@@ -32,13 +32,13 @@ module.exports = function(grunt) {
     'usemin',
   ]);
 
-  grunt.registerTask('build-assets', [
+  grunt.registerTask('build-assets', [<% if (features.useOptim || features.useSprites) { %>
     // optimze SVG & generate & optimize their fallbacks
     'newer:imagemin:svg',
     'newer:svg2png:dist',
     'newer:imagemin:svgfallbacks',
     // optimize non-SVG images (GIF, PNG, JPG)
-    'newer:imagemin:nosvg',<% if (features.useSprites) { %>
+    'newer:imagemin:nosvg',<% } %><% if (features.useSprites) { %>
     // generate & optimize sprites
     'sprite:dist1x',
     'sprite:dist2x',

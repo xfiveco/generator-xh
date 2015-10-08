@@ -25,9 +25,9 @@ module.exports = function (grunt) {
       usemin: ['{head,scripts}.<%= extension %>'],
       root: __dirname,
       includes: '<%%= xh.src %>/includes',
-      designs: 'designs',
-      assets: '{img,media,fonts,<%%= xh.designs %>}',
-      images: '{img,media}' // used in imagemin
+      designs: 'designs',<% if (features.useOptim || features.useSprites) { %>
+      images: '{img,media}',<% } %>
+      assets: '{img,media,fonts,<%%= xh.designs %>}'
     }
   });
 

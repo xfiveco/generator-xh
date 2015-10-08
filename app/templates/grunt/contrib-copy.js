@@ -11,12 +11,7 @@ module.exports = function(grunt) {
       dest: '<%%= xh.src %>/bower_components/normalize.css/normalize.less'<% } %>
     },
 
-    <% } %>jquery: {
-      expand: true,
-      cwd: '<%%= xh.src %>/bower_components/jquery/dist/',
-      src: ['jquery.min.js', 'jquery.min.map'],
-      dest: '<%%= xh.dist %>/js/'
-    },<% if (features.useCSS3Pie) { %>
+    <% } %><% if (features.useCSS3Pie) { %>
 
     pie: {
       expand: true,

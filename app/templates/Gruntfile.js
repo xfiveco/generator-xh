@@ -42,7 +42,6 @@ module.exports = function (grunt) {
   grunt.registerTask('postinstall', [<% if (!features.useBootstrap) { %>
     'copy:normalize',<% } %><% if (features.useCSS3Pie) { %>
     'copy:pie',<% } %>
-    'copy:jquery'
   ]);
 
   grunt.registerTask('qa', 'Assure quality', [<% if (reloader !== 'None' && !server) { %>

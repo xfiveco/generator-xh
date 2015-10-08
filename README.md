@@ -397,9 +397,8 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 2. Then link it in `src/includes/scripts.html`. This will ensure that the library will be added to `plugins.min.js` file
 
     ```html
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery.min.js">\x3C/script>')</script>
     <!-- build:js js/plugins.min.js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
     <!-- endbuild -->
     <script src="js/main.js"></script>

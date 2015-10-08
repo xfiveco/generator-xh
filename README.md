@@ -1,4 +1,4 @@
-XH Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh.svg?branch=master)](https://travis-ci.org/xhtmlized/generator-xh) [![NPM version](https://badge.fury.io/js/generator-xh.svg)](http://badge.fury.io/js/generator-xh) [![NPM dependiencies](https://david-dm.org/xhtmlized/generator-xh.svg)
+XH Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh.svg?branch=master)](https://travis-ci.org/xhtmlized/generator-xh) [![NPM version](https://badge.fury.io/js/generator-xh.svg)](http://badge.fury.io/js/generator-xh) [![NPM dependiencies](https://david-dm.org/xhtmlized/generator-xh.svg)](https://david-dm.org/xhtmlized/generator-xh)
 ============
 
 [![NPM](https://nodei.co/npm/generator-xh.png?downloads=true)](https://nodei.co/npm/generator-xh/)

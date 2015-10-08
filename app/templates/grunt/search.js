@@ -9,7 +9,7 @@ module.exports = function(grunt) {
   grunt.config('search', {
     imports: {
       files: {
-        src: ['<%%= xh.src %>/<%= this.cssPreprocessor %>/**/*.<%= this.cssPreprocessor %>']
+        src: ['<%%= xh.src %>/<%= cssPreprocessor %>/**/*.<%= cssPreprocessor %>']
       },
       options: {
         searchString: /@import[ \("']*([^;]+)[;\)"']*/g,

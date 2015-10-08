@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     },
 
     compileCSS: {
-      files: ['<%%= xh.src %>/<%= this.cssPreprocessor %>/**/*.<%= this.cssPreprocessor %>'],
+      files: ['<%%= xh.src %>/<%= cssPreprocessor %>/**/*.<%= cssPreprocessor %>'],
       tasks: ['build-css'<% if (isWP) { %>, 'copy:wp'<% } %>]<% if (reloader === 'LiveReload') { %>,
       options: {
         livereload: true

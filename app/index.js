@@ -74,8 +74,8 @@ var XhGenerator = yeoman.generators.Base.extend({
   },
 
   configuring: function () {
-    this._templateArgs = [ this.extension ];
-    this._preprocessorArgs = (this.cssPreprocessor === 'SCSS' || this.cssPreprocessor === 'LIBSASS') ? ['scss', '_'] : ['less', ''];
+    this._templateArgs = [this.extension];
+    this._preprocessorArgs = [this.cssPreprocessor, '_'];
 
     // Yeoman config file
     utils.generate.config.bind(this)();

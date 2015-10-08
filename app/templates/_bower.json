@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     <% if (features.useModernizr) { %>"modernizr": "^2.8.3",<% } %>
-    <% if (features.useBootstrap) { %><% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>"bootstrap-sass": "^3.3.5",<% } %><% if (cssPreprocessor === 'LESS') { %>"bootstrap": "^3.3.5",<% } %><% } else { %>"normalize.css": "^3.0.3",<% } %><% if (features.useJquery) { %>
+    <% if (features.useBootstrap) { %><% if (cssPreprocessor === 'scss') { %>"bootstrap-sass": "^3.3.5",<% } %><% if (cssPreprocessor === 'less') { %>"bootstrap": "^3.3.5",<% } %><% } else { %>"normalize.css": "^3.0.3",<% } %><% if (features.useJquery) { %>
     "jquery": "^2.1.4"<% } %>
   },
   "devDependencies": {}

@@ -8,8 +8,7 @@
 - [Prerequisites](#prerequisites)
     - [Node.js](#1-nodejs)
     - [Grunt](#2-grunt)
-    - [Bower](#3-bower)<% if (cssPreprocessor === 'SCSS') { %>
-    - [Sass](#4-sass)<% } %>
+    - [Bower](#3-bower)
 - [Usage](#usage)
     - [Project Structure](#1-project-structure)
     - [Getting Started](#2-getting-started)
@@ -17,7 +16,7 @@
     - [WordPress Development](#4-wordpress-development)
 - [Tips & Tricks](#tips--tricks)
     - [Working with Files in the dist Folder](#working-with-files-in-the-dist-folder)
-    - [Writing Syles](#writing-styles)<% if (cssPreprocessor === 'LIBSASS') { %>
+    - [Writing Syles](#writing-styles)<% if (cssPreprocessor === 'scss') { %>
     - [LibSass Notices](#libsass-notices)<% } %>
     - [Adding 3rd-party Dependency via Bower](#adding-3rd-party-dependency-via-bower)<% if (features.useSprites) { %>
     - [Using Sprites](#using-sprites)<% } %>
@@ -49,19 +48,6 @@ npm install -g bower
 
 Also make sure that [git](http://git-scm.com/) is installed as some bower packages require it to be fetched and installed. On Windows ensure that Git is installed in your PATH by selecting *Run Git from the Windows Command Prompt* option during installation (check this [screenshot](http://wiki.team-mediaportal.com/@api/deki/files/3808/=Git_Setup_-_Run_from_Windows_Command_Prompt.PNG)).
 
-<% if (cssPreprocessor === 'SCSS') { %>### 4) Sass
-To compile styles you also need to install [Ruby](https://www.ruby-lang.org/en/installation/) and [Sass](http://sass-lang.com/install). Once Ruby is installed (on Mac it comes preinstalled), install the Sass preprocessor and other dependencies from the command line. To do it, the easiest way is to use [Bundler](http://bundler.io/). You can grab it with:
-
-```
-gem install bundler
-```
-
-After you have it installed, in the project root run:
-
-```
-bundle install
-```<% } %>
-
 ## Usage
 
 ### 1) Project Structure
@@ -75,8 +61,8 @@ The meaning of files and folders in generated project structure are as follows:
    - **designs** - place to store design previews, sprite source files & so on
    - **grunt** - atomic grunt tasks configuration
    - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
-   - **<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>scss<% } %><% if (cssPreprocessor === 'LESS') { %>less<% } %>** - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>SCSS<% } %><% if (cssPreprocessor === 'LESS') { %>Less<% } %> files
-     - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`main.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`main.less`<% } %> - main file where other stylesheets are imported
+   - **<%= this.cssPreprocessor %>** - <% if (cssPreprocessor === 'scss') { %>Sass<% } %><% if (cssPreprocessor === 'less') { %>Less<% } %> files
+     - `main.<%= this.cssPreprocessor %>` - main file where other stylesheets are imported
      - **common** - common styles for most of pages
      - **components** - styles for page modules/components; this is where most of your styles will go
      - **setup** - various configurations and preprocesor helpers
@@ -100,7 +86,7 @@ On a typical project, you will work in `src` folder and check your work in `dist
 
 ### 2) Getting Started
 
-If you are joining an existing project which was set up using XH Generator (assuming that you have all [prerequisites](#prerequisites) installed), all you need to do is to clone the existing repository and install <% if (cssPreprocessor === 'SCSS') { %>Ruby, <% } %>Bower and npm dependencies.
+If you are joining an existing project which was set up using XH Generator (assuming that you have all [prerequisites](#prerequisites) installed), all you need to do is to clone the existing repository and install Bower and npm dependencies.
 
 Let's imagine you have cloned/unpacked <%= projectName %> project into `<%= projectNameSlug %>` directory.
 
@@ -110,13 +96,7 @@ First, change the directory to your cloned project:
 cd <%= projectNameSlug %>
 ```
 
-<% if (cssPreprocessor === 'SCSS') { %>Install Ruby dependencies:
-
-```
-bundle install
-```
-
-<% } %>After that install Bower depedencies:
+After that install Bower depedencies:
 
 ```
 bower install
@@ -140,7 +120,7 @@ Now the project is set up and you can continue like described in the [Developmen
 
 ### 3) Development
 
-When you have the basic setup done, you can start development. To re-compile HTML / SCSS file in real time you can use default task. Type
+When you have the basic setup done, you can start development. To re-compile HTML / <%= this.cssPreprocessor %> file in real time you can use default task. Type
 
 ```
 grunt
@@ -171,35 +151,35 @@ When running Grunt tasks the front-end `dist` files are automatically copied to 
 
 In general, it’s not recommended that you work directly with files in the `dist`. The files in `dist` folder are automatically generated from the source files in `src` folder and by default `dist` folder is ignored in version control system.
 
-HTML and CSS files are prettified for consistent formatting and a table of contents from imported <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>SCSS<% } %><% if (cssPreprocessor === 'LESS') { %>Less<% } %> stylesheets is generated at the beginning of `main.css` for better overview.
+HTML and CSS files are prettified for consistent formatting and a table of contents from imported <% if (cssPreprocessor === 'scss') { %>Sass<% } %><% if (cssPreprocessor === 'less') { %>Less<% } %> stylesheets is generated at the beginning of `main.css` for better overview.
 
 ### Writing Styles
 
-The following source files are generated in <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`src/scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`src/less`<% } %> folders:
+The following source files are generated in `src/<%= this.cssPreprocessor %>` folders:
 
-- <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`main.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`main.less`<% } %> - main file where other stylesheets are imported
+- `main.<%= this.cssPreprocessor %>` - main file where other stylesheets are imported
 - **common** - common styles for most of pages
-  - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_layout.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`layout.less`<% } %> - main page structure
-  - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_utilites.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`utilities.less`<% } %> - utility classes (image replacement, hide, etc.)<% if (isWP) { %>
-  - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_wordpress.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`wordpress.less`<% } %> -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions<% } %>
+  - `layout.<%= this.cssPreprocessor %>` - main page structure
+  - `utilities.<%= this.cssPreprocessor %>` - utility classes (image replacement, hide, etc.)<% if (isWP) { %>
+  - `wordpress.<%= this.cssPreprocessor %>` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions<% } %>
 - **components** - styles for page modules/components; this is where most of your styles will go
 - **setup** - various configurations and preprocesor helpers
-  - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_variables.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`variables.less`<% } %> - variables file
-  - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_mixins.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`mixins.less`<% } %> - mixins file<% if (features.useSprites) { %>
-  - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_sprites.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`sprites.less`<% } %> - sprite mixin
-  - <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_sprites.scss.mustache`<% } %><% if (cssPreprocessor === 'LESS') { %>`sprites.less.mustache`<% } %> - template file for generating actual sprites code<% } %>
+  - `variables.<%= this.cssPreprocessor %>` - variables file
+  - `mixins.<%= this.cssPreprocessor %>` - mixins file<% if (features.useSprites) { %>
+  - `sprites.<%= this.cssPreprocessor %>` - sprite mixin
+  - `sprites.<%= this.cssPreprocessor %>.mustache` - template file for generating actual sprites code<% } %>
 - **vendor** - styles overwriting/replacing library ones
 
 The following approach is recommended when creating styles:
 
-1. Use <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`main.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`main.less`<% } %> only for importing other stylesheets. Do not write styles directly in this file!
+1. Use `main.<%= this.cssPreprocessor %>` only for importing other stylesheets. Do not write styles directly in this file!
 2. Use variables and mixins files to store your variables and mixins.
-3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`scss/components/_article.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`less/components/article.less`<% } %> file instead of ~~<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`scss/components/_text.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`less/components/text.less`<% } %>~~.
+3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in `<%= this.cssPreprocessor %>/components/_article.<%= this.cssPreprocessor %>` file instead of ~~`<%= this.cssPreprocessor %>/components/_text.<%= this.cssPreprocessor %>`~~.
 4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
 5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
 6. By default [grunt-autoprefixer](https://github.com/nDmitry/grunt-autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
 
-<% if (cssPreprocessor === 'LIBSASS') { %>### LibSass notices
+<% if (cssPreprocessor === 'scss') { %>### LibSass notices
 
 LibSass is much faster than Ruby Sass, however some features of Ruby Sass [may not yet be ported there or a bit faulty](http://benfrain.com/libsass-lightning-fast-sass-compiler-ready-prime-time/). Sometimes project requiremens force you to choose Ruby version over LibSass as some features of the libraries you would like to use may not be available in LibSass (like automatic sprite generation from [Compass](http://compass-style.org/)).
 
@@ -227,15 +207,15 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 
 3. Go to `src/bower_components/jquery-colorbox` and copy images from `example1/images` folder to `src/img/colorbox` folder.
 
-4. Get `example1/colorbox.css` from the same dir, rename it to <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_colorbox.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`colorbox.less`<% } %>, store it in `src/<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>scss<% } %><% if (cssPreprocessor === 'LESS') { %>less<% } %>/vendor` folder and adjust to your needs if needed.
+4. Get `example1/colorbox.css` from the same dir, rename it to `_colorbox.<%= this.cssPreprocessor %>`, store it in `src/<%= this.cssPreprocessor %>/vendor` folder and adjust to your needs if needed.
 
-5. Import <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_colorbox.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`colorbox.less`<% } %> in <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`main.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`main.less`<% } %>
+5. Import `_colorbox.<%= this.cssPreprocessor %>` in `main.<%= this.cssPreprocessor %>`
 
     ```css
     @import "vendor/colorbox";
     ```
 
-6. Replace all instances of `images/` in <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`_colorbox.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`colorbox.less`<% } %> with `../img/colorbox/`
+6. Replace all instances of `images/` in `_colorbox.<%= this.cssPreprocessor %>` with `../img/colorbox/`
 
 7. Run the `grunt build` task or `grunt` task
 
@@ -247,7 +227,7 @@ When relevant option is selected during setup, tasks for automatic sprite genera
 
 Sprites generation is accomplished using [grunt-spritesmith](https://github.com/Ensighten/grunt-spritesmith). Detailed documentation regarding available options and generation engines is described there.
 
-In the XH Generator default configuration you are expected to put yor files in `src/img/sprites/1x/` directory for normal-density screens and `src/img/sprites/2x/` for retina & similar ones. Filename of the image should be the same - let's say `home.png`. When task finishes running (it may take some time, which is why sprite generation is optional feature), you will be able to use sprite helper mixins in your code. The one you're most interested in can be found in <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`src/scss/setup/_sprites.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`src/less/setup/sprites.less`<% } %> - `sprite-retina` mixin. It takes two arguments (for now, we're planning to further simplify that) - variable that holds normal sprite data & variable that holds retina sprite data. Those variables were generated for you when task ran. To make it clearer, using SCSS for our example home icon you would do:
+In the XH Generator default configuration you are expected to put yor files in `src/img/sprites/1x/` directory for normal-density screens and `src/img/sprites/2x/` for retina & similar ones. Filename of the image should be the same - let's say `home.png`. When task finishes running (it may take some time, which is why sprite generation is optional feature), you will be able to use sprite helper mixins in your code. The one you're most interested in can be found in `src/<%= this.cssPreprocessor %>/setup/_sprites.<%= this.cssPreprocessor %>` - `sprite-retina` mixin. It takes two arguments (for now, we're planning to further simplify that) - variable that holds normal sprite data & variable that holds retina sprite data. Those variables were generated for you when task ran. To make it clearer, using <%= this.cssPreprocessor %> for our example home icon you would do:
 
 ```css
 .my-home-icon {
@@ -255,7 +235,7 @@ In the XH Generator default configuration you are expected to put yor files in `
 }
 ```
 
-The exact variable names can be found in <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>`src/scss/setup/_sprites@N.scss`<% } %><% if (cssPreprocessor === 'LESS') { %>`src/less/setup/sprites@N.less`<% } %> files if you need to check them.
+The exact variable names can be found in `src/<%= this.cssPreprocessor %>/setup/sprites@N.<%= this.cssPreprocessor %>`
 
 **Important!** Currently you need to provide **both** files (nomal & retina). If you do not, the output sprite images will differ and as a result generated `background-position` values will be incorrect.<% } %>
 

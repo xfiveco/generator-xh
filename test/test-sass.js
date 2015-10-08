@@ -4,7 +4,7 @@ var path = require('path');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 
-describe('XH Generator SCSS', function () {
+describe('XH Generator Sass', function () {
   before(function (done) {
 
     helpers
@@ -19,7 +19,7 @@ describe('XH Generator SCSS', function () {
         useBranding: true,
         reloader: 'None',
         server: false,
-        cssPreprocessor: 'SCSS',
+        cssPreprocessor: 'scss',
         ignoreDist: false,
         isWP: false,
         features: []
@@ -38,7 +38,6 @@ describe('XH Generator SCSS', function () {
       '.gitignore',
       'package.json',
       'bower.json',
-      'Gemfile',
       'README.md'
     ];
 
@@ -53,13 +52,13 @@ describe('XH Generator SCSS', function () {
       'grunt/contrib-concat.js',
       'grunt/contrib-copy.js',
       'grunt/contrib-jshint.js',
-      'grunt/contrib-sass.js',
       'grunt/contrib-uglify.js',
       'grunt/contrib-watch.js',
       'grunt/cssbeautifier.js',
       'grunt/html-validation.js',
       'grunt/include-replace.js',
       'grunt/jsbeautifier.js',
+      'grunt/sass.js',
       'grunt/postcss.js',
       'grunt/search.js',
       'grunt/text-replace.js',
@@ -86,7 +85,7 @@ describe('XH Generator SCSS', function () {
     done();
   });
 
-  it('creates SCSS structure', function (done) {
+  it('creates Sass structure', function (done) {
     var expectedFiles = [
       'src/scss/main.scss',
       'src/scss/setup/_variables.scss',

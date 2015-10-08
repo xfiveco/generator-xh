@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       files: {
         src: [
           '<%%= xh.src %>/js/**/*.js',
-          '<%%= xh.src %>/scss/**/*.scss'
+          '<%%= xh.src %>/<%= this.cssPreprocessor %>/**/*.<%= this.cssPreprocessor %>'
         ]
       },
 

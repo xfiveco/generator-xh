@@ -47,21 +47,19 @@ module.exports = {
     name: 'cssPreprocessor',
     message: 'Which CSS preprocessor would you like to use?',
     choices: [{
-      name: 'SCSS (LibSass; not fully compatible with Ruby version but much faster)',
-      value: 'LIBSASS'
+      name: 'Sass',
+      value: 'scss'
     }, {
-      value: 'LESS'
-    }, {
-      name: 'SCSS (Ruby)',
-      value: 'SCSS'
+      name: 'Less',
+      value: 'less'
     }],
-    default: 'LIBSASS'
+    default: 'sass'
   }, {
     type: 'confirm',
     name: 'ignoreDist',
     message: 'Add dist folder to the Git ignore list?',
     default: function (response) {
-      return response.cssPreprocessor !== 'SCSS';
+      return response.cssPreprocessor !== 'sass';
     }
   }, {
     type: 'confirm',

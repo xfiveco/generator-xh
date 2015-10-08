@@ -8,8 +8,8 @@ module.exports = function(grunt) {
     dist1x: {
       src: '<%%= xh.src %>/img/sprites/1x/*.{png,jpg,gif}',
       dest: '<%%= xh.dist %>/img/common/sprites@1x.png',
-      destCss: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/setup/_sprites@1x.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/setup/sprites@1x.less'<% } %>,
-      cssTemplate: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/setup/_sprites.scss.mustache'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/setup/sprites.less.mustache'<% } %>,
+      destCss: '<%%= xh.src %>/<%= this.cssPreprocessor %>/setup/_sprites@1x.<%= this.cssPreprocessor %>',
+      cssTemplate: '<%%= xh.src %>/<%= this.cssPreprocessor %>/setup/_sprites.<%= this.cssPreprocessor %>.mustache',
       algorithm: 'binary-tree',
       engine: 'pngsmith',
       padding: 2,
@@ -20,8 +20,8 @@ module.exports = function(grunt) {
     dist2x: {
       src: '<%%= xh.src %>/img/sprites/2x/*.{png,jpg,gif}',
       dest: '<%%= xh.dist %>/img/common/sprites@2x.png',
-      destCss: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/setup/_sprites@2x.scss'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/setup/sprites@2x.less'<% } %>,
-      cssTemplate: <% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>'<%%= xh.src %>/scss/setup/_sprites.scss.mustache'<% } %><% if (cssPreprocessor === 'LESS') { %>'<%%= xh.src %>/less/setup/sprites.less.mustache'<% } %>,
+      destCss: '<%%= xh.src %>/<%= this.cssPreprocessor %>/setup/_sprites@2x.<%= this.cssPreprocessor %>',
+      cssTemplate: '<%%= xh.src %>/<%= this.cssPreprocessor %>/setup/_sprites.<%= this.cssPreprocessor %>.mustache',
       algorithm: 'binary-tree',
       engine: 'pngsmith',
       padding: 4,

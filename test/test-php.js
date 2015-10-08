@@ -20,7 +20,7 @@ describe('XH Generator with PHP option', function () {
         reloader: 'BrowserSync',
         server: false,
         extension: 'php',
-        cssPreprocessor: 'LIBSASS',
+        cssPreprocessor: 'scss',
         ignoreDist: true,
         isWP: true,
         features: []

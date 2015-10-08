@@ -148,7 +148,7 @@ Example of valid configuration file:
       "useBranding": true,
       "reloader": "BrowserSync",
       "server": true,
-      "cssPreprocessor": "LIBSASS",
+      "cssPreprocessor": "scss",
       "ignoreDist": true,
       "isWP": false,
       "features": [

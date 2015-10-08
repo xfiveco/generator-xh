@@ -47,8 +47,8 @@ module.exports = function(grunt) {
     'newer:copy:assets'
   ]);
 
-  grunt.registerTask('build-css', [<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
-    'sass',<% } %><% if (cssPreprocessor === 'LESS') { %>
+  grunt.registerTask('build-css', [<% if (cssPreprocessor === 'scss') { %>
+    'sass',<% } %><% if (cssPreprocessor === 'less') { %>
     'less',<% } %>
     'postcss'
   ]);<% if (features.useModernizr) { %>

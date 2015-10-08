@@ -53,10 +53,6 @@ var generate = {
   appfiles: function () {
     this.template('_package.json', 'package.json');
     this.template('_bower.json', 'bower.json');
-
-    if (this.cssPreprocessor === 'SCSS') {
-      this.copy('Gemfile');
-    }
   },
 
   gruntModules: function () {

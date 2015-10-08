@@ -19,7 +19,7 @@ describe('XH Generator Defaults', function () {
         useBranding: true,
         reloader: 'BrowserSync',
         server: true,
-        cssPreprocessor: 'LIBSASS',
+        cssPreprocessor: 'scss',
         ignoreDist: true,
         isWP: true,
         features: ['useJquery', 'useBootstrap', 'useModernizr', 'useSprites']

@@ -14,11 +14,10 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - [Features](#features)
 - [Prerequisites](#prerequisites)
    - [Node.js](#1-nodejs)
-   - [Sass](#2-sass)
-   - [Grunt](#3-grunt)
-   - [Bower](#4-bower)
-   - [Yeoman](#5-yeoman)
-   - [XH Generator](#6-xh-generator)
+   - [Grunt](#2-grunt)
+   - [Bower](#3-bower)
+   - [Yeoman](#4-yeoman)
+   - [XH Generator](#5-xh-generator)
 - [Usage](#usage)
    - [Project scaffolding](#1-project-scaffolding)
    - [Project structure](#2-project-structure)
@@ -71,22 +70,16 @@ The following software needs to be installed if you want to use XH Generator. Th
 ### 1) Node.js
 
 Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
-
-### 2) Sass _(Optional)_
-If you want to use SCSS for CSS preprocessing and need to use original ruby compiler ([LibSass](http://libsass.org/) - a C version of Sass compiler is the default option), you will need to install [Ruby](https://www.ruby-lang.org/en/installation/) and [Sass](http://sass-lang.com/install). Once Ruby is installed (on Mac it comes preinstalled), install the Sass preprocessor from the command line.
-
-```
-gem install sass
 ```
 
-### 3) Grunt
+### 2) Grunt
 Then install [Grunt](http://gruntjs.com/)'s command line interface (CLI) globally:
 
 ```
 npm install -g grunt-cli
 ```
 
-### 4) Bower
+### 3) Bower
 For managing certain dependencies like Bootstrap, you will need [Bower](http://bower.io/), another package manager. Install it from the command line too:
 
 ```
@@ -95,14 +88,14 @@ npm install -g bower
 
 Also make sure that [git](http://git-scm.com/) is installed as some bower packages require it to be fetched and installed. On Windows ensure that Git is installed in your PATH by selecting *Run Git from the Windows Command Prompt* option during installation (check this [screenshot](http://wiki.team-mediaportal.com/@api/deki/files/3808/=Git_Setup_-_Run_from_Windows_Command_Prompt.PNG)).
 
-### 5) Yeoman
+### 4) Yeoman
 XH Generator is a [Yeoman](http://yeoman.io/) generator, so obviously it depends on it. You can easily install Yeoman with the following command:
 
 ```
 npm install -g yo
 ```
 
-### 6) XH Generator
+### 5) XH Generator
 Finally install the XH Generator:
 
 ```
@@ -167,39 +160,39 @@ The generated project structure will look like this:
 
 The meaning of files and folders are as follows:
 
-* **dist** - production / preview files are automatically generated here, this is where you check your work in a browser.
-* **node_modules** - Node.js modules for various Grunt tasks, usually you don’t have to do anything about this folder
-* **src** - source files, development is done here
-   * **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
-   * **designs** - place to store design previews, sprite source files & so on
-   * **grunt** - atomic grunt tasks configuration
-   * **includes** - HTML partials like `head.html`, `scripts.html`, etc.
-   * **scss / less** - Sass or Less files
-     * `main.scss` / `main.less` - main file where other stylesheets are imported
-     * **common** - common styles for most of pages
-       * `_layout.scss` / `layout.less` - main page structure
-       * `_utilites.scss` / `utilities.less` - utility classes (image replacement, hide, etc.)
-       * `_wordpress.scss` / `wordpress.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
-     * **components** - styles for page modules/components; this is where most of your styles will go
-     * **setup** - various configurations and preprocesor helpers
-       * `_variables.scss` / `variables.less` - variables file
-       * `_mixins.scss` / `mixins.less` - mixins file
-       * `_sprites.scss` / `sprites.less` - sprite mixin when 'Automatic sprites' feature is used
-       * `_sprites.scss.mustache` / `sprites.less.mustache` - template file for generating actual sprites code
-     * **vendor** - styles overwriting/replacing library ones
-   * **js**
-     * `main.js` is a main JS file in project
-   * `home.html`, etc. - HTML files composed from HTML partials
-* `index.html` - project index with project pages listed
-* `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
-* `bower.json` - Bower dependencies in the project
-* `package.json` - npm packages dependencies
-* `.yo-rc.json` - Yeoman generator configuration file
-* `.bowerrc` - configuration file for Bower
-* `.editorconfig` - [EditorConfig](http://editorconfig.org/) configuration file to achieve consistent coding style
-* `.gitattributes` - [Git](http://git-scm.com/) configuration file to force Unix line ending in all text files
-* `.gitignore` - default Git ignore files and folders
-* `.jshitrc` - [JSHint](http://www.jshint.com/) configuration
+- **dist** - production / preview files are automatically generated here, this is where you check your work in a browser.
+- **node_modules** - Node.js modules for various Grunt tasks, usually you don’t have to do anything about this folder
+- **src** - source files, development is done here
+   - **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
+   - **designs** - place to store design previews, sprite source files & so on
+   - **grunt** - atomic grunt tasks configuration
+   - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
+   - **scss / less** - Sass or Less files
+     - `main.scss` / `main.less` - main file where other stylesheets are imported
+     - **common** - common styles for most of pages
+       - `_layout.scss` / `layout.less` - main page structure
+       - `_utilites.scss` / `utilities.less` - utility classes (image replacement, hide, etc.)
+       - `_wordpress.scss` / `wordpress.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+     - **components** - styles for page modules/components; this is where most of your styles will go
+     - **setup** - various configurations and preprocesor helpers
+       - `_variables.scss` / `variables.less` - variables file
+       - `_mixins.scss` / `mixins.less` - mixins file
+       - `_sprites.scss` / `sprites.less` - sprite mixin when 'Automatic sprites' feature is used
+       - `_sprites.scss.mustache` / `sprites.less.mustache` - template file for generating actual sprites code
+     - **vendor** - styles overwriting/replacing library ones
+   - **js**
+     - `main.js` is a main JS file in project
+   - `home.html`, etc. - HTML files composed from HTML partials
+- `index.html` - project index with project pages listed
+- `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
+- `bower.json` - Bower dependencies in the project
+- `package.json` - npm packages dependencies
+- `.yo-rc.json` - Yeoman generator configuration file
+- `.bowerrc` - configuration file for Bower
+- `.editorconfig` - [EditorConfig](http://editorconfig.org/) configuration file to achieve consistent coding style
+- `.gitattributes` - [Git](http://git-scm.com/) configuration file to force Unix line ending in all text files
+- `.gitignore` - default Git ignore files and folders
+- `.jshitrc` - [JSHint](http://www.jshint.com/) configuration
 
 
 On a typical project, you will work in `src` folder and check your work in `dist` folder so you don’t have to touch other files. For more info about working with styles structure go to [Writing styles section](#writing-styles).

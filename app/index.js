@@ -4,6 +4,7 @@ var yeoman = require('yeoman-generator');
 var utils = require('./utils/index');
 
 var XhGenerator = yeoman.generators.Base.extend({
+
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
 
@@ -132,6 +133,7 @@ var XhGenerator = yeoman.generators.Base.extend({
       skipInstall: this.options['skip-install']
     });
   }
+  
 });
 
 module.exports = XhGenerator;

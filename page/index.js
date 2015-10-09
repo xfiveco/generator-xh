@@ -4,7 +4,7 @@ var path = require('path');
 var _ = require('lodash');
 
 var PageGenerator = yeoman.generators.Base.extend({
-
+  
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
 

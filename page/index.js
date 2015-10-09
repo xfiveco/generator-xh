@@ -15,6 +15,12 @@ var PageGenerator = yeoman.generators.Base.extend({
       process.exit();
     }
 
+    // TODO:
+    // - Get input pages first and attach them to config pages
+    // - Set new pages to config file
+    // - Run page manipulations on pages from config files
+    // - Check if the new page already exists and skip if it does
+
     try {
       this.pages = this.config.get('pages');
     } catch (ex) {

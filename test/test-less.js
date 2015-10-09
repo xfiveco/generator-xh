@@ -19,7 +19,7 @@ describe('XH Generator Less', function () {
         useBranding: false,
         reloader: 'LiveReload',
         server: true,
-        cssPreprocessor: 'LESS',
+        cssPreprocessor: 'less',
         ignoreDist: true,
         isWP: false,
         features: ['useSprites']
@@ -48,7 +48,6 @@ describe('XH Generator Less', function () {
   it('creates Grunt files', function (done) {
     var expectedFiles = [
       'Gruntfile.js',
-      'grunt/autoprefixer.js',
       'grunt/contrib-clean.js',
       'grunt/contrib-concat.js',
       'grunt/contrib-connect.js',
@@ -61,7 +60,7 @@ describe('XH Generator Less', function () {
       'grunt/html-validation.js',
       'grunt/include-replace.js',
       'grunt/jsbeautifier.js',
-      'grunt/remfallback.js',
+      'grunt/postcss.js',
       'grunt/search.js',
       'grunt/spritesmith.js',
       'grunt/text-replace.js',
@@ -91,10 +90,10 @@ describe('XH Generator Less', function () {
   it('creates Less structure', function (done) {
     var expectedFiles = [
       'src/less/main.less',
-      'src/less/setup/variables.less',
-      'src/less/setup/mixins.less',
-      'src/less/common/utilities.less',
-      'src/less/common/layout.less',
+      'src/less/setup/_variables.less',
+      'src/less/setup/_mixins.less',
+      'src/less/common/_utilities.less',
+      'src/less/common/_layout.less',
       'src/less/components/.keep',
       'src/less/vendor/.keep'
     ];
@@ -128,12 +127,11 @@ describe('XH Generator Less', function () {
     var expectedFiles = [
       'src/img/sprites/1x/.keep',
       'src/img/sprites/2x/.keep',
-      'src/less/setup/sprites.less',
-      'src/less/setup/sprites.less.mustache'
+      'src/less/setup/_sprites.less',
+      'src/less/setup/_sprites.less.mustache'
     ];
 
     assert.file(expectedFiles);
     done();
   });
 });
-

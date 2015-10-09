@@ -55,13 +55,13 @@ module.exports = {
     this.log(configFoundPrompt + chalk.yellow(props.projectName) + '\n');
 
     if (this.options.interactive === false) {
-      utils.setProps.apply(this, [props]);
+      utils.setPrompts.apply(this, [props]);
       done();
     } else {
       this.prompt(utils.prompts.newProjectName, function (newProps) {
         this.projectName = newProps.projectName;
         props.projectName = this.projectName;
-        utils.setProps.apply(this, [props]);
+        utils.setPrompts.apply(this, [props]);
         done();
       }.bind(this));
     }

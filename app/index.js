@@ -4,6 +4,7 @@ var yeoman = require('yeoman-generator');
 var utils = require('./utils/index');
 
 var XhGenerator = yeoman.generators.Base.extend({
+
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
 
@@ -68,15 +69,12 @@ var XhGenerator = yeoman.generators.Base.extend({
     }
 
     this.prompt(utils.prompts.generator, function (props) {
-      utils.setProps.apply(this, [ props ]);
+      utils.setPrompts.apply(this, [ props ]);
       done();
     }.bind(this));
   },
 
   configuring: function () {
-    this._templateArgs = [ this.extension ];
-    this._preprocessorArgs = (this.cssPreprocessor === 'SCSS' || this.cssPreprocessor === 'LIBSASS') ? ['scss', '_'] : ['less', ''];
-
     // Yeoman config file
     utils.generate.config.bind(this)();
 
@@ -99,37 +97,30 @@ var XhGenerator = yeoman.generators.Base.extend({
       utils.generate.assets.bind(this)();
 
       // Template files
-      utils.generate.templateFiles.apply(this, this._templateArgs);
+      utils.generate.templateFiles.bind(this)();
 
       // Styles
-      utils.generate.preprocessor.apply(this, this._preprocessorArgs);
-
-      if (this.features.useBootstrap) {
-        utils.generate.bootstrap.apply(this, [].concat(this._preprocessorArgs, this._templateArgs));
-      }
+      utils.generate.preprocessor.bind(this)();
 
       // JS
       utils.generate.js.bind(this)();
+
+      if (this.features.useBootstrap) {
+        utils.generate.bootstrap.bind(this)();
+      }
     },
 
     // WordPress
     wp: function () {
       if (this.isWP) {
-        utils.generate.wp.apply(this, [].concat(this._preprocessorArgs, this._templateArgs));
+        utils.generate.wp.bind(this)();
       }
     },
 
     // Sprites
     sprites: function () {
       if (this.features.useSprites) {
-        utils.generate.sprites.apply(this, this._preprocessorArgs);
-      }
-    },
-
-    // CSS3Pie
-    css3pie: function () {
-      if (this.features.useCSS3Pie) {
-        utils.generate.css3pie.bind(this)();
+        utils.generate.sprites.bind(this)();
       }
     }
   },
@@ -139,6 +130,7 @@ var XhGenerator = yeoman.generators.Base.extend({
       skipInstall: this.options['skip-install']
     });
   }
+
 });
 
 module.exports = XhGenerator;

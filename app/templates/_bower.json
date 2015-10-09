@@ -1,5 +1,5 @@
 {
-  "name": "<%= _.slugify(projectName) %>",
+  "name": "<%= projectNameSlug %>",
   "version": "0.0.1",
   "ignore": [
     "**/.*",
@@ -9,10 +9,11 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    <% if (features.useModernizr) { %>"modernizr": "^2.8.3",<% } else { %>"html5shiv": "^3.7.2",<% } %>
-    <% if (features.useBootstrap) { %><% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>"bootstrap-sass": "^3.3.5",<% } %><% if (cssPreprocessor === 'LESS') { %>"bootstrap": "^3.3.5",<% } %><% } else { %>"normalize.css": "^3.0.3",<% } %>
-    "jquery": "^1.11.2"
+  "dependencies": {<% if (features.useBootstrap && cssPreprocessor === 'scss') { %>
+    "bootstrap-sass": "^3.3.5"<% } %><% if (features.useBootstrap && cssPreprocessor === 'less') { %>
+    "bootstrap": "^3.3.5"<% } %><% if (!features.useBootstrap) { %>
+    "normalize.css": "^3.0.3"<% } %><% if (features.useJquery) { %>,
+    "jquery": "^2.1.4"<% } %>
   },
   "devDependencies": {}
 }

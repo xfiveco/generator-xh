@@ -1,43 +1,31 @@
 /* ==========================================================================
 
     Project: <%= projectName %>
-    Author: <%= projectAuthor %>
+    Author: <%= authorName %>
     Last updated: @@timestamp
 
    ========================================================================== */
 
-(function($) {
+'use strict';
 
-  'use strict';
+var <%= projectNameCamel %> = {
 
-  var App = {
+  /**
+   * Init function
+   */
+  init: function() {
+    <%= projectNameCamel %>.exampleFn();
+  },
 
-    /**
-     * Init Function
-     */
-    init: function() {
-      // App.feature1();
-      // App.feature2();
-    },
+  /**
+   * Example function
+   */
+  exampleFn: function() {
+    console.log('Ready!');
+  }
 
-    /**
-     * Custom feature 1
-     */
-    feature1: function() {
+};
 
-    },
-
-    /**
-     * Custom feature 2
-     */
-    feature2: function() {
-
-    }
-
-  };
-
-  $(function() {
-    App.init();
-  });
-
-})(jQuery);
+document.addEventListener('DOMContentLoaded', function() {
+  <%= projectNameCamel %>.init();
+});

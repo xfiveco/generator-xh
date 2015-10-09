@@ -1,4 +1,4 @@
-XH Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh.svg?branch=master)](https://travis-ci.org/xhtmlized/generator-xh) [![NPM version](https://badge.fury.io/js/generator-xh.svg)](http://badge.fury.io/js/generator-xh)
+XH Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh.svg?branch=master)](https://travis-ci.org/xhtmlized/generator-xh) [![NPM version](https://badge.fury.io/js/generator-xh.svg)](http://badge.fury.io/js/generator-xh) [![NPM dependiencies](https://david-dm.org/xhtmlized/generator-xh.svg)](https://david-dm.org/xhtmlized/generator-xh)
 ============
 
 [![NPM](https://nodei.co/npm/generator-xh.png?downloads=true)](https://nodei.co/npm/generator-xh/)
@@ -14,11 +14,10 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - [Features](#features)
 - [Prerequisites](#prerequisites)
    - [Node.js](#1-nodejs)
-   - [Sass](#2-sass)
-   - [Grunt](#3-grunt)
-   - [Bower](#4-bower)
-   - [Yeoman](#5-yeoman)
-   - [XH Generator](#6-xh-generator)
+   - [Grunt](#2-grunt)
+   - [Bower](#3-bower)
+   - [Yeoman](#4-yeoman)
+   - [XH Generator](#5-xh-generator)
 - [Usage](#usage)
    - [Project scaffolding](#1-project-scaffolding)
    - [Project structure](#2-project-structure)
@@ -46,11 +45,12 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - [HTML includes](https://github.com/alanshaw/grunt-include-replace) to avoid code duplication
 - A sub generator for adding pages to the project
 - Industry standard [normalize.css](http://necolas.github.io/normalize.css/) as a base stylesheet
-- CSS Preprocessing with [SCSS](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
-- Support for both [LibSass](http://libsass.org/) (default) and [Ruby version](http://sass-lang.com/install) when using SCSS
-- Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [CSS3 Pie](http://css3pie.com/)
-- Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/nDmitry/grunt-autoprefixer)
-- Add fallback for rem units automatically with [remfallback](https://github.com/thomasdobber/grunt-remfallback) (set base font size for `<html>` tag - 100% is default 16px)
+- CSS Preprocessing with [Sass](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
+- Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [jQuery](http://jquery.com/)
+- Building customized Modernizr version using only the tests you've used in your JavaScript or (S)CSS files.
+- Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/postcss/autoprefixer) - PostCSS plugin
+- Add fallback for rem units automatically with [pixrem](https://github.com/robwierzbowski/node-pixrem) - PostCSS plugin (set base font size for `<html>` tag - 100% is default 16px)
+- Support for importing vanilla CSS files (eg. from Bower) directly into SCSS with [postcss-import](https://github.com/postcss/postcss-import) - PostCSS plugin
 - Live reload and browsers syncing with [BrowserSync](http://www.browsersync.io/) or LiveReload
 - Optional development server
 - Grunt tasks for prettifying built HTML / CSS / JS
@@ -70,22 +70,16 @@ The following software needs to be installed if you want to use XH Generator. Th
 ### 1) Node.js
 
 Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
-
-### 2) Sass _(Optional)_
-If you want to use SCSS for CSS preprocessing and need to use original ruby compiler ([LibSass](http://libsass.org/) - a C version of Sass compiler is the default option), you will need to install [Ruby](https://www.ruby-lang.org/en/installation/) and [Sass](http://sass-lang.com/install). Once Ruby is installed (on Mac it comes preinstalled), install the Sass preprocessor from the command line.
-
-```
-gem install sass
 ```
 
-### 3) Grunt
+### 2) Grunt
 Then install [Grunt](http://gruntjs.com/)'s command line interface (CLI) globally:
 
 ```
 npm install -g grunt-cli
 ```
 
-### 4) Bower
+### 3) Bower
 For managing certain dependencies like Bootstrap, you will need [Bower](http://bower.io/), another package manager. Install it from the command line too:
 
 ```
@@ -94,14 +88,14 @@ npm install -g bower
 
 Also make sure that [git](http://git-scm.com/) is installed as some bower packages require it to be fetched and installed. On Windows ensure that Git is installed in your PATH by selecting *Run Git from the Windows Command Prompt* option during installation (check this [screenshot](http://wiki.team-mediaportal.com/@api/deki/files/3808/=Git_Setup_-_Run_from_Windows_Command_Prompt.PNG)).
 
-### 5) Yeoman
+### 4) Yeoman
 XH Generator is a [Yeoman](http://yeoman.io/) generator, so obviously it depends on it. You can easily install Yeoman with the following command:
 
 ```
 npm install -g yo
 ```
 
-### 6) XH Generator
+### 5) XH Generator
 Finally install the XH Generator:
 
 ```
@@ -146,12 +140,12 @@ Example of valid configuration file:
       "useBranding": true,
       "reloader": "BrowserSync",
       "server": true,
-      "cssPreprocessor": "LIBSASS",
+      "cssPreprocessor": "scss",
       "ignoreDist": true,
       "isWP": false,
       "features": [
-        "useModernizr",
-        "useCSS3Pie"
+        "useJquery",
+        "useModernizr"
       ]
     }
   }
@@ -173,7 +167,7 @@ The meaning of files and folders are as follows:
    - **designs** - place to store design previews, sprite source files & so on
    - **grunt** - atomic grunt tasks configuration
    - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
-   - **scss / less** - SCSS or Less files
+   - **scss / less** - Sass or Less files
      - `main.scss` / `main.less` - main file where other stylesheets are imported
      - **common** - common styles for most of pages
        - `_layout.scss` / `layout.less` - main page structure
@@ -353,7 +347,7 @@ HTML and CSS files are prettified for consistent formatting and a table of conte
 
 ### Writing styles
 
-XH Generator supports SCSS or Less. Sass syntax is not recommended. The following source files are generated in `src/scss` or `src/less` folders:
+XH Generator supports Sass or Less. Sass syntax is not recommended. The following source files are generated in `src/scss` or `src/less` folders:
 
 - `main.scss` / `main.less` - main file where other stylesheets are imported
 - **common** - common styles for most of pages
@@ -375,14 +369,8 @@ The following approach is recommended when creating styles:
 3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in `scss/components/_article.scss` file instead of ~~`scss/components/_text.scss`~~.
 4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
 5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
-6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use the default LibSass or Less as they are [faster than Ruby Sass](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
-7. By default [grunt-autoprefixer](https://github.com/nDmitry/grunt-autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
-
-### LibSass notices
-
-LibSass is much faster than Ruby Sass, and [since v3.2 almost fully compatible](https://sass-compatibility.github.io/). Sometimes project requiremens force you to choose Ruby version over LibSass as some features of the libraries you would like to use may not be available in LibSass (like automatic sprite generation from [Compass](http://compass-style.org/)).
-
-You can browse or add LibSass issues at [LibSass GitHub](https://github.com/sass/libsass/issues) page.
+6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS.
+7. By default [autoprefixer](https://github.com/postcss/autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
 
 ### Adding 3rd party dependency via Bower
 
@@ -397,9 +385,8 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 2. Then link it in `src/includes/scripts.html`. This will ensure that the library will be added to `plugins.min.js` file
 
     ```html
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery.min.js">\x3C/script>')</script>
     <!-- build:js js/plugins.min.js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
     <!-- endbuild -->
     <script src="js/main.js"></script>
@@ -463,7 +450,7 @@ In `grunt/contrib-connect.js` file find `options` section and either remove `ope
 
 #### BrowserSync Proxy
 
-During setup, when you choose not to run development server (or are unable to run it), you will be asked about URL of the page you will work with. By default this is `localhost`, but you can change it to something like `project.previewized.dev` or anything you like. When running development (default) grunt task, BrowserSync will then set up proxy server (by default on port 3000), that will allow you to use live reloading while for example simultaneously serving pages via Apache (and using PHP).
+During setup, when you choose not to run development server (or are unable to run it), you will be asked about URL of the page you will work with. By default this is `localhost`, but you can change it to something like `project.dev` or anything you like. When running development (default) grunt task, BrowserSync will then set up proxy server (by default on port 3000), that will allow you to use live reloading while for example simultaneously serving pages via Apache (and using PHP).
 
 ## Changelog
 

@@ -2,7 +2,7 @@
 
 module.exports = {
 	prompts: require('./prompts'),
-	setProps: require('./setProps'),
+	setPrompts: require('./setPrompts'),
 	welcome: require('./welcome'),
   generate: require('./generate')
 };

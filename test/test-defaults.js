@@ -19,10 +19,10 @@ describe('XH Generator Defaults', function () {
         useBranding: true,
         reloader: 'BrowserSync',
         server: true,
-        cssPreprocessor: 'LIBSASS',
+        cssPreprocessor: 'scss',
         ignoreDist: true,
         isWP: true,
-        features: ['useBootstrap', 'useModernizr', 'useCSS3Pie', 'useSprites']
+        features: ['useJquery', 'useBootstrap', 'useModernizr', 'useSprites']
       })
       .on('end', done);
 
@@ -48,7 +48,6 @@ describe('XH Generator Defaults', function () {
   it('creates Grunt files', function (done) {
     var expectedFiles = [
       'Gruntfile.js',
-      'grunt/autoprefixer.js',
       'grunt/browser-sync.js',
       'grunt/contrib-clean.js',
       'grunt/contrib-concat.js',
@@ -60,7 +59,7 @@ describe('XH Generator Defaults', function () {
       'grunt/html-validation.js',
       'grunt/include-replace.js',
       'grunt/jsbeautifier.js',
-      'grunt/remfallback.js',
+      'grunt/postcss.js',
       'grunt/sass.js',
       'grunt/search.js',
       'grunt/spritesmith.js',
@@ -167,15 +166,6 @@ describe('XH Generator Defaults', function () {
     done();
   });
 
-  it('creates CSS PIE file', function (done) {
-    var expectedFiles = [
-      'src/js/PIE.htc'
-    ];
-
-    assert.file(expectedFiles);
-    done();
-  });
-
   it('creates pages using \'page\' subgenerator', function (done) {
     var expectedFiles = [
       'src/home.html',
@@ -199,4 +189,3 @@ describe('XH Generator Defaults', function () {
       });
   });
 });
-

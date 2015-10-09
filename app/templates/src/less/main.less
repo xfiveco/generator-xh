@@ -1,7 +1,7 @@
 /* =========================================================================
 
     Project: <%= projectName %>
-    Author: <%= projectAuthor %>
+    Author: <%= authorName %>
     Last updated: @@timestamp
 @@toc
 
@@ -13,9 +13,9 @@
 // Authored Dependencies
 @import "setup/variables";
 @import "setup/mixins";<% if (features.useSprites) { %>
-@import "setup/sprites";<% } %>
+@import "setup/sprites";<% } %><% if (features.useBootstrap) { %>
 
-<% if (features.useBootstrap) { %>/* =========================================================================
+/* =========================================================================
    Bootstrap
    ========================================================================= */
 

@@ -26,8 +26,8 @@ module.exports = function (grunt) {
       root: __dirname,
       includes: '<%%= xh.src %>/includes',
       designs: 'designs',
-      assets: '{img,media,fonts,<%%= xh.designs %>}',
-      images: '{img,media}' // used in imagemin
+      images: '{img,media}',
+      assets: '{img,media,fonts,<%%= xh.designs %>}'
     }
   });
 
@@ -39,12 +39,6 @@ module.exports = function (grunt) {
     'notify:validation'
   ]);
 
-  grunt.registerTask('postinstall', [<% if (!features.useBootstrap) { %>
-    'copy:normalize',<% } %><% if (features.useCSS3Pie) { %>
-    'copy:pie',<% } %>
-    'copy:jquery'
-  ]);
-
   grunt.registerTask('qa', 'Assure quality', [<% if (reloader !== 'None' && !server) { %>
     'replace:reloader',<% } %>
     'build',
@@ -54,10 +48,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', 'Build site files', [
     'clean:dist',
-    'postinstall',
 
     'build-usemin-min',
-    'build-html',
+    'build-html',<% if (features.useModernizr) { %>
+    'build-modernizr',<% } %>
     'build-assets',
     'build-css',
     'build-js',
@@ -69,11 +63,11 @@ module.exports = function (grunt) {
     'notify:build'
   ]);
 
-  grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [
-    'postinstall'<% if (reloader === 'BrowserSync') { %>,
-    'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>,
+  grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [<% if (reloader === 'BrowserSync') { %>
+    'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>
     'connect:server'<% } %>,
-    'build-usemin',
+    'build-usemin',<% if (features.useModernizr) { %>
+    'build-modernizr',<% } %>
     'watch'
   ]);
 

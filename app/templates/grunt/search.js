@@ -8,9 +8,8 @@ module.exports = function(grunt) {
   // Create list of @imports
   grunt.config('search', {
     imports: {
-      files: {<% if (cssPreprocessor === 'SCSS' || cssPreprocessor === 'LIBSASS') { %>
-        src: ['<%%= xh.src %>/scss/main.scss']<% } %><% if (cssPreprocessor === 'LESS') { %>
-        src: ['<%%= xh.src %>/less/main.less']<% } %>
+      files: {
+        src: ['<%%= xh.src %>/<%= cssPreprocessor %>/**/*.<%= cssPreprocessor %>']
       },
       options: {
         searchString: /@import[ \("']*([^;]+)[;\)"']*/g,

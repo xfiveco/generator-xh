@@ -1,6 +1,7 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var path = require('path');
+var _ = require('lodash');
 
 var PageGenerator = yeoman.generators.Base.extend({
 
@@ -8,7 +9,7 @@ var PageGenerator = yeoman.generators.Base.extend({
     yeoman.generators.Base.apply(this, arguments);
 
     try {
-      this.config = this.fs.readJSON(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
+      this.config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
     } catch (ex) {
       this.log('You need to run this generator in a project directory.');
       process.exit();
@@ -35,9 +36,9 @@ var PageGenerator = yeoman.generators.Base.extend({
   initializing: function () {
     this.reserved = ['template', 'wp'];
 
-    this.isNotReserved = function(element) {
-      if (this.reserved.indexOf(this._.slugify(element)) === -1) {
-        return element;
+    this.isNotReserved = function(page) {
+      if (this.reserved.indexOf(_.kebabCase(page)) === -1) {
+        return page;
       }
     };
 
@@ -49,14 +50,14 @@ var PageGenerator = yeoman.generators.Base.extend({
 
   writing: function () {
     // Create pages from template
-    this.generatePage = function(element) {
-      var filename = this._.slugify(element) + '.' + this.config.extension;
+    this.generatePage = function(page) {
+      var filename = _.kebabCase(page) + '.' + this.config.extension;
       var root = path.join(this.destinationRoot(), 'src');
 
       // Write file
       this.fs.copyTpl(path.join(root, 'template.' + this.config.extension), path.join(root, filename), {
         extension: this.config.extension,
-        name: element
+        name: page
       });
     };
 
@@ -65,10 +66,10 @@ var PageGenerator = yeoman.generators.Base.extend({
       this.indexFile = this.readFileAsString('index.html');
       this.link = '';
 
-      array.forEach(function(element) {
-        this.filename = this._.slugify(element) + '.' + this.config.extension;
+      array.forEach(function(page) {
+        this.filename = _.kebabCase(page) + '.' + this.config.extension;
         this.link += '<li><i class="fa fa-file-o"></i><a href="dist/' + this.filename + '"><strong>' +
-          element + '</strong> ' + this.filename + '</a><i class="fa fa-check"></i></li>\n';
+          page + '</strong> ' + this.filename + '</a><i class="fa fa-check"></i></li>\n';
       }, this);
 
       // Write file

@@ -1,22 +1,20 @@
 /* =========================================================================
 
     Project: <%= projectName %>
-    Author: <%= projectAuthor %>
+    Author: <%= authorName %>
     Last updated: @@timestamp
 @@toc
 
    ========================================================================= */
 
 // Vendor Dependencies<% if (!features.useBootstrap) { %>
-@import "normalize.css/normalize";<% } %>
+@import "normalize.css/normalize";<% } %><% if (features.useBootstrap) { %>
+@import "vendor/bootstrap/variables";<% } %>
 
 // Authored Dependencies
 @import "setup/variables";
 @import "setup/mixins";<% if (features.useSprites) { %>
-@import "setup/sprites";<% } %>
-
-<% if (features.useBootstrap) { %>// Overwritten Bootstrap variables
-@import "vendor/bootstrap/variables";
+@import "setup/sprites";<% } %><% if (features.useBootstrap) { %>
 
 /* =========================================================================
    Bootstrap

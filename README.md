@@ -167,39 +167,39 @@ The generated project structure will look like this:
 
 The meaning of files and folders are as follows:
 
-- **dist** - production / preview files are automatically generated here, this is where you check your work in a browser.
-- **node_modules** - Node.js modules for various Grunt tasks, usually you don’t have to do anything about this folder
-- **src** - source files, development is done here
-   - **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
-   - **designs** - place to store design previews, sprite source files & so on
-   - **grunt** - atomic grunt tasks configuration
-   - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
-   - **scss / less** - Sass or Less files
-     - `main.scss` / `main.less` - main file where other stylesheets are imported
-     - **common** - common styles for most of pages
-       - `_layout.scss` / `layout.less` - main page structure
-       - `_utilites.scss` / `utilities.less` - utility classes (image replacement, hide, etc.)
-       - `_wordpress.scss` / `wordpress.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
-     - **components** - styles for page modules/components; this is where most of your styles will go
-     - **setup** - various configurations and preprocesor helpers
-       - `_variables.scss` / `variables.less` - variables file
-       - `_mixins.scss` / `mixins.less` - mixins file
-       - `_sprites.scss` / `sprites.less` - sprite mixin when 'Automatic sprites' feature is used
-       - `_sprites.scss.mustache` / `sprites.less.mustache` - template file for generating actual sprites code
-     - **vendor** - styles overwriting/replacing library ones
-   - **js**
-     - `main.js` is a main JS file in project
-   - `home.html`, etc. - HTML files composed from HTML partials
-- `index.html` - project index with project pages listed
-- `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
-- `bower.json` - Bower dependencies in the project
-- `package.json` - npm packages dependencies
-- `.yo-rc.json` - Yeoman generator configuration file
-- `.bowerrc` - configuration file for Bower
-- `.editorconfig` - [EditorConfig](http://editorconfig.org/) configuration file to achieve consistent coding style
-- `.gitattributes` - [Git](http://git-scm.com/) configuration file to force Unix line ending in all text files
-- `.gitignore` - default Git ignore files and folders
-- `.jshitrc` - [JSHint](http://www.jshint.com/) configuration
+* **dist** - production / preview files are automatically generated here, this is where you check your work in a browser.
+* **node_modules** - Node.js modules for various Grunt tasks, usually you don’t have to do anything about this folder
+* **src** - source files, development is done here
+   * **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
+   * **designs** - place to store design previews, sprite source files & so on
+   * **grunt** - atomic grunt tasks configuration
+   * **includes** - HTML partials like `head.html`, `scripts.html`, etc.
+   * **scss / less** - Sass or Less files
+     * `main.scss` / `main.less` - main file where other stylesheets are imported
+     * **common** - common styles for most of pages
+       * `_layout.scss` / `layout.less` - main page structure
+       * `_utilites.scss` / `utilities.less` - utility classes (image replacement, hide, etc.)
+       * `_wordpress.scss` / `wordpress.less` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions (in WP projects)
+     * **components** - styles for page modules/components; this is where most of your styles will go
+     * **setup** - various configurations and preprocesor helpers
+       * `_variables.scss` / `variables.less` - variables file
+       * `_mixins.scss` / `mixins.less` - mixins file
+       * `_sprites.scss` / `sprites.less` - sprite mixin when 'Automatic sprites' feature is used
+       * `_sprites.scss.mustache` / `sprites.less.mustache` - template file for generating actual sprites code
+     * **vendor** - styles overwriting/replacing library ones
+   * **js**
+     * `main.js` is a main JS file in project
+   * `home.html`, etc. - HTML files composed from HTML partials
+* `index.html` - project index with project pages listed
+* `Gruntfile.js` - [Grunt](http://gruntjs.com/) file with various automation tasks defined in it
+* `bower.json` - Bower dependencies in the project
+* `package.json` - npm packages dependencies
+* `.yo-rc.json` - Yeoman generator configuration file
+* `.bowerrc` - configuration file for Bower
+* `.editorconfig` - [EditorConfig](http://editorconfig.org/) configuration file to achieve consistent coding style
+* `.gitattributes` - [Git](http://git-scm.com/) configuration file to force Unix line ending in all text files
+* `.gitignore` - default Git ignore files and folders
+* `.jshitrc` - [JSHint](http://www.jshint.com/) configuration
 
 
 On a typical project, you will work in `src` folder and check your work in `dist` folder so you don’t have to touch other files. For more info about working with styles structure go to [Writing styles section](#writing-styles).

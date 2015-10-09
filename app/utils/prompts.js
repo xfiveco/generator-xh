@@ -58,9 +58,7 @@ module.exports = {
     type: 'confirm',
     name: 'ignoreDist',
     message: 'Add dist folder to the Git ignore list?',
-    default: function (response) {
-      return response.cssPreprocessor !== 'scss';
-    }
+    default: true
   }, {
     type: 'confirm',
     name: 'isWP',

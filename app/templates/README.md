@@ -19,8 +19,8 @@
     - [Writing Syles](#writing-styles)<% if (cssPreprocessor === 'scss') { %>
     - [LibSass Notices](#libsass-notices)<% } %>
     - [Adding 3rd-party Dependency via Bower](#adding-3rd-party-dependency-via-bower)<% if (features.useSprites) { %>
-    - [Using Sprites](#using-sprites)<% } %>
-    - [Automatic SVG Fallbacks](#automatic-svg-fallbacks)
+    - [Using Sprites](#using-sprites)<% } %><% if (features.useOptim) { %>
+    - [Automatic SVG Fallbacks](#automatic-svg-fallbacks)<% } %>
 
 ## Prerequisites
 
@@ -159,6 +159,7 @@ The following source files are generated in `src/<%= cssPreprocessor %>` folders
 
 - `main.<%= cssPreprocessor %>` - main file where other stylesheets are imported
 - **common** - common styles for most of pages
+  - `base.<%= cssPreprocessor %>` - normalized base styles
   - `layout.<%= cssPreprocessor %>` - main page structure
   - `utilities.<%= cssPreprocessor %>` - utility classes (image replacement, hide, etc.)<% if (isWP) { %>
   - `wordpress.<%= cssPreprocessor %>` -  [WordPress styles](http://codex.wordpress.org/CSS) for images and captions<% } %>
@@ -177,13 +178,7 @@ The following approach is recommended when creating styles:
 3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in `<%= cssPreprocessor %>/components/_article.<%= cssPreprocessor %>` file instead of ~~`<%= cssPreprocessor %>/components/_text.<%= cssPreprocessor %>`~~.
 4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
 5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
-6. By default [grunt-autoprefixer](https://github.com/nDmitry/grunt-autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
-
-<% if (cssPreprocessor === 'scss') { %>### LibSass notices
-
-LibSass is much faster than Ruby Sass, however some features of Ruby Sass [may not yet be ported there or a bit faulty](http://benfrain.com/libsass-lightning-fast-sass-compiler-ready-prime-time/). Sometimes project requiremens force you to choose Ruby version over LibSass as some features of the libraries you would like to use may not be available in LibSass (like automatic sprite generation from [Compass](http://compass-style.org/)).
-
-You can browse or add LibSass issues at [LibSass GitHub](https://github.com/sass/libsass/issues) page.<% } %>
+6. By default [autoprefixer](https://github.com/postcss/autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
 
 ### Adding 3rd-party Dependency via Bower
 
@@ -219,9 +214,9 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 
 7. Run the `grunt build` task or `grunt` task
 
-8. Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`
+8. Now you can use Colorbox in your HTML files and initiate it from `src/js/main.js`<% if (features.useSprites) { %>
 
-<% if (features.useSprites) { %>### Using Sprites
+### Using Sprites
 
 When relevant option is selected during setup, tasks for automatic sprite generation are added. Out-of-the-box only PNG files are supported, however if for some reason other source files are needed (like JPGs and GIFs) it is possible to add them (it will require installing some additional dependencies tough).
 
@@ -237,8 +232,8 @@ In the XH Generator default configuration you are expected to put yor files in `
 
 The exact variable names can be found in `src/<%= cssPreprocessor %>/setup/sprites@N.<%= cssPreprocessor %>`
 
-**Important!** Currently you need to provide **both** files (nomal & retina). If you do not, the output sprite images will differ and as a result generated `background-position` values will be incorrect.<% } %>
+**Important!** Currently you need to provide **both** files (nomal & retina). If you do not, the output sprite images will differ and as a result generated `background-position` values will be incorrect.<% } %><% if (features.useOptim) { %>
 
 ### Automatic SVG Fallbacks
 
-Vector graphics is increasingly more popular in web development due to its prefect look no matter the scale. As such you will probably find yourself using SVG files or icon fonts more and more often. However, not all browsers support SVGs out of the box, so fallbacks are needed. Currently XH Generator supports automatic optimization of SVG files (along with various other raster image formats) and PNG fallbacks creation. The caveat for correct automatic fallbacks is that SVG viewport needs to have proper size (PNG file will have the same dimensions). Also, if something seems off you can [play with optimization settings](https://github.com/sindresorhus/grunt-svgmin#available-optionsplugins) in `grunt/contrib-imagemin.js` task.
+Vector graphics is increasingly more popular in web development due to its prefect look no matter the scale. As such you will probably find yourself using SVG files or icon fonts more and more often. However, not all browsers support SVGs out of the box, so fallbacks are needed. Currently XH Generator supports automatic optimization of SVG files (along with various other raster image formats) and PNG fallbacks creation. The caveat for correct automatic fallbacks is that SVG viewport needs to have proper size (PNG file will have the same dimensions). Also, if something seems off you can [play with optimization settings](https://github.com/sindresorhus/grunt-svgmin#available-optionsplugins) in `grunt/contrib-imagemin.js` task.<% } %>

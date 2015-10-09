@@ -46,8 +46,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - [HTML includes](https://github.com/alanshaw/grunt-include-replace) to avoid code duplication
 - A sub generator for adding pages to the project
 - Industry standard [normalize.css](http://necolas.github.io/normalize.css/) as a base stylesheet
-- CSS Preprocessing with [SCSS](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
-- Support for both [LibSass](http://libsass.org/) (default) and [Ruby version](http://sass-lang.com/install) when using SCSS
+- CSS Preprocessing with [Sass](http://http://sass-lang.com/) or [Less](http://lesscss.org/)
 - Optional libraries like [Bootstrap](http://getbootstrap.com/), [Modernizr](http://modernizr.com/) & [jQuery](http://jquery.com/)
 - Building customized Modernizr version using only the tests you've used in your JavaScript or (S)CSS files.
 - Add vendor-prefixed CSS properties with [autoprefixer](https://github.com/postcss/autoprefixer) - PostCSS plugin
@@ -175,7 +174,7 @@ The meaning of files and folders are as follows:
    - **designs** - place to store design previews, sprite source files & so on
    - **grunt** - atomic grunt tasks configuration
    - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
-   - **scss / less** - SCSS or Less files
+   - **scss / less** - Sass or Less files
      - `main.scss` / `main.less` - main file where other stylesheets are imported
      - **common** - common styles for most of pages
        - `_layout.scss` / `layout.less` - main page structure
@@ -355,7 +354,7 @@ HTML and CSS files are prettified for consistent formatting and a table of conte
 
 ### Writing styles
 
-XH Generator supports SCSS or Less. Sass syntax is not recommended. The following source files are generated in `src/scss` or `src/less` folders:
+XH Generator supports Sass or Less. Sass syntax is not recommended. The following source files are generated in `src/scss` or `src/less` folders:
 
 - `main.scss` / `main.less` - main file where other stylesheets are imported
 - **common** - common styles for most of pages
@@ -377,14 +376,8 @@ The following approach is recommended when creating styles:
 3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in `scss/components/_article.scss` file instead of ~~`scss/components/_text.scss`~~.
 4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
 5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
-6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS. In such case use the default LibSass or Less as they are [faster than Ruby Sass](http://www.solitr.com/blog/2014/01/css-preprocessor-benchmark/).
-7. By default [grunt-autoprefixer](https://github.com/nDmitry/grunt-autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
-
-### LibSass notices
-
-LibSass is much faster than Ruby Sass, and [since v3.2 almost fully compatible](https://sass-compatibility.github.io/). Sometimes project requiremens force you to choose Ruby version over LibSass as some features of the libraries you would like to use may not be available in LibSass (like automatic sprite generation from [Compass](http://compass-style.org/)).
-
-You can browse or add LibSass issues at [LibSass GitHub](https://github.com/sass/libsass/issues) page.
+6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS.
+7. By default [autoprefixer](https://github.com/postcss/autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
 
 ### Adding 3rd party dependency via Bower
 
@@ -464,7 +457,7 @@ In `grunt/contrib-connect.js` file find `options` section and either remove `ope
 
 #### BrowserSync Proxy
 
-During setup, when you choose not to run development server (or are unable to run it), you will be asked about URL of the page you will work with. By default this is `localhost`, but you can change it to something like `project.previewized.dev` or anything you like. When running development (default) grunt task, BrowserSync will then set up proxy server (by default on port 3000), that will allow you to use live reloading while for example simultaneously serving pages via Apache (and using PHP).
+During setup, when you choose not to run development server (or are unable to run it), you will be asked about URL of the page you will work with. By default this is `localhost`, but you can change it to something like `project.dev` or anything you like. When running development (default) grunt task, BrowserSync will then set up proxy server (by default on port 3000), that will allow you to use live reloading while for example simultaneously serving pages via Apache (and using PHP).
 
 ## Changelog
 

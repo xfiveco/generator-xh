@@ -9,9 +9,10 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    <% if (features.useModernizr) { %>"modernizr": "^2.8.3",<% } %>
-    <% if (features.useBootstrap) { %><% if (cssPreprocessor === 'scss') { %>"bootstrap-sass": "^3.3.5",<% } %><% if (cssPreprocessor === 'less') { %>"bootstrap": "^3.3.5",<% } %><% } else { %>"normalize.css": "^3.0.3",<% } %><% if (features.useJquery) { %>
+  "dependencies": {<% if (features.useBootstrap && cssPreprocessor === 'scss') { %>
+    "bootstrap-sass": "^3.3.5"<% } %><% if (features.useBootstrap && cssPreprocessor === 'less') { %>
+    "bootstrap": "^3.3.5"<% } %><% if (!features.useBootstrap) { %>
+    "normalize.css": "^3.0.3"<% } %><% if (features.useJquery) { %>,
     "jquery": "^2.1.4"<% } %>
   },
   "devDependencies": {}

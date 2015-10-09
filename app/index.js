@@ -69,15 +69,12 @@ var XhGenerator = yeoman.generators.Base.extend({
     }
 
     this.prompt(utils.prompts.generator, function (props) {
-      utils.setProps.apply(this, [ props ]);
+      utils.setPrompts.apply(this, [ props ]);
       done();
     }.bind(this));
   },
 
   configuring: function () {
-    // this._templateArgs = [this.extension];
-    // this._preprocessorArgs = [this.cssPreprocessor, '_'];
-
     // Yeoman config file
     utils.generate.config.bind(this)();
 
@@ -133,7 +130,7 @@ var XhGenerator = yeoman.generators.Base.extend({
       skipInstall: this.options['skip-install']
     });
   }
-  
+
 });
 
 module.exports = XhGenerator;

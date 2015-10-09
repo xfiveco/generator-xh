@@ -4,12 +4,12 @@ var path = require('path');
 var _ = require('lodash');
 
 var PageGenerator = yeoman.generators.Base.extend({
-  
+
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
 
     try {
-      this.config = this.fs.readJSON(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
+      this.config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
     } catch (ex) {
       this.log('You need to run this generator in a project directory.');
       process.exit();

@@ -3,49 +3,26 @@
 module.exports = {
   generator: [{
     name: 'projectName',
-    message: 'Please enter the project name',
+    message: 'Enter your project name',
     validate: function (input) {
       return !!input;
     }
   }, {
     type: 'confirm',
     name: 'useBranding',
-    message: 'Should XHTMLized branding be used?',
-    default: true
-  }, {
-    type: 'string',
-    name: 'extension',
-    message: 'Please provide default pages extension (use \'html\' if you want to run developments server):',
-    default: 'html'
-  }, {
-    type: 'list',
-    name: 'reloader',
-    message: 'Which type of live reloader would you like to use?',
-    choices: ['LiveReload', 'BrowserSync', 'None'],
-    default: 'BrowserSync'
-  }, {
-    when: function (response) {
-      return response.reloader !== 'None' && response.extension.toLowerCase() === 'html';
-    },
-    type: 'confirm',
-    name: 'server',
-    message: 'Do you want to run development server?',
+    message: 'Do you want to use XHTMLized branding?',
     default: true
   }, {
     when: function (response) {
-      return response.reloader === 'BrowserSync' && !response.server;
+      return !response.useBranding;
     },
-    type: 'string',
-    name: 'proxy',
-    message: 'What URL will be used by your server?',
-    default: 'localhost',
-    validate: function (input) {
-      return !!input;
-    }
+    type: 'input',
+    name: 'authorName',
+    message: 'Enter your name'
   }, {
     type: 'list',
     name: 'cssPreprocessor',
-    message: 'Which CSS preprocessor would you like to use?',
+    message: 'Choose your CSS preprocessor',
     choices: [{
       name: 'Sass',
       value: 'scss'
@@ -55,19 +32,50 @@ module.exports = {
     }],
     default: 'scss'
   }, {
+    type: 'list',
+    name: 'extension',
+    message: 'Choose your page extension (choose \'html\' if you want to run dev server):',
+    choices: ['html', 'php'],
+    default: 'html'
+  }, {
+    type: 'list',
+    name: 'reloader',
+    message: 'Choose your live reloader type',
+    choices: ['BrowserSync', 'LiveReload', 'None'],
+    default: 'BrowserSync'
+  }, {
+    when: function (response) {
+      return response.reloader !== 'None' && response.extension === 'html';
+    },
+    type: 'confirm',
+    name: 'server',
+    message: 'Do you want to run development server?',
+    default: true
+  }, {
+    when: function (response) {
+      return response.reloader === 'BrowserSync' && !response.server;
+    },
+    type: 'input',
+    name: 'proxy',
+    message: 'Enter your server URL',
+    default: 'localhost',
+    validate: function (input) {
+      return !!input;
+    }
+  }, {
     type: 'confirm',
     name: 'ignoreDist',
-    message: 'Add dist folder to the Git ignore list?',
+    message: 'Do you want to add dist folder to the .gitignore?',
     default: true
   }, {
     type: 'confirm',
     name: 'isWP',
-    message: 'Is this WordPress project?',
+    message: 'Do you want to install WordPress?',
     default: false
   }, {
     type: 'checkbox',
     name: 'features',
-    message: 'Select additional features:',
+    message: 'Choose additional features',
     choices: [{
       name: 'jQuery',
       value: 'useJquery',

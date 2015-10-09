@@ -23,7 +23,7 @@ describe('XH Generator with PHP option', function () {
         cssPreprocessor: 'scss',
         ignoreDist: true,
         isWP: true,
-        features: []
+        features: ['useJquery']
       })
       .on('end', done);
 

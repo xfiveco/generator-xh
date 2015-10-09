@@ -25,8 +25,8 @@ module.exports = function (grunt) {
       usemin: ['{head,scripts}.<%= extension %>'],
       root: __dirname,
       includes: '<%%= xh.src %>/includes',
-      designs: 'designs',<% if (features.useOptim || features.useSprites) { %>
-      images: '{img,media}',<% } %>
+      designs: 'designs',
+      images: '{img,media}',
       assets: '{img,media,fonts,<%%= xh.designs %>}'
     }
   });
@@ -63,8 +63,8 @@ module.exports = function (grunt) {
     'notify:build'
   ]);
 
-  grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [<% if (reloader === 'BrowserSync') { %>,
-    'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>,
+  grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [<% if (reloader === 'BrowserSync') { %>
+    'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>
     'connect:server'<% } %>,
     'build-usemin',<% if (features.useModernizr) { %>
     'build-modernizr',<% } %>

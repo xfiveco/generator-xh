@@ -39,7 +39,7 @@ var helpers = {
 
 var generate = {
   config: function () {
-    this.config.set('config', this.props);
+    this.config.set('config', this.prompts);
   },
 
   dotfiles: function () {

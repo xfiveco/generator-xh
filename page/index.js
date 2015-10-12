@@ -15,26 +15,21 @@ var PageGenerator = yeoman.generators.Base.extend({
       process.exit();
     }
 
-    // TODO:
-    // - Get input pages first and attach them to config pages
-    // - Set new pages to config file
-    // - Run page manipulations on pages from config files
-    // - Check if the new page already exists and skip if it does
+    this.argument('newPages', {
+      desc: 'List of names',
+      type: Array,
+      required: false
+    });
 
-    try {
-      this.pages = this.config.get('pages');
-    } catch (ex) {
-      try {
-        this.argument('pages', {
-          desc: 'List of names',
-          type: Array,
-          required: true
-        });
-      } catch (ex) {
-        this.log('Page names list cannot be empty.');
-        process.exit();
-      }
+    this.pages = this.config.get('pages');
+    this.pages = _.union(this.newPages, this.pages);
+
+    if (_.isEmpty(this.pages)) {
+      this.log('Page names list cannot be empty.');
+      process.exit();
     }
+
+    this.config.set('pages', this.pages);
 
     this.option('skip-build', {
       desc: 'Do not run `grunt build` after pages are created',
@@ -64,11 +59,13 @@ var PageGenerator = yeoman.generators.Base.extend({
       var filename = _.kebabCase(page) + '.' + this.configuration.extension;
       var root = path.join(this.destinationRoot(), 'src');
 
-      // Write file
-      this.fs.copyTpl(path.join(root, 'template.' + this.configuration.extension), path.join(root, filename), {
-        extension: this.configuration.extension,
-        name: page
-      });
+      // Write file if not exists
+      if (!this.fs.exists(path.join(root, filename))) {
+        this.fs.copyTpl(path.join(root, 'template.' + this.configuration.extension), path.join(root, filename), {
+          extension: this.configuration.extension,
+          name: page
+        });
+      }
     };
 
     // Update index template
@@ -88,9 +85,6 @@ var PageGenerator = yeoman.generators.Base.extend({
 
     this.pages.forEach(this.generatePage, this);
     this.updateIndex(this.pages);
-
-    var oldPages = this.config.get('pages');
-    this.config.set('pages', _.uniq(this.pages.concat(oldPages)));
   },
 
   end: function () {

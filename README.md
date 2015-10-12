@@ -70,7 +70,6 @@ The following software needs to be installed if you want to use XH Generator. Th
 ### 1) Node.js
 
 Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
-```
 
 ### 2) Grunt
 Then install [Grunt](http://gruntjs.com/)'s command line interface (CLI) globally:
@@ -243,7 +242,7 @@ Confirm overwriting the file with `Y` or with `a` at once.
 
 #### Generating multiple pages at once
 
-You can also list the pages that you want to create directly in the ```.yo-rc.json``` file:
+You can also list the pages that you want to create directly in the `.yo-rc.json` file:
 
 ```
 {

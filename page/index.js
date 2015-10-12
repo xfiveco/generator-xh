@@ -9,28 +9,33 @@ var PageGenerator = yeoman.generators.Base.extend({
     yeoman.generators.Base.apply(this, arguments);
 
     try {
-      this.config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
+      this.configuration = this.config.get('config');
     } catch (ex) {
       this.log('You need to run this generator in a project directory.');
       process.exit();
     }
 
-    try {
-      this.argument('pages', {
-        desc: 'List of names',
-        type: Array,
-        required: true
-      });
+    this.argument('newPages', {
+      desc: 'List of names',
+      type: Array,
+      required: false
+    });
 
-      this.option('skip-build', {
-        desc: 'Do not run `grunt build` after pages are created',
-        type: Boolean,
-        defaults: false
-      });
-    } catch (ex) {
+    this.pages = this.config.get('pages');
+    this.pages = _.union(this.newPages, this.pages);
+
+    if (_.isEmpty(this.pages)) {
       this.log('Page names list cannot be empty.');
       process.exit();
     }
+
+    this.config.set('pages', this.pages);
+
+    this.option('skip-build', {
+      desc: 'Do not run `grunt build` after pages are created',
+      type: Boolean,
+      defaults: false
+    });
   },
 
   initializing: function () {
@@ -51,14 +56,16 @@ var PageGenerator = yeoman.generators.Base.extend({
   writing: function () {
     // Create pages from template
     this.generatePage = function(page) {
-      var filename = _.kebabCase(page) + '.' + this.config.extension;
+      var filename = _.kebabCase(page) + '.' + this.configuration.extension;
       var root = path.join(this.destinationRoot(), 'src');
 
-      // Write file
-      this.fs.copyTpl(path.join(root, 'template.' + this.config.extension), path.join(root, filename), {
-        extension: this.config.extension,
-        name: page
-      });
+      // Write file if not exists
+      if (!this.fs.exists(path.join(root, filename))) {
+        this.fs.copyTpl(path.join(root, 'template.' + this.configuration.extension), path.join(root, filename), {
+          extension: this.configuration.extension,
+          name: page
+        });
+      }
     };
 
     // Update index template
@@ -67,13 +74,13 @@ var PageGenerator = yeoman.generators.Base.extend({
       this.link = '';
 
       array.forEach(function(page) {
-        this.filename = _.kebabCase(page) + '.' + this.config.extension;
+        this.filename = _.kebabCase(page) + '.' + this.configuration.extension;
         this.link += '<li><i class="fa fa-file-o"></i><a href="dist/' + this.filename + '"><strong>' +
           page + '</strong> ' + this.filename + '</a><i class="fa fa-check"></i></li>\n';
       }, this);
 
       // Write file
-      this.write('index.html', this.indexFile.replace('<!-- @@pageList -->', this.link + '<!-- @@pageList -->'));
+      this.write('index.html', this.indexFile.replace(/(<!-- @@pages -->)((.|\n)*)(<!-- \/@@pages -->)/img, '$1' + this.link + '$4'));
     };
 
     this.pages.forEach(this.generatePage, this);

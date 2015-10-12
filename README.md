@@ -203,19 +203,19 @@ Once you have basic project structure generated, you should add pages you will b
 From the command line type:
 
 ```
-yo xh:page “Page Name”
+yo xh:page "Page Name"
 ```
 
 for example
 
 ```
-yo xh:page “Home”
+yo xh:page "Home"
 ```
 
 You can also create multiple pages at once by separating page names with space:
 
 ```
-yo xh:page “Home” “About Us” “Contact Us” “News”
+yo xh:page "Home" "About Us" "Contact Us" "News"
 ```
 
 The command will do the following:
@@ -239,6 +239,32 @@ If you wonder what Yanxdh means in the above screenshot, it is:
 - **h:** Help, list all options
 
 Confirm overwriting the file with `Y` or with `a` at once.
+
+#### Generating multiple pages at once
+
+You can also list the pages that you want to create directly in the `.yo-rc.json` file:
+
+```
+{
+  "generator-xh": {
+    "config": {...},
+    "pages": [
+      "Home",
+      "About Us",
+      "Contact Us",
+      "News"
+    ]
+  }
+}
+```
+
+Then, from the command line you can type:
+
+```
+yo xh:page
+```
+
+After you run the command, please proceed with the flow described above.
 
 ### 4) Development
 

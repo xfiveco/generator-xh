@@ -28,13 +28,13 @@
     "test": "mocha"
   },
   "dependencies": {
-    "lodash": "^3.10.1",
-    "yeoman-generator": "~0.18.10",
-    "update-notifier": "~0.2.2",
-    "string-length": "~1.0.0",
     "chalk": "^0.5.1",
+    "lodash": "^3.10.1",
+    "q": "~1.0.0",
     "simple-git": "^0.10.0",
-    "q": "~1.0.0"
+    "string-length": "~1.0.0",
+    "update-notifier": "~0.2.2",
+    "yeoman-generator": "~0.18.10"
   },
   "devDependencies": {
     "mocha": "*"

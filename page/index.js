@@ -39,10 +39,10 @@ var PageGenerator = yeoman.generators.Base.extend({
    * @public
    */
   prompting: function () {
-    var reservedNames = ['template', 'wp'];
-    var isReserved = function (page) {
-      return _.includes(reservedNames, _.kebabCase(page));
-    }
+    this.reservedNames = ['template', 'wp'];
+    this.isReserved = function (page) {
+      return _.includes(this.reservedNames, _.kebabCase(page));
+    };
 
     this.argument('newPages', {
       desc: 'List of names',
@@ -57,8 +57,8 @@ var PageGenerator = yeoman.generators.Base.extend({
       process.exit();
     }
 
-    if (this.pages.some(isReserved, this)) {
-      this.log('You cannot use those reserved words as a page name: ' + reservedNames.join(', ') + '.');
+    if (_.some(this.pages, this.isReserved, this)) {
+      this.log('You cannot use those reserved words: ' + this.reservedNames.join(', ') + '.');
       process.exit();
     }
   },
@@ -113,8 +113,9 @@ var PageGenerator = yeoman.generators.Base.extend({
   install: function () {
     if (!this.options['skip-build']) {
       this.spawnCommand('grunt', ['build']);
-      this.log('All done!');
     }
+
+    this.log('All done!');
   }
 
 });

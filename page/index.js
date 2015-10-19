@@ -12,29 +12,6 @@ var PageGenerator = yeoman.generators.Base.extend({
     yeoman.generators.Base.apply(this, arguments);
     this.sourceRoot(this.destinationRoot());
 
-    try {
-      this.configuration = this.config.get('config');
-    } catch (ex) {
-      this.log('You need to run this generator in a project directory.');
-      process.exit();
-    }
-
-    this.argument('newPages', {
-      desc: 'List of names',
-      type: Array,
-      required: false
-    });
-
-    this.pages = this.config.get('pages');
-    this.pages = _.union(this.newPages, this.pages);
-
-    if (_.isEmpty(this.pages)) {
-      this.log('Page names list cannot be empty.');
-      process.exit();
-    }
-
-    this.config.set('pages', this.pages);
-
     this.option('skip-build', {
       desc: 'Do not run `grunt build` after pages are created',
       type: Boolean,
@@ -43,22 +20,55 @@ var PageGenerator = yeoman.generators.Base.extend({
   },
 
   /**
-   * Checks provided pages against registered names
+   * Reads current generator config and list of pages
    * @public
    */
   initializing: function () {
-    this.reserved = ['template', 'wp'];
-
-    this.isNotReserved = function (page) {
-      if (this.reserved.indexOf(_.kebabCase(page)) === -1) {
-        return page;
-      }
-    };
-
-    if (!this.pages.every(this.isNotReserved, this)) {
-      this.log('You cannot use those reserved words as a page name: ' + this.reserved.join(', ') + '.');
+    try {
+      this.configuration = this.config.get('config');
+    } catch (ex) {
+      this.log('You need to run this generator in a project directory.');
       process.exit();
     }
+
+    this.pages = this.config.get('pages');
+  },
+
+  /**
+   * Checks new pages listed in arguments
+   * @public
+   */
+  prompting: function () {
+    var reservedNames = ['template', 'wp'];
+    var isReserved = function (page) {
+      return _.includes(reservedNames, _.kebabCase(page));
+    }
+
+    this.argument('newPages', {
+      desc: 'List of names',
+      type: Array,
+      required: false
+    });
+
+    this.pages = _.union(this.newPages, this.pages);
+
+    if (_.isEmpty(this.pages)) {
+      this.log('Page names list cannot be empty.');
+      process.exit();
+    }
+
+    if (this.pages.some(isReserved, this)) {
+      this.log('You cannot use those reserved words as a page name: ' + reservedNames.join(', ') + '.');
+      process.exit();
+    }
+  },
+
+  /**
+   * Updated the generator config file with new pages
+   * @public
+   */
+  configuring: function () {
+    this.config.set('pages', this.pages);
   },
 
   /**
@@ -66,13 +76,13 @@ var PageGenerator = yeoman.generators.Base.extend({
    * @public
    */
   generatePages: function () {
-    this.pages.forEach(function (page) {
-      var fileName = _.kebabCase(page) + '.' + this.configuration.extension;
+    this.pages.forEach(function (pageName) {
+      var fileName = _.kebabCase(pageName) + '.' + this.configuration.extension;
 
       // Write file if not exists
       if (!this.fs.exists(this.destinationPath('src/' + fileName))) {
         this.fs.copyTpl(this.templatePath('src/template.' + this.configuration.extension), this.destinationPath('src/' + fileName), {
-          name: page
+          pageName: pageName
         });
       }
     }, this);
@@ -86,11 +96,10 @@ var PageGenerator = yeoman.generators.Base.extend({
     var pagesRegex = /(<!-- @@pages -->)((.|\n)*)(<!-- \/@@pages -->)/img;
     var pagesList = '';
 
-    this.pages.forEach(function (page) {
-      var fileName = _.kebabCase(page) + '.' + this.configuration.extension;
+    this.pages.forEach(function (pageName) {
+      var fileName = _.kebabCase(pageName) + '.' + this.configuration.extension;
 
-      pagesList += '<li><i class="fa fa-file-o"></i><a href="dist/' + fileName + '"><strong>' +
-        page + '</strong> ' + fileName + '</a><i class="fa fa-check"></i></li>\n';
+      pagesList += '<li><i class="fa fa-file-o"></i><a href="dist/' + fileName + '"><strong>' + pageName + '</strong> ' + fileName + '</a><i class="fa fa-check"></i></li>\n';
     }, this);
 
     // Write file
@@ -101,7 +110,7 @@ var PageGenerator = yeoman.generators.Base.extend({
    * Runs build helpers if they're not skipped by generator
    * @public
    */
-  end: function () {
+  install: function () {
     if (!this.options['skip-build']) {
       this.spawnCommand('grunt', ['build']);
       this.log('All done!');

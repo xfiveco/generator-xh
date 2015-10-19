@@ -1,12 +1,16 @@
 'use strict';
+
 var yeoman = require('yeoman-generator');
-var path = require('path');
 var _ = require('lodash');
 
 var PageGenerator = yeoman.generators.Base.extend({
-
+  /**
+   * Extends base Yeoman constructor
+   * @public
+   */
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
+    this.sourceRoot(this.destinationRoot());
 
     try {
       this.configuration = this.config.get('config');
@@ -38,10 +42,14 @@ var PageGenerator = yeoman.generators.Base.extend({
     });
   },
 
+  /**
+   * Checks provided pages against registered names
+   * @public
+   */
   initializing: function () {
     this.reserved = ['template', 'wp'];
 
-    this.isNotReserved = function(page) {
+    this.isNotReserved = function (page) {
       if (this.reserved.indexOf(_.kebabCase(page)) === -1) {
         return page;
       }
@@ -53,40 +61,46 @@ var PageGenerator = yeoman.generators.Base.extend({
     }
   },
 
-  writing: function () {
-    // Create pages from template
-    this.generatePage = function(page) {
-      var filename = _.kebabCase(page) + '.' + this.configuration.extension;
-      var root = path.join(this.destinationRoot(), 'src');
+  /**
+   * Generates template files based on provided list or stored in config file
+   * @public
+   */
+  generatePages: function () {
+    this.pages.forEach(function (page) {
+      var fileName = _.kebabCase(page) + '.' + this.configuration.extension;
 
       // Write file if not exists
-      if (!this.fs.exists(path.join(root, filename))) {
-        this.fs.copyTpl(path.join(root, 'template.' + this.configuration.extension), path.join(root, filename), {
-          extension: this.configuration.extension,
+      if (!this.fs.exists(this.destinationPath('src/' + fileName))) {
+        this.fs.copyTpl(this.templatePath('src/template.' + this.configuration.extension), this.destinationPath('src/' + fileName), {
           name: page
         });
       }
-    };
-
-    // Update index template
-    this.updateIndex = function(array) {
-      this.indexFile = this.readFileAsString('index.html');
-      this.link = '';
-
-      array.forEach(function(page) {
-        this.filename = _.kebabCase(page) + '.' + this.configuration.extension;
-        this.link += '<li><i class="fa fa-file-o"></i><a href="dist/' + this.filename + '"><strong>' +
-          page + '</strong> ' + this.filename + '</a><i class="fa fa-check"></i></li>\n';
-      }, this);
-
-      // Write file
-      this.write('index.html', this.indexFile.replace(/(<!-- @@pages -->)((.|\n)*)(<!-- \/@@pages -->)/img, '$1' + this.link + '$4'));
-    };
-
-    this.pages.forEach(this.generatePage, this);
-    this.updateIndex(this.pages);
+    }, this);
   },
 
+  /**
+   * Updates main project page listing with generated page list
+   * @public
+   */
+  updateIndex: function () {
+    var pagesRegex = /(<!-- @@pages -->)((.|\n)*)(<!-- \/@@pages -->)/img;
+    var pagesList = '';
+
+    this.pages.forEach(function (page) {
+      var fileName = _.kebabCase(page) + '.' + this.configuration.extension;
+
+      pagesList += '<li><i class="fa fa-file-o"></i><a href="dist/' + fileName + '"><strong>' +
+        page + '</strong> ' + fileName + '</a><i class="fa fa-check"></i></li>\n';
+    }, this);
+
+    // Write file
+    this.fs.write('index.html', this.fs.read('index.html').replace(pagesRegex, '$1' + pagesList + '$4'));
+  },
+
+  /**
+   * Runs build helpers if they're not skipped by generator
+   * @public
+   */
   end: function () {
     if (!this.options['skip-build']) {
       this.spawnCommand('grunt', ['build']);

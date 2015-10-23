@@ -14,7 +14,7 @@ describe('XH Generator Sass', function () {
         'skip-install': true,
         'skip-update': true
       })
-      .withPrompt({
+      .withPrompts({
         projectName: 'Test Project',
         useBranding: true,
         reloader: 'None',

@@ -35,31 +35,43 @@ var PageGenerator = yeoman.generators.Base.extend({
   },
 
   /**
-   * Checks new pages listed in arguments
+   * Gets generator arguments
    * @public
    */
-  prompting: function () {
-    this.reservedNames = ['template', 'wp'];
-    this.isReserved = function (page) {
-      return _.includes(this.reservedNames, _.kebabCase(page));
-    };
+  prompting: {
+    /**
+     * Gets new pages listed in arguments and checks if there're any pages to render
+     * @public
+     */
+    checkNames: function () {
+      this.argument('newPages', {
+        desc: 'List of names',
+        type: Array,
+        required: false
+      });
 
-    this.argument('newPages', {
-      desc: 'List of names',
-      type: Array,
-      required: false
-    });
+      this.pages = _.union(this.newPages, this.pages);
 
-    this.pages = _.union(this.newPages, this.pages);
+      if (_.isEmpty(this.pages)) {
+        this.log('Page names list cannot be empty.');
+        process.exit();
+      }
+    },
 
-    if (_.isEmpty(this.pages)) {
-      this.log('Page names list cannot be empty.');
-      process.exit();
-    }
+    /**
+     * Checks if there are any reserved names in pages array
+     * @public
+     */
+    checkReservedNames: function () {
+      this.reservedNames = ['template', 'wp'];
+      this.isReserved = function (page) {
+        return _.includes(this.reservedNames, _.kebabCase(page));
+      };
 
-    if (_.some(this.pages, this.isReserved, this)) {
-      this.log('You cannot use those reserved words: ' + this.reservedNames.join(', ') + '.');
-      process.exit();
+      if (_.some(this.pages, this.isReserved, this)) {
+        this.log('You cannot use those reserved words: ' + this.reservedNames.join(', ') + '.');
+        process.exit();
+      }
     }
   },
 

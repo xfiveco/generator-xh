@@ -14,7 +14,7 @@ describe('XH Generator Less', function () {
         'skip-install': true,
         'skip-update': true
       })
-      .withPrompt({
+      .withPrompts({
         projectName: 'Test Project',
         useBranding: false,
         reloader: 'LiveReload',

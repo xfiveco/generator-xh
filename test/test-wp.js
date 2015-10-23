@@ -15,7 +15,7 @@ describe('XH WP Defaults + XH Generator Defaults', function () {
         'skip-install': true,
         'skip-update': true
       })
-      .withPrompt({
+      .withPrompts({
         projectName: 'Test Project',
         useBranding: true,
         reloader: 'BrowserSync',
@@ -30,7 +30,7 @@ describe('XH WP Defaults + XH Generator Defaults', function () {
           .run(path.join(__dirname, '../wp'), {
             tmpdir: false
           })
-          .withPrompt({
+          .withPrompts({
             databaseHost: '$_SERVER[\'XTEAM_DB_HOST\']',
             databaseName: '$_SERVER[\'XTEAM_DB_NAME\']',
             databaseUser: '$_SERVER[\'XTEAM_DB_USER\']',

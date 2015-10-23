@@ -1,17 +1,24 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
-var config = require(process.cwd() + '/.yo-rc.json')['generator-xh'].config;
-var path = require('path');
+var async = require('async');
+var _ = require('lodash');
 
 var WPGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-    if (!config.isWP) {
+    try {
+      this.configuration = this.config.get('config');
+    } catch (ex) {
+      this.log('You need to run this generator in a project directory.');
+      process.exit();
+    }
+
+    if (!this.configuration.isWP) {
       this.log('This project was not set up as a WordPress project');
       process.exit();
     }
 
-    if (yeoman.file.exists(config.wpFolder + '/wp-config.php')) {
+    if (this.fs.exists(this.destinationPath(this.configuration.wpFolder + '/wp-config.php'))) {
       this.log('WordPress is already installed.');
       process.exit();
     }
@@ -28,26 +35,26 @@ var WPGenerator = yeoman.generators.Base.extend({
 
     var prompts = [{
         name: 'databaseHost',
-        message: 'Please enter the database host:',
+        message: 'Enter the database host',
         default: '$_SERVER[\'XTEAM_DB_HOST\']'
       }, {
         name: 'databaseName',
-        message: 'Please enter the database name:',
+        message: 'Enter the database name',
         default: '$_SERVER[\'XTEAM_DB_NAME\']'
       }, {
         name: 'databaseUser',
-        message: 'Please enter the database user:',
+        message: 'Enter the database user',
         default: '$_SERVER[\'XTEAM_DB_USER\']'
       }, {
         name: 'databasePassword',
-        message: 'Please enter the database password:',
+        message: 'Enter the database password',
         default: '$_SERVER[\'XTEAM_DB_PASSWORD\']'
       }, {
         type: 'checkbox',
         name: 'features',
-        message: 'Select additional features:',
+        message: 'Choose additional features',
         choices: [{
-            name: 'WPized Light Base Theme',
+            name: 'WPized Light Theme',
             value: 'installWPizedLight',
             checked: true
         }, {
@@ -55,153 +62,112 @@ var WPGenerator = yeoman.generators.Base.extend({
             value: 'installWpSyncDb',
             checked: true
         }, {
-            name: 'Stream Plugin',
+            name: 'WP Stream Plugin',
             value: 'installWpStream',
-            checked: true
+            checked: false
         }]
       }
     ];
 
-    this.prompt(prompts, function (props) {
-      this.databaseHost = props.databaseHost;
-      this.databaseName = props.databaseName;
-      this.databaseUser = props.databaseUser;
-      this.databasePassword = props.databasePassword;
-      this.features = props.features;
+    this.prompt(prompts, function (answers) {
+      this.prompts = {};
 
-      var features = this.features;
+      this.prompts.databaseHost = answers.databaseHost;
+      this.prompts.databaseName = answers.databaseName;
+      this.prompts.databaseUser = answers.databaseUser;
+      this.prompts.databasePassword = answers.databasePassword;
+      this.prompts.features = {};
 
-      function hasFeature(feat) {
-        return features.indexOf(feat) !== -1;
+      for (var i in answers.features) {
+        this.prompts.features[answers.features[i]] = true;
       }
-
-      this.installWPizedLight = hasFeature('installWPizedLight');
-      this.installWpSyncDb = hasFeature('installWpSyncDb');
-      this.installWpStream = hasFeature('installWpStream');
 
       done();
 
     }.bind(this));
   },
 
+  configuring: function () {
+    this.repositories = [
+      {
+        username: 'WordPress',
+        repo: 'WordPress',
+        label: 'WordPress Core',
+        destination: this.configuration.wpFolder,
+        callback: this._createConfig
+      }
+    ];
+
+    if (this.prompts.features.installWPizedLight) {
+      this.repositories.push({
+        username: 'xhtmlized',
+        repo: 'wpized-light',
+        label: 'WPized Light Theme',
+        destination: this.configuration.wpThemeFolder,
+        callback: this._updateThemeStyles
+      });
+    }
+
+    if (this.prompts.features.installWpSyncDb) {
+      this.repositories.push({
+        username: 'wp-sync-db',
+        repo: 'wp-sync-db',
+        label: 'WP Sync DB Plugin',
+        destination: this.configuration.wpFolder + '/wp-content/plugins/wp-sync-db'
+      }, {
+        username: 'wp-sync-db',
+        repo: 'wp-sync-db-media-files',
+        label: 'WP Sync DB Media Files Plugin',
+        destination: this.configuration.wpFolder + '/wp-content/plugins/wp-sync-db-media-files'
+      });
+    }
+
+    if (this.prompts.features.installWpStream) {
+      this.repositories.push({
+        username: 'x-team',
+        repo: 'wp-stream',
+        label: 'WP Stream Plugin',
+        destination: this.configuration.wpFolder + '/wp-content/plugins/wp-stream'
+      });
+    }
+  },
+
   writing: {
-    installWordPress: function () {
+    fetchRepositories: function () {
       var done = this.async();
       var self = this;
 
-      this._getCurrentWpVersion(function(err, ver) {
-        var username = 'wordpress';
-        var repo = 'wordpress';
-        var url = 'https://github.com/' + [username, repo, 'archive', ver].join('/') + '.zip';
+      this.log.write()
+        .info('... Fetching Wordpress Core files ...')
+        .info(chalk.yellow('This might take a few moments'));
 
-        self.log.write()
-          .info('... Fetching %s ...', url)
-          .info(chalk.yellow('This might take a few moments'));
-
-        // cannot use yeoman's remote() method
-        // with user / repo / branch notation
-        // since it downloads .tar.gz
-        // and since WP tar.gz seems to have some weird files in it
-        // there's an error during unpacking
-        self.remote(url, function (err, remote) {
+      async.each(this.repositories, function (repository, callback) {
+        self.remote(repository.username, repository.repo, function (err, remote) {
           if (err) {
-            return done();
+            callback(err);
           }
 
-          self.log('\nCopying WordPress ' + ver + '\n');
+          self.log('\nCopying ' + repository.label + '\n');
 
-          self.conflicter.checkForCollision(config.wpFolder, null, function (err, status) {
-            if (/force|create/.test(status)) {
-              self._directory(remote.cachePath, config.wpFolder, process, true);
-            }
-          }.bind(self));
+          remote.bulkDirectory('.', repository.destination);
 
-          self._createConfig(remote);
+          if (repository.callback) {
+            repository.callback.call(self, remote);
+          }
 
-          done();
+          callback();
         });
-      });
-
-    },
-
-    installWPizedLight: function () {
-      if (!this.installWPizedLight) {
-        return;
-      }
-
-      var done = this.async();
-      var self = this;
-
-      this.remote('xhtmlized', 'wpized-light', 'master', function (err, remote) {
-
-        if (err) {
-          return done(err);
-        }
-
-        self.log('\nCopying WPized Light Theme\n');
-
-        // cannot use remote.bulkDirectory here
-        // since we need to specify 'process' argument to update file contents
-        var root = self.sourceRoot();
-        self.sourceRoot(remote.cachePath);
-        self.bulkDirectory('.', config.wpThemeFolder, self._updateThemeStyles);
-        self.sourceRoot(root);
-
-        done();
-      }, true);
-
-    },
-
-    installWpSyncDb: function () {
-      if (!this.installWpSyncDb) {
-        return;
-      }
-
-      var done = this.async();
-      var self = this;
-
-      this.remote('wp-sync-db', 'wp-sync-db', 'master', function (err, remote) {
-
-        if (err) {
-          return done(err);
-        }
-
-        self.log('\nCopying WP Sync DB Plugin\n');
-
-        remote.bulkDirectory('.', 'wp/wp-content/plugins/wp-sync-db');
-
-        done();
-      });
-    },
-
-    installWpStream: function () {
-      if (!this.installWpStream) {
-        return;
-      }
-
-      var done = this.async();
-      var self = this;
-
-      this.remote('x-team', 'wp-stream', 'master', function (err, remote) {
-
-        if (err) {
-          return done(err);
-        }
-
-        self.log('\nCopying Stream Plugin\n');
-
-        remote.bulkDirectory('.', 'wp/wp-content/plugins/stream');
-
-        done();
-      });
+      }, done);
     },
 
     createVhostFile: function () {
-      var name = this._.slugify(config.projectName);
-      this.documentRoot = process.cwd();
-      this.serverName = 'dev-' + name + '.previewized.com';
-      this.dbName = name;
-      this.template('dev-vhost.conf', 'dev-vhost.conf');
+      var name = _.kebabCase(this.configuration.projectName);
+
+      this.fs.copyTpl(this.templatePath('dev-vhost.conf'), this.destinationPath('dev-vhost.conf'), {
+        documentRoot: process.cwd(),
+        serverName: 'dev-' + name + '.previewized.com',
+        dbName: name
+      });
     }
   },
 
@@ -210,40 +176,13 @@ var WPGenerator = yeoman.generators.Base.extend({
   },
 
   /**
-   * Find out current WordPress version from repository tags.
-   */
-  _getCurrentWpVersion: function (callback) {
-
-    var latestVersion = '4.1';
-
-    require('simple-git')().listRemote('--tags git://github.com/WordPress/WordPress.git', function (err, tagsList) {
-
-      if (err) {
-        return callback(err, latestVersion);
-      }
-
-      var tagList = ('' + tagsList).split('\n');
-      tagList.pop();
-
-      var lastTag = /\d\.\d(\.\d)?/ig.exec(tagList.pop());
-
-      if (lastTag !== null) {
-        latestVersion = lastTag[0];
-      }
-
-      callback(null, latestVersion);
-    });
-
-  },
-
-  /**
    * Wrap setting in quotes if needed.
    */
   _getDbSetting: function (setting) {
-    if (setting.indexOf('$_SERVER') !== -1) {
-      return setting;
+    if (_.startsWith(this.prompts[setting], '$_')) {
+      return this.prompts[setting];
     } else {
-      return '\'' + setting + '\'';
+      return '\'' + this.prompts[setting] + '\'';
     }
   },
 
@@ -253,27 +192,26 @@ var WPGenerator = yeoman.generators.Base.extend({
    * so we cannot just grab one from theme dir).
    */
   _createConfig: function (remote) {
-    var prefix = this._.slugify(config.projectName).replace(/-/g, '_');
+    var prefix = _.snakeCase(this.configuration.projectName);
 
     var contents = this.fs.read(remote.cachePath + '/wp-config-sample.php')
-      .replace('\'localhost\'', this._getDbSetting(this.databaseHost))
-      .replace('\'database_name_here\'', this._getDbSetting(this.databaseName))
-      .replace('\'username_here\'', this._getDbSetting(this.databaseUser))
-      .replace('\'password_here\'', this._getDbSetting(this.databasePassword))
+      .replace('\'localhost\'', this._getDbSetting('databaseHost'))
+      .replace('\'database_name_here\'', this._getDbSetting('databaseName'))
+      .replace('\'username_here\'', this._getDbSetting('databaseUser'))
+      .replace('\'password_here\'', this._getDbSetting('databasePassword'))
       .replace('wp_', prefix + '_');
 
-    this.fs.write(config.wpFolder + '/wp-config.php', contents);
+    this.fs.write(this.configuration.wpFolder + '/wp-config.php', contents);
   },
 
   /**
    * Replace theme name in styles file before copy.
    */
-  _updateThemeStyles: function (body, source, destination) {
-    if (path.basename(destination) === 'style.css') {
-      body = body.replace('WPized Light', config.projectName);
-    }
+  _updateThemeStyles: function (remote) {
+    var contents = this.fs.read(remote.cachePath + '/style.css')
+      .replace(/WPized Light/g, this.configuration.projectName);
 
-    return body;
+    this.fs.write(this.configuration.wpThemeFolder + '/style.css', contents);
   }
 
 });

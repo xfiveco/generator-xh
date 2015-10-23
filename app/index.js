@@ -105,21 +105,21 @@ var XhGenerator = yeoman.generators.Base.extend({
       // JS
       utils.generate.js.bind(this)();
 
-      if (this.features.useBootstrap) {
+      if (this.prompts.features.useBootstrap) {
         utils.generate.bootstrap.bind(this)();
       }
     },
 
     // WordPress
     wp: function () {
-      if (this.isWP) {
+      if (this.prompts.isWP) {
         utils.generate.wp.bind(this)();
       }
     },
 
     // Sprites
     sprites: function () {
-      if (this.features.useSprites) {
+      if (this.prompts.features.useSprites) {
         utils.generate.sprites.bind(this)();
       }
     }

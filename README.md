@@ -138,7 +138,7 @@ Example of valid configuration file:
       "projectName": "Default Project Name",
       "useBranding": true,
       "reloader": "BrowserSync",
-      "server": true,
+      "devServer": true,
       "cssPreprocessor": "scss",
       "ignoreDist": true,
       "isWP": false,

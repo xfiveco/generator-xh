@@ -1,5 +1,5 @@
 {
-  "name": "<%= projectNameSlug %>",
+  "name": "<%= _.kebabCase(projectName) %>",
   "version": "0.0.1",
   "ignore": [
     "**/.*",

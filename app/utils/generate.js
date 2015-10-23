@@ -1,8 +1,16 @@
 'use strict';
 
+var _ = require('lodash');
+
 var helpers = {
   copy: function (template, destination, context) {
     if (context && Object.keys(context).length) {
+      context._ = {
+        kebabCase: _.kebabCase,
+        camelCase: _.camelCase,
+        capitalize: _.capitalize
+      };
+      
       this.fs.copyTpl(this.templatePath(template), this.destinationPath(destination), context);
     } else {
       this.fs.copy(this.templatePath(template), this.destinationPath(destination));
@@ -65,6 +73,7 @@ var generate = {
 
   gruntModules: function () {
     helpers.copy.call(this, 'Gruntfile.js', 'Gruntfile.js', this.prompts);
+    helpers.copy.call(this, 'grunt/build-helpers.js', 'grunt/build-helpers.js', this.prompts);
 
     // read packages from packages.json
     // and include neccessary task config files
@@ -81,9 +90,6 @@ var generate = {
         }
       }
     }
-
-    // additional task files
-    helpers.copy.call(this, 'grunt/build-helpers.js', 'grunt/build-helpers.js');
   },
 
   projectInfo: function () {

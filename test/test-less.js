@@ -9,16 +9,15 @@ describe('XH Generator Less', function () {
 
     helpers
       .run(path.join(__dirname, '../app'))
-      .inDir(path.join(__dirname, 'temp', 'less'))
       .withOptions({
         'skip-install': true,
         'skip-update': true
       })
       .withPrompts({
         projectName: 'Test Project',
-        useBranding: false,
+        useBranding: true,
         reloader: 'LiveReload',
-        server: true,
+        devServer: true,
         cssPreprocessor: 'less',
         ignoreDist: true,
         isWP: false,

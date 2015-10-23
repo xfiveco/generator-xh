@@ -8,13 +8,13 @@
 
 'use strict';
 
-var <%= projectNameCamel %> = {
+var <%= _.capitalize(_.camelCase(projectName)) %> = {
 
   /**
    * Init function
    */
   init: function() {
-    <%= projectNameCamel %>.exampleFn();
+    <%= _.capitalize(_.camelCase(projectName)) %>.exampleFn();
   },
 
   /**
@@ -27,5 +27,5 @@ var <%= projectNameCamel %> = {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-  <%= projectNameCamel %>.init();
+  <%= _.capitalize(_.camelCase(projectName)) %>.init();
 });

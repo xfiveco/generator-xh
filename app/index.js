@@ -1,18 +1,13 @@
 'use strict';
 
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
 var utils = require('./utils/index');
 
 var XhGenerator = yeoman.generators.Base.extend({
 
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
-
-    this.option('config', {
-      desc: 'Path to configuration file',
-      type: String,
-      alias: 'c'
-    });
 
     this.option('interactive', {
       desc: 'Prompt user for info. Use --no-interactive for fully automated project generation based on config file. --no-interactive implies --skip-update & forcibly overwrites all files. Use with caution.',
@@ -35,38 +30,36 @@ var XhGenerator = yeoman.generators.Base.extend({
 
   initializing: {
     checkIfInteractive: function () {
-      if (this.options.interactive === false) {
+      if (!this.options.interactive) {
         this.conflicter.force = true;
       }
     },
 
     checkForUpdate: function () {
-      if (this.options['skip-update'] === false && this.options.interactive !== false) {
+      if (!this.options['skip-update'] && this.options.interactive) {
         var update = require('./update');
         update.apply(this);
       }
     },
 
-    lookForConfigFile: function () {
-      var checkConfig = require('./configcheck');
-
-      checkConfig.fileContent.bind(this)()
-        .then(checkConfig.result.bind(this),
-              checkConfig.error.bind(this));
+    checkConfig: function () {
+      this.prompts = this.config.get('config');
     }
   },
 
   prompting: function () {
-    if (this.options.interactive === false || this.configFound) {
+    if (!this.options.interactive || this.prompts) {
       return;
     }
 
     var done = this.async();
 
     // Welcome user
-    if (this.configCorrupted !== true) {
-      utils.welcome.bind(this)();
-    }
+    this.log('');
+    this.log(chalk.cyan(' ***********************************************************') + '\n');
+    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
+    this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
+    this.log(chalk.cyan(' ***********************************************************') + '\n');
 
     this.prompt(utils.prompts.generator, function (props) {
       utils.setPrompts.apply(this, [ props ]);

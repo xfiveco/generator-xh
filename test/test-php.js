@@ -9,7 +9,6 @@ describe('XH Generator with PHP option', function () {
 
     helpers
       .run(path.join(__dirname, '../app'))
-      .inDir(path.join(__dirname, 'temp', 'php'))
       .withOptions({
         'skip-install': true,
         'skip-update': true
@@ -18,7 +17,7 @@ describe('XH Generator with PHP option', function () {
         projectName: 'Test Project',
         useBranding: true,
         reloader: 'BrowserSync',
-        server: false,
+        devServer: false,
         extension: 'php',
         cssPreprocessor: 'scss',
         ignoreDist: true,

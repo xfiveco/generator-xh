@@ -48,7 +48,7 @@ module.exports = {
       return response.reloader !== 'None' && response.extension === 'html';
     },
     type: 'confirm',
-    name: 'server',
+    name: 'devServer',
     message: 'Do you want to run development server?',
     default: true
   }, {

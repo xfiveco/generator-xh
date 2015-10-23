@@ -9,7 +9,6 @@ describe('XH Generator Sass', function () {
 
     helpers
       .run(path.join(__dirname, '../app'))
-      .inDir(path.join(__dirname, 'temp', 'scss'))
       .withOptions({
         'skip-install': true,
         'skip-update': true
@@ -18,7 +17,7 @@ describe('XH Generator Sass', function () {
         projectName: 'Test Project',
         useBranding: true,
         reloader: 'None',
-        server: false,
+        devServer: false,
         cssPreprocessor: 'scss',
         ignoreDist: false,
         isWP: false,

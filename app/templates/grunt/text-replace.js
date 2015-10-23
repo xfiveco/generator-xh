@@ -75,7 +75,7 @@ module.exports = function(grunt) {
         from: '@@timestamp',
         to: '<%%= grunt.template.today() %>'
       }]
-    }<% if (reloader !== 'None' && !server) { %>,
+    }<% if (reloader !== 'None' && !devServer) { %>,
 
     reloader: {
       src: ['<%%= xh.includes %>/scripts.<%= extension %>'],

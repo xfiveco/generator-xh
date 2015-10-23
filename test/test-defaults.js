@@ -9,7 +9,6 @@ describe('XH Generator Defaults', function () {
 
     helpers
       .run(path.join(__dirname, '../app'))
-      .inDir(path.join(__dirname, 'temp', 'defaults'))
       .withOptions({
         'skip-install': true,
         'skip-update': true
@@ -18,7 +17,7 @@ describe('XH Generator Defaults', function () {
         projectName: 'Test Project',
         useBranding: true,
         reloader: 'BrowserSync',
-        server: true,
+        devServer: true,
         cssPreprocessor: 'scss',
         ignoreDist: true,
         isWP: true,

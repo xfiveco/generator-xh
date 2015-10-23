@@ -39,7 +39,7 @@ module.exports = function (grunt) {
     'notify:validation'
   ]);
 
-  grunt.registerTask('qa', 'Assure quality', [<% if (reloader !== 'None' && !server) { %>
+  grunt.registerTask('qa', 'Assure quality', [<% if (reloader !== 'None' && !devServer) { %>
     'replace:reloader',<% } %>
     'build',
     'validate',
@@ -64,7 +64,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('dev', 'Start a live-reloading dev webserver on localhost', [<% if (reloader === 'BrowserSync') { %>
-    'browserSync'<% } else if (reloader === 'LiveReload' && server) { %>
+    'browserSync'<% } else if (reloader === 'LiveReload' && devServer) { %>
     'connect:server'<% } %>,
     'build-usemin',<% if (features.useModernizr) { %>
     'build-modernizr',<% } %>

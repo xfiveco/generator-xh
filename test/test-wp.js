@@ -10,7 +10,6 @@ describe('XH WP Defaults + XH Generator Defaults', function () {
 
     helpers
       .run(path.join(__dirname, '../app'))
-      .inDir(path.join(__dirname, 'temp', 'wp'))
       .withOptions({
         'skip-install': true,
         'skip-update': true
@@ -19,7 +18,7 @@ describe('XH WP Defaults + XH Generator Defaults', function () {
         projectName: 'Test Project',
         useBranding: true,
         reloader: 'BrowserSync',
-        server: true,
+        devServer: true,
         cssPreprocessor: 'scss',
         ignoreDist: true,
         isWP: true,

@@ -3,6 +3,7 @@ var updateNotifier = require('update-notifier');
 var stringLength = require('string-length');
 var chalk = require('chalk');
 var utils = require('./utils/index');
+var pkg = require('../package.json');
 
 // notify user about updates
 module.exports = function () {
@@ -72,7 +73,7 @@ module.exports = function () {
         this.updateNotify = props.updateNotify;
 
         if (this.updateNotify === 'yesandcopy') {
-          copyToClipboard('npm update -g ' + this.pkg.name);
+          copyToClipboard('npm update -g ' + pkg.name);
           this.log(chalk.yellow('Update command was copied to your clipboard \n'));
           process.exit();
         } else if (this.updateNotify === 'yes') {
@@ -87,14 +88,14 @@ module.exports = function () {
   }.bind(this);
 
   try {
-    if (this.options.interactive === false || this.configFound) {
+    if (this.options.interactive === false || this.prompts) {
       done();
       return;
     }
 
     var notifier = updateNotifier({
-      packageName: this.pkg.name,
-      packageVersion: this.pkg.version,
+      packageName: pkg.name,
+      packageVersion: pkg.version,
       callback: notifyCallback
     });
   } catch (err) {

@@ -3,8 +3,7 @@
 var _ = require('lodash');
 
 module.exports = function (answers) {
-  this.prompts = {};
-
+  this.prompts                  = {};
   this.prompts.projectName      = answers.projectName;
   this.prompts.authorName       = answers.useBranding ? 'XHTMLized' : answers.authorName;
   this.prompts.useBranding      = answers.useBranding;

@@ -2,12 +2,18 @@
 
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var _ = require('lodash');
 var utils = require('./utils/index');
 
 var XhGenerator = yeoman.generators.Base.extend({
 
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
+
+    this.option('config', {
+      desc: 'Path to configuration file',
+      type: String
+    });
 
     this.option('interactive', {
       desc: 'Prompt user for info. Use --no-interactive for fully automated project generation based on config file. --no-interactive implies --skip-update & forcibly overwrites all files. Use with caution.',
@@ -43,26 +49,37 @@ var XhGenerator = yeoman.generators.Base.extend({
     },
 
     checkConfig: function () {
-      this.prompts = this.config.get('config');
+      this.prompts = this.options.config ? require(this.options.config)['generator-xh'].config : this.config.get('config');
     }
   },
 
   prompting: function () {
-    if (!this.options.interactive || this.prompts) {
+    if (!this.options.interactive) {
       return;
     }
-
-    var done = this.async();
 
     // Welcome user
     this.log('');
     this.log(chalk.cyan(' ***********************************************************') + '\n');
-    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH ') + '\n');
+    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH Generator ') + '\n');
     this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
     this.log(chalk.cyan(' ***********************************************************') + '\n');
 
-    this.prompt(utils.prompts.generator, function (props) {
-      utils.setPrompts.apply(this, [ props ]);
+    var done = this.async();
+    var prompts = [{
+      name: 'projectName',
+      message: 'Enter your project name',
+      validate: function (input) {
+        return !!input;
+      }
+    }];
+
+    if (!this.prompts) {
+      prompts = prompts.concat(utils.prompts.generator);
+    }
+
+    this.prompt(prompts, function (prompts) {
+      utils.setPrompts.call(this, _.merge(this.prompts || [], prompts));
       done();
     }.bind(this));
   },

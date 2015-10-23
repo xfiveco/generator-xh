@@ -123,10 +123,10 @@ Once done, the generator will create the required files and folders and install 
 
 XH Generator allows you to generate projects based on provided configuration. If the `yo-rc.json` file is present in project root folder, you will be prompted to type new name for the project and the rest will be scaffolded automatically.
 
-With `--config` or `-c` option you can provide a path to your custom configuration file:
+Use `--config` option to provide a path to your custom configuration file (if you're storing the file in your home directory, use non-default name for it, ie. .yo-config.json - otherwise Yeoman will change the project directory to your home dir):
 
 ```
-yo xh --config ~/your-xh-config.json
+yo xh --config ~/.yo-config.json
 ```
 
 Example of valid configuration file:
@@ -144,7 +144,10 @@ Example of valid configuration file:
       "isWP": false,
       "features": [
         "useJquery",
-        "useModernizr"
+        "useOptim",
+        "useBootstrap",
+        "useModernizr",
+        "useSprites"
       ]
     }
   }

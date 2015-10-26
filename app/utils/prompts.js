@@ -2,12 +2,6 @@
 
 module.exports = {
   generator: [{
-    name: 'projectName',
-    message: 'Enter your project name',
-    validate: function (input) {
-      return !!input;
-    }
-  }, {
     type: 'confirm',
     name: 'useBranding',
     message: 'Do you want to use XHTMLized branding?',
@@ -48,12 +42,12 @@ module.exports = {
       return response.reloader !== 'None' && response.extension === 'html';
     },
     type: 'confirm',
-    name: 'server',
+    name: 'devServer',
     message: 'Do you want to run development server?',
     default: true
   }, {
     when: function (response) {
-      return response.reloader === 'BrowserSync' && !response.server;
+      return response.reloader === 'BrowserSync' && !response.devServer;
     },
     type: 'input',
     name: 'proxy',
@@ -83,7 +77,7 @@ module.exports = {
     }, {
       name: 'Image optimisation',
       value: 'useOptim',
-      checked: true
+      checked: false
     }, {
       name: 'Automatic sprites',
       value: 'useSprites',
@@ -114,13 +108,5 @@ module.exports = {
       value: 'No'
     }],
     default: 'yesandcopy'
-  }],
-
-  newProjectName: [{
-    name: 'projectName',
-    message: 'Please enter new project name',
-    validate: function (input) {
-      return !!input;
-    }
   }]
 };

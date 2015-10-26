@@ -1,35 +1,16 @@
 'use strict';
+
 var yeoman = require('yeoman-generator');
-var path = require('path');
 var _ = require('lodash');
 
 var PageGenerator = yeoman.generators.Base.extend({
-
+  /**
+   * Extends base Yeoman constructor
+   * @public
+   */
   constructor: function () {
     yeoman.generators.Base.apply(this, arguments);
-
-    try {
-      this.configuration = this.config.get('config');
-    } catch (ex) {
-      this.log('You need to run this generator in a project directory.');
-      process.exit();
-    }
-
-    this.argument('newPages', {
-      desc: 'List of names',
-      type: Array,
-      required: false
-    });
-
-    this.pages = this.config.get('pages');
-    this.pages = _.union(this.newPages, this.pages);
-
-    if (_.isEmpty(this.pages)) {
-      this.log('Page names list cannot be empty.');
-      process.exit();
-    }
-
-    this.config.set('pages', this.pages);
+    this.sourceRoot(this.destinationRoot());
 
     this.option('skip-build', {
       desc: 'Do not run `grunt build` after pages are created',
@@ -38,60 +19,115 @@ var PageGenerator = yeoman.generators.Base.extend({
     });
   },
 
+  /**
+   * Reads current generator config and list of pages
+   * @public
+   */
   initializing: function () {
-    this.reserved = ['template', 'wp'];
+    this.configuration = this.config.get('config');
 
-    this.isNotReserved = function(page) {
-      if (this.reserved.indexOf(_.kebabCase(page)) === -1) {
-        return page;
-      }
-    };
-
-    if (!this.pages.every(this.isNotReserved, this)) {
-      this.log('You cannot use those reserved words as a page name: ' + this.reserved.join(', ') + '.');
+    if (!this.configuration) {
+      this.log('You need to run this generator in a project directory.');
       process.exit();
     }
+
+    this.pages = this.config.get('pages');
   },
 
-  writing: function () {
-    // Create pages from template
-    this.generatePage = function(page) {
-      var filename = _.kebabCase(page) + '.' + this.configuration.extension;
-      var root = path.join(this.destinationRoot(), 'src');
+  /**
+   * Gets generator arguments
+   * @public
+   */
+  prompting: {
+    /**
+     * Gets new pages listed in arguments and checks if there're any pages to render
+     * @public
+     */
+    checkNames: function () {
+      this.argument('newPages', {
+        desc: 'List of names',
+        type: Array,
+        required: false
+      });
+
+      this.pages = _.union(this.newPages, this.pages);
+
+      if (_.isEmpty(this.pages)) {
+        this.log('Page names list cannot be empty.');
+        process.exit();
+      }
+    },
+
+    /**
+     * Checks if there are any reserved names in pages array
+     * @public
+     */
+    checkReservedNames: function () {
+      this.reservedNames = ['template', 'wp'];
+      this.isReserved = function (page) {
+        return _.includes(this.reservedNames, _.kebabCase(page));
+      };
+
+      if (_.some(this.pages, this.isReserved, this)) {
+        this.log('You cannot use those reserved words: ' + this.reservedNames.join(', ') + '.');
+        process.exit();
+      }
+    }
+  },
+
+  /**
+   * Updated the generator config file with new pages
+   * @public
+   */
+  configuring: function () {
+    this.config.set('pages', this.pages);
+  },
+
+  /**
+   * Generates template files based on provided list or stored in config file
+   * @public
+   */
+  generatePages: function () {
+    this.pages.forEach(function (pageName) {
+      var fileName = _.kebabCase(pageName) + '.' + this.configuration.extension;
 
       // Write file if not exists
-      if (!this.fs.exists(path.join(root, filename))) {
-        this.fs.copyTpl(path.join(root, 'template.' + this.configuration.extension), path.join(root, filename), {
-          extension: this.configuration.extension,
-          name: page
+      if (!this.fs.exists(this.destinationPath('src/' + fileName))) {
+        this.fs.copyTpl(this.templatePath('src/template.' + this.configuration.extension), this.destinationPath('src/' + fileName), {
+          pageName: pageName
         });
       }
-    };
-
-    // Update index template
-    this.updateIndex = function(array) {
-      this.indexFile = this.readFileAsString('index.html');
-      this.link = '';
-
-      array.forEach(function(page) {
-        this.filename = _.kebabCase(page) + '.' + this.configuration.extension;
-        this.link += '<li><i class="fa fa-file-o"></i><a href="dist/' + this.filename + '"><strong>' +
-          page + '</strong> ' + this.filename + '</a><i class="fa fa-check"></i></li>\n';
-      }, this);
-
-      // Write file
-      this.write('index.html', this.indexFile.replace(/(<!-- @@pages -->)((.|\n)*)(<!-- \/@@pages -->)/img, '$1' + this.link + '$4'));
-    };
-
-    this.pages.forEach(this.generatePage, this);
-    this.updateIndex(this.pages);
+    }, this);
   },
 
-  end: function () {
+  /**
+   * Updates main project page listing with generated page list
+   * @public
+   */
+  updateIndex: function () {
+    var pagesRegex = /(<!-- @@pages -->)((.|\n)*)(<!-- \/@@pages -->)/img;
+    var pagesList = '';
+
+    this.pages.forEach(function (pageName) {
+      var fileName = _.kebabCase(pageName) + '.' + this.configuration.extension;
+
+      pagesList += '<li><i class="fa fa-file-o"></i><a href="dist/' + fileName + '"><strong>' + pageName + '</strong> ' + fileName + '</a><i class="fa fa-check"></i></li>\n';
+    }, this);
+
+    // Write file
+    this.fs.write('index.html', this.fs.read('index.html').replace(pagesRegex, '$1' + pagesList + '$4'));
+  },
+
+  /**
+   * Runs build helpers if they're not skipped by generator
+   * @public
+   */
+  install: function () {
     if (!this.options['skip-build']) {
       this.spawnCommand('grunt', ['build']);
-      this.log('All done!');
     }
+
+    this.log('All done!');
   }
 
 });

@@ -7,9 +7,6 @@
   <title>@@pagename - <%= projectName %></title>
   <link rel="stylesheet" media="all" href="css/main.css">
   <% if (features.useModernizr) { %>
-  <!-- build:js js/modernizr.min.js -->
-    <script src="bower_components/modernizr/modernizr.js"></script>
-  <!-- endbuild --><% } else { %>
-    <script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, 'js');</script>
-  <% } %>
+  <script src="js/modernizr.min.js"></script><% } else { %>  
+  <script>document.documentElement.className = document.documentElement.className.replace(/(\s|^)no-js(\s|$)/, 'js');</script><% } %>
 </head>

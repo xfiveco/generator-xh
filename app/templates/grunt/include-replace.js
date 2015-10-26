@@ -8,7 +8,7 @@ module.exports = function(grunt) {
   grunt.config('includereplace', {
     dist: {
       options: {
-        globals: {<% if (reloader === 'LiveReload' && !server) { %>
+        globals: {<% if (reloader === 'LiveReload' && !devServer) { %>
           reloader: '<script>//<![CDATA[\ndocument.write(\"<script async src=\'//HOST:35729/livereload.js?snipver=1\'><\\\/script>\".replace(/HOST/g, location.hostname));\n//]]></script>'<% } %>
         },
         includesDir: '<%%= xh.tmp %>'

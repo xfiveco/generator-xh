@@ -1,9 +1,25 @@
 'use strict';
 
+var _ = require('lodash');
+
 var helpers = {
+  copy: function (template, destination, context) {
+    if (context && Object.keys(context).length) {
+      context._ = {
+        kebabCase: _.kebabCase,
+        camelCase: _.camelCase,
+        capitalize: _.capitalize
+      };
+      
+      this.fs.copyTpl(this.templatePath(template), this.destinationPath(destination), context);
+    } else {
+      this.fs.copy(this.templatePath(template), this.destinationPath(destination));
+    }
+  },
+
   getStructure: function () {
     if (!helpers._stylesStructure) {
-      helpers._stylesStructure = this.src.readJSON('stylesStructure.json');
+      helpers._stylesStructure = this.fs.readJSON(this.templatePath('stylesStructure.json'));
     }
 
     return helpers._stylesStructure;
@@ -23,14 +39,14 @@ var helpers = {
           helpers.createStructure.bind(this)(item.children, n);
         }
       } else {
-        n = (base + '/' + item.name).replace('{{type}}', this.cssPreprocessor);
+        n = (base + '/' + item.name).replace('{{type}}', this.prompts.cssPreprocessor);
         tn = this.templatePath(n);
         dn = this.destinationPath(n);
 
         if (item.raw) {
           this.fs.copy(tn, dn);
         } else {
-          this.fs.copyTpl(tn, dn, this);
+          this.fs.copyTpl(tn, dn, this.prompts);
         }
       }
     }
@@ -43,88 +59,87 @@ var generate = {
   },
 
   dotfiles: function () {
-    this.copy('bowerrc', '.bowerrc');
-    this.copy('editorconfig', '.editorconfig');
-    this.copy('gitattributes', '.gitattributes');
-    this.copy('jshintrc', '.jshintrc');
-    this.template('gitignore', '.gitignore');
+    helpers.copy.call(this, 'bowerrc', '.bowerrc');
+    helpers.copy.call(this, 'editorconfig', '.editorconfig');
+    helpers.copy.call(this, 'gitattributes', '.gitattributes');
+    helpers.copy.call(this, 'jshintrc', '.jshintrc');
+    helpers.copy.call(this, 'gitignore', '.gitignore', this.prompts);
   },
 
   appfiles: function () {
-    this.template('_package.json', 'package.json');
-    this.template('_bower.json', 'bower.json');
+    helpers.copy.call(this, '_package.json', 'package.json', this.prompts);
+    helpers.copy.call(this, '_bower.json', 'bower.json', this.prompts);
   },
 
   gruntModules: function () {
-    this.template('Gruntfile.js');
+    helpers.copy.call(this, 'Gruntfile.js', 'Gruntfile.js', this.prompts);
+    helpers.copy.call(this, 'grunt/build-helpers.js', 'grunt/build-helpers.js', this.prompts);
 
     // read packages from packages.json
     // and include neccessary task config files
-    var pkg = JSON.parse(this.engine(this.src.read('_package.json'), this)).devDependencies;
+    var pkg = this.fs.readJSON(this.destinationPath('package.json')).devDependencies;
     var p, m, f;
 
     for (p in pkg) {
       m = p.match(/^grunt-(.+)$/i);
       if (m) {
         f = 'grunt/' + m[1] + '.js';
-        if (this.src.exists(f)) {
-          this.template(f);
+
+        if (this.fs.exists(this.templatePath(f))) {
+          helpers.copy.call(this, f, f, this.prompts);
         }
       }
     }
-
-    // additional task files
-    this.copy('grunt/build-helpers.js');
   },
 
   projectInfo: function () {
-    this.template('_index.html', 'index.html');
-    this.template('README.md');
+    helpers.copy.call(this, '_index.html', 'index.html', this.prompts);
+    helpers.copy.call(this, 'README.md', 'README.md', this.prompts);
   },
 
   assets: function () {
-    this.copy('src/img/.keep', 'src/fonts/.keep');
-    this.copy('src/img/.keep', 'src/img/.keep');
-    this.copy('src/img/.keep', 'src/media/.keep');
-    this.copy('src/img/.keep', 'src/designs/.keep');
+    helpers.copy.call(this, 'src/img/.keep', 'src/fonts/.keep');
+    helpers.copy.call(this, 'src/img/.keep', 'src/img/.keep');
+    helpers.copy.call(this, 'src/img/.keep', 'src/media/.keep');
+    helpers.copy.call(this, 'src/img/.keep', 'src/designs/.keep');
   },
 
   templateFiles: function () {
-    this.copy('src/_template.html', 'src/template.' + this.extension);
+    helpers.copy.call(this, 'src/_template.html', 'src/template.' + this.prompts.extension, this.prompts);
 
-    this.template('src/includes/_head.html', 'src/includes/head.' + this.extension);
-    this.template('src/includes/_header.html', 'src/includes/header.' + this.extension);
-    this.template('src/includes/_sidebar.html', 'src/includes/sidebar.' + this.extension);
-    this.template('src/includes/_footer.html', 'src/includes/footer.' + this.extension);
-    this.template('src/includes/_scripts.html', 'src/includes/scripts.' + this.extension);
+    helpers.copy.call(this, 'src/includes/_head.html', 'src/includes/head.' + this.prompts.extension, this.prompts);
+    helpers.copy.call(this, 'src/includes/_header.html', 'src/includes/header.' + this.prompts.extension, this.prompts);
+    helpers.copy.call(this, 'src/includes/_sidebar.html', 'src/includes/sidebar.' + this.prompts.extension, this.prompts);
+    helpers.copy.call(this, 'src/includes/_footer.html', 'src/includes/footer.' + this.prompts.extension, this.prompts);
+    helpers.copy.call(this, 'src/includes/_scripts.html', 'src/includes/scripts.' + this.prompts.extension, this.prompts);
   },
 
   preprocessor: function (type, underscore) {
-    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().default, 'src/' + this.cssPreprocessor);
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().default, 'src/' + this.prompts.cssPreprocessor);
   },
 
   js: function () {
-    this.template('src/js/_main.js', 'src/js/main.js');
+    helpers.copy.call(this, 'src/js/_main.js', 'src/js/main.js', this.prompts);
   },
 
   wp: function () {
-    this.dest.mkdir(this.wpThemeFolder);
-    this.copy('src/_wp.html', 'src/wp.' + this.extension);
+    this.fs.write(this.destinationPath(this.prompts.wpThemeFolder + '/.keep'), '');
+    helpers.copy.call(this, 'src/_wp.html', 'src/wp.' + this.prompts.extension);
 
-    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().wp, 'src/' + this.cssPreprocessor);
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().wp, 'src/' + this.prompts.cssPreprocessor);
   },
 
   sprites: function () {
-    this.copy('src/img/.keep', 'src/img/sprites/1x/.keep');
-    this.copy('src/img/.keep', 'src/img/sprites/2x/.keep');
+    helpers.copy.call(this, 'src/img/.keep', 'src/img/sprites/1x/.keep');
+    helpers.copy.call(this, 'src/img/.keep', 'src/img/sprites/2x/.keep');
 
-    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().sprites, 'src/' + this.cssPreprocessor);
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().sprites, 'src/' + this.prompts.cssPreprocessor);
   },
 
   bootstrap: function () {
-    this.template('src/_bootstrap.html', 'src/bootstrap.' + this.extension);
+    helpers.copy.call(this, 'src/_bootstrap.html', 'src/bootstrap.' + this.prompts.extension, this.prompts);
 
-    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().bootstrap, 'src/' + this.cssPreprocessor);
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().bootstrap, 'src/' + this.prompts.cssPreprocessor);
   }
 };
 

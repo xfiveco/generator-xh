@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       },
 
       options: {
-        watchTask: true,<% if (server) { %>
+        watchTask: true,<% if (devServer) { %>
         server: {
           baseDir: './',
           port: 3000

@@ -1,6 +1,8 @@
 'use strict';
 
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
+var _ = require('lodash');
 var utils = require('./utils/index');
 
 var XhGenerator = yeoman.generators.Base.extend({
@@ -10,8 +12,7 @@ var XhGenerator = yeoman.generators.Base.extend({
 
     this.option('config', {
       desc: 'Path to configuration file',
-      type: String,
-      alias: 'c'
+      type: String
     });
 
     this.option('interactive', {
@@ -35,41 +36,50 @@ var XhGenerator = yeoman.generators.Base.extend({
 
   initializing: {
     checkIfInteractive: function () {
-      if (this.options.interactive === false) {
+      if (!this.options.interactive) {
         this.conflicter.force = true;
       }
     },
 
     checkForUpdate: function () {
-      if (this.options['skip-update'] === false && this.options.interactive !== false) {
+      if (!this.options['skip-update'] && this.options.interactive) {
         var update = require('./update');
         update.apply(this);
       }
     },
 
-    lookForConfigFile: function () {
-      var checkConfig = require('./configcheck');
-
-      checkConfig.fileContent.bind(this)()
-        .then(checkConfig.result.bind(this),
-              checkConfig.error.bind(this));
+    checkConfig: function () {
+      this.prompts = this.options.config ? require(this.options.config)['generator-xh'].config : this.config.get('config');
     }
   },
 
   prompting: function () {
-    if (this.options.interactive === false || this.configFound) {
+    if (!this.options.interactive) {
       return;
     }
 
-    var done = this.async();
-
     // Welcome user
-    if (this.configCorrupted !== true) {
-      utils.welcome.bind(this)();
+    this.log('');
+    this.log(chalk.cyan(' ***********************************************************') + '\n');
+    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH Generator ') + '\n');
+    this.log(chalk.white('  A Yeoman generator for scaffolding web projects') + '\n');
+    this.log(chalk.cyan(' ***********************************************************') + '\n');
+
+    var done = this.async();
+    var prompts = [{
+      name: 'projectName',
+      message: 'Enter your project name',
+      validate: function (input) {
+        return !!input;
+      }
+    }];
+
+    if (!this.prompts) {
+      prompts = prompts.concat(utils.prompts.generator);
     }
 
-    this.prompt(utils.prompts.generator, function (props) {
-      utils.setPrompts.apply(this, [ props ]);
+    this.prompt(prompts, function (prompts) {
+      utils.setPrompts.call(this, _.merge(this.prompts || [], prompts));
       done();
     }.bind(this));
   },
@@ -105,21 +115,21 @@ var XhGenerator = yeoman.generators.Base.extend({
       // JS
       utils.generate.js.bind(this)();
 
-      if (this.features.useBootstrap) {
+      if (this.prompts.features.useBootstrap) {
         utils.generate.bootstrap.bind(this)();
       }
     },
 
     // WordPress
     wp: function () {
-      if (this.isWP) {
+      if (this.prompts.isWP) {
         utils.generate.wp.bind(this)();
       }
     },
 
     // Sprites
     sprites: function () {
-      if (this.features.useSprites) {
+      if (this.prompts.features.useSprites) {
         utils.generate.sprites.bind(this)();
       }
     }

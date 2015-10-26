@@ -24,9 +24,9 @@ var PageGenerator = yeoman.generators.Base.extend({
    * @public
    */
   initializing: function () {
-    try {
-      this.configuration = this.config.get('config');
-    } catch (ex) {
+    this.configuration = this.config.get('config');
+
+    if (!this.configuration) {
       this.log('You need to run this generator in a project directory.');
       process.exit();
     }

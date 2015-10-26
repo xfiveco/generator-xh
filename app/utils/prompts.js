@@ -77,7 +77,7 @@ module.exports = {
     }, {
       name: 'Image optimisation',
       value: 'useOptim',
-      checked: true
+      checked: false
     }, {
       name: 'Automatic sprites',
       value: 'useSprites',
@@ -108,13 +108,5 @@ module.exports = {
       value: 'No'
     }],
     default: 'yesandcopy'
-  }],
-
-  newProjectName: [{
-    name: 'projectName',
-    message: 'Please enter new project name',
-    validate: function (input) {
-      return !!input;
-    }
   }]
 };

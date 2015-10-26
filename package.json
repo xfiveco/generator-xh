@@ -25,16 +25,16 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/**/*.test.js"
   },
   "dependencies": {
     "async": "^1.4.2",
     "chalk": "^1.1.1",
     "lodash": "^3.10.1",
-    "q": "~1.4.1",
-    "string-length": "~1.0.1",
-    "update-notifier": "~0.5.0",
-    "yeoman-generator": "~0.20.3"
+    "q": "^1.4.1",
+    "string-length": "^1.0.1",
+    "update-notifier": "^0.5.0",
+    "yeoman-generator": "^0.21.1"
   },
   "devDependencies": {
     "mocha": "*"

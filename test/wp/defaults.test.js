@@ -14,7 +14,6 @@ describe('XH Generator with default options', function () {
       function (callback) {
         helpers
           .run(path.join(__dirname, '../../app'))
-          .inDir(path.join(__dirname, 'temp'))
           .withOptions({
             'skip-install': true,
             'skip-update': true

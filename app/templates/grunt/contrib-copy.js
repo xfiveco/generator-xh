@@ -5,14 +5,15 @@ module.exports = function(grunt) {
   'use strict';
 
   grunt.config('copy', {
+    <% if (features.useOptim) { %>
     // copy assets other than images-to-be-optimized
-    // (imagemin & svg2png tasks will take care of that)
+    // (imagemin & svg2png tasks will take care of that)<% } %>
     assets: {
       files: [
         {
           expand: true,
           cwd: '<%%= xh.src %>',
-          src: ['<%%= xh.assets %>/**/*.*', '!<%%= xh.images %>/**/*.{png,jpg,gif,svg}', '!**/.keep'],
+          src: ['<%%= xh.assets %>/**/*.*'<% if (features.useOptim) { %>, '!<%%= xh.images %>/**/*.{png,jpg,gif,svg}'<% } %>, '!**/.keep'],
           dest: '<%%= xh.dist %>'
         }
       ]

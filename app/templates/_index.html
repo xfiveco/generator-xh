@@ -59,16 +59,21 @@
     .files header li.done i { background: #00ad69; }
     .files header li.wip i { background: #00a6b6; }
 
-    .files article ul { margin: 0 0 50px; }
-    .files article li { padding: 16px 0; border-bottom: 1px solid #ededed; }
-    .files article li:first-child { padding-top: 0; }
-    .files article li a { float: left;width: 86%; }
-    .files article li a strong { font-size: 140%; float: left; width: 65%; }
-    .files article li span { display: inline-block; margin-top: 6px; width: 35%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; -moz-binding: url(<q>assets/xml/ellipsis.xml#ellipsis</q>); }
-    .files article li i { font-size: 130%; }
+    .files article > ul { margin: 0 0 50px; }
+    .files article > ul > li { padding: 16px 0; border-bottom: 1px solid #ededed; line-height: 28px; }
+    .files article > ul > li:first-child { padding-top: 0; }
+    .files article > ul > li a { float: left;width: 86%; }
+    .files article > ul > li strong { font-size: 140%; float: left; }
+    .files article > ul > li a strong { width: 65%; }
+    .files article > ul > li span { display: inline-block; margin-top: 6px; width: 35%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; -moz-binding: url(<q>assets/xml/ellipsis.xml#ellipsis</q>); }
+    .files article > ul > li i { font-size: 130%; }
+    .files article > ul > li ul { float: right; }
+    .files article > ul > li li { float: left; margin-left: 10px; }
+    .files article > ul > li li a { white-space: nowrap; }
+    .files article > ul > li li .fa { margin-right: 5px; line-height: 1; vertical-align: middle; }
 
-    .fa-file-o { float: left; width: 5%; margin: 3px 1% 0; }
-    .fa-file-o, .fa-wordpress, .fa-lock { float: left; width: 5%; margin: 3px 1% 0; }
+    .fa-file-o, .fa-file-text-o { float: left; width: 5%; margin: 3px 1% 0; }
+    .fa-file-o, .fa-file-text-o, .fa-wordpress, .fa-lock { float: left; width: 5%; margin: 3px 1% 0; }
     .fa-check { float: right; width: 5%; margin: -2px 0 0 2%; color: #333; font-size: 180%!important; visibility: hidden; }
     .done .fa-check { visibility: visible; }
 

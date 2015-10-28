@@ -1,9 +1,11 @@
 XH Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh.svg?branch=master)](https://travis-ci.org/xhtmlized/generator-xh) [![NPM version](https://badge.fury.io/js/generator-xh.svg)](http://badge.fury.io/js/generator-xh) [![NPM dependiencies](https://david-dm.org/xhtmlized/generator-xh.svg)](https://david-dm.org/xhtmlized/generator-xh)
 ============
 
+> XH Generator is a [Yeoman](http://yeoman.io) generator for scaffolding web projects.
+
 [![NPM](https://nodei.co/npm/generator-xh.png?downloads=true)](https://nodei.co/npm/generator-xh/)
 
-XH Generator is a [Yeoman](http://yeoman.io) generator for scaffolding web projects. XH is suitable for client work when you deliver a completed project to your client for further review and development.
+XH is suitable for client work when you deliver a completed project to your client for further review and development.
 
 XH Generator creates a project structure, files and Grunt tasks which support modern workflows like CSS preprocessors. Built HTML, CSS and JS files are prettified and fully editable so clients can work directly with them if they wish.
 
@@ -61,7 +63,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - Optional [WordPress styles](http://codex.wordpress.org/CSS) for images and captions
 - WordPress development support
 
-## Prerequisites
+## Getting Started
 
 The following software needs to be installed if you want to use XH Generator. These installations need to be done just once so you can skip this section if you have the software already installed.
 

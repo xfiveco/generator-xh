@@ -10,7 +10,7 @@ var helpers = {
         camelCase: _.camelCase,
         capitalize: _.capitalize
       };
-      
+
       this.fs.copyTpl(this.templatePath(template), this.destinationPath(destination), context);
     } else {
       this.fs.copy(this.templatePath(template), this.destinationPath(destination));
@@ -101,7 +101,6 @@ var generate = {
     helpers.copy.call(this, 'src/img/.keep', 'src/fonts/.keep');
     helpers.copy.call(this, 'src/img/.keep', 'src/img/.keep');
     helpers.copy.call(this, 'src/img/.keep', 'src/media/.keep');
-    helpers.copy.call(this, 'src/img/.keep', 'src/designs/.keep');
   },
 
   templateFiles: function () {

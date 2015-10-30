@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     wp: {
       expand: true,
       cwd: '<%%= xh.dist %>/',
-      src: ['**', '!**/<%%= xh.designs %>/**', '!*.<%= extension %>'],
+      src: ['**', '!*.<%= extension %>'],
       dest: '<%= wpThemeFolder  %>'
     },<% } %>
 

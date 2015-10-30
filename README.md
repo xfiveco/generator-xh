@@ -283,7 +283,7 @@ grunt build
 
 If everything went ok, the preview files will be generated and you will be able to check your work in the `dist` folder.
 
-To re-compile HTML / SCSS file in real time you can use default task. Type
+To re-compile HTML / SCSS file in real time you can use default task. Type:
 
 ```
 grunt
@@ -293,13 +293,13 @@ and this will start a task that will watch for changes in files and recompile th
 
 ![grunt watch command](docs/img/grunt-watch.png)
 
-To rebuild the whole project, use the grunt build task again
+To rebuild the whole project, use the grunt build task again:
 
 ```
 grunt build
 ```
 
-To validate HTML files, use the following task
+To validate HTML files, use the following task:
 
 ```
 grunt validate

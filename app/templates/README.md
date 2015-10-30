@@ -58,7 +58,6 @@ The meaning of files and folders in generated project structure are as follows:
 - **node_modules** - Node.js modules for various Grunt tasks, usually you don’t have to do anything about this folder
 - **src** - source files, development is done here
    - **bower_components** - 3rd party libraries managed via [Bower](http://bower.io/)
-   - **designs** - place to store design previews, sprite source files & so on
    - **grunt** - atomic grunt tasks configuration
    - **includes** - HTML partials like `head.html`, `scripts.html`, etc.
    - **<%= cssPreprocessor %>** - <% if (cssPreprocessor === 'scss') { %>Sass<% } %><% if (cssPreprocessor === 'less') { %>Less<% } %> files

@@ -9,6 +9,13 @@ module.exports = function(grunt) {
   grunt.config('uglify', {
     options: {
       preserveComments: 'some'
+    },
+
+    mainjs: {
+      files: [{
+        dest: '<%%= xh.dist %>/js/main.min.js',
+        src: '<%%= xh.dist %>/js/main.js'
+      }]
     }
   });
 };

@@ -108,8 +108,7 @@ describe('XH Generator with default options', function () {
     assert.file([
       'src/fonts/.keep',
       'src/img/.keep',
-      'src/media/.keep',
-      'src/designs/.keep'
+      'src/media/.keep'
     ]);
 
     done();

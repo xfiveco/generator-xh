@@ -7,6 +7,11 @@
    ========================================================================== */
 
 'use strict';
+<% if(features.useBrowserify) { %>
+(function () {
+  require('./modules/exampleFn').init();
+})();
+<% } else { %>
 
 var <%= _.capitalize(_.camelCase(projectName)) %> = {
 
@@ -29,3 +34,5 @@ var <%= _.capitalize(_.camelCase(projectName)) %> = {
 document.addEventListener('DOMContentLoaded', function() {
   <%= _.capitalize(_.camelCase(projectName)) %>.init();
 });
+
+<% } %>

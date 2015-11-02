@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 
     js: {
       files: ['<%%= xh.src %>/js/*.js'],
-      tasks: ['build-js'<% if (isWP) { %>, 'copy:wp'<% } %>]<% if (reloader === 'LiveReload') { %>,
+      tasks: [<% if (features.useBrowserify) { %>'jshint'<% } else { %>'build-js'<% } %><% if (isWP) { %>, 'copy:wp'<% } %>]<% if (reloader === 'LiveReload') { %>,
       options: {
         livereload: true
       }<% } %>

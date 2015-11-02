@@ -139,6 +139,12 @@ var generate = {
     helpers.copy.call(this, 'src/_bootstrap.html', 'src/bootstrap.' + this.prompts.extension, this.prompts);
 
     helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().bootstrap, 'src/' + this.prompts.cssPreprocessor);
+  },
+
+  browserify: function () {
+    helpers.copy.call(this, 'src/js/modules/_exampleFn.js', 'src/js/modules/exampleFn.js', this.prompts);
+
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().browserify, 'src/js/');
   }
 };
 

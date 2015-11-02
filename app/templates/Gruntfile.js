@@ -66,8 +66,9 @@ module.exports = function (grunt) {
     'browserSync'<% } else if (reloader === 'LiveReload' && devServer) { %>
     'connect:server'<% } %>,
     'build-usemin',<% if (features.useModernizr) { %>
-    'build-modernizr',<% } %>
-    'watch'
+    'build-modernizr',<% } %><% if (features.useBrowserify) { %>
+    'concurrent:watch'<% } else { %>
+    'watch'<% } %>
   ]);
 
   grunt.registerTask('default', ['dev']);

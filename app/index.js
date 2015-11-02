@@ -132,6 +132,13 @@ var XhGenerator = yeoman.generators.Base.extend({
       if (this.prompts.features.useSprites) {
         utils.generate.sprites.bind(this)();
       }
+    },
+
+    // Browserify
+    browserify: function () {
+      if (this.prompts.features.useBrowserify) {
+        utils.generate.browserify.bind(this)();
+      }
     }
   },
 

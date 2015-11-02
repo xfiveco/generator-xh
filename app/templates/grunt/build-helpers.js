@@ -57,17 +57,19 @@ module.exports = function(grunt) {
     'modernizr'
   ]);<% } %>
 
-  grunt.registerTask('build-js', [
+  grunt.registerTask('build-js', [<% if (features.useBrowserify) { %>
+    'jshint',
+    'browserify:build',
+    'uglify:mainjs'<% } else {%>
     'copy:js',
-    'jshint'
+    'jshint'<% } %>
   ]);
 
   grunt.registerTask('build-beautify', [
     'cssbeautifier',
     'search',
-    'replace:css',
-
-    'jsbeautifier:js',
+    'replace:css',<% if (!features.useBrowserify) { %>
+    'jsbeautifier:js',<% } %>
     'replace:js',
   ]);
 };

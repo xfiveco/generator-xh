@@ -8,6 +8,7 @@
   "unused": true,
   "undef": true,
   "curly": true,
+  "browserify": true,
   "globals": {
     "console": true
   }

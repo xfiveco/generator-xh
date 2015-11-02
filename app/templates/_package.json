@@ -7,7 +7,11 @@
     "url": ""
   },
   "devDependencies": {
-    "autoprefixer": "^6.0.3",
+    "autoprefixer": "^6.0.3",<% if (features.useBrowserify) { %>
+    "browserify": "^12.0.1",
+    "browserify-shim": "^3.8.11",
+    "grunt-browserify": "^4.0.1",
+    "grunt-concurrent": "^2.0.3",<% } %>
     "grunt": "^0.4.5",<% if (cssPreprocessor === 'less') { %>
     "grunt-contrib-less": "^1.0.1",<% } %><% if (cssPreprocessor === 'scss') { %>
     "grunt-sass": "^1.1.0",<% } %>
@@ -39,5 +43,14 @@
     "lodash": "^3.10.0",
     "pixrem": "^3.0.0",
     "postcss-import": "^7.0.0"
-  }
+  }<% if (features.useBrowserify) { %>,
+  "browser": {},
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {<% if (features.useModernizr) { %>
+    "modernizr": "global:Modernizr"<% } %>
+  }<% } %>
 }

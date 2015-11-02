@@ -90,6 +90,10 @@ module.exports = {
       name: 'Modernizr',
       value: 'useModernizr',
       checked: false
+    }, {
+      name: 'Browserify',
+      value: 'useBrowserify',
+      checked: false
     }]
   }],
 

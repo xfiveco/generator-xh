@@ -57,6 +57,14 @@ module.exports = function(grunt) {
       options: {
         livereload: true
       }<% } %>
-    }
+    }<% if (features.useIcomoon) { %>,
+
+    icons: {
+      files: ['<%%= xh.src %>/icomoon.zip'],
+      tasks: ['icomoon-zip']<% if (reloader === 'LiveReload') { %>,
+      options: {
+        livereload: true
+      }<% } %>
+    }<% } %>
   });
 };

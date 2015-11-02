@@ -16,8 +16,12 @@ module.exports = function (answers) {
   this.prompts.proxy            = answers.proxy;
   this.prompts.features         = {};
 
-  for (var i in answers.features) {
-    this.prompts.features[answers.features[i]] = true;
+  if (Array.isArray(answers.features)) {
+    for (var i in answers.features) {
+      this.prompts.features[answers.features[i]] = true;
+    }
+  } else if (typeof answers.features === 'object') {
+    this.prompts.features = answers.features;
   }
 
   if (this.prompts.isWP) {

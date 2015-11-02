@@ -1,5 +1,11 @@
 /**
  * Modernizr - Build out a lean, mean Modernizr machine.
+ *
+ * Tests, etc.:
+ * https://modernizr.com/download
+ *
+ * Available options:
+ * https://github.com/doctyper/customizr#config-file
  */
 module.exports = function(grunt) {
   'use strict';

@@ -502,7 +502,7 @@ The following labels are used to mark the issues and ensure predictable generato
 Please also follow the GitHub guides for contributing and reporting issues to the project:
 
 - [Contributing to Open Source on GitHub](https://guides.github.com/activities/contributing-to-open-source/)
-- [Mastering Issues](http://https://guides.github.com/features/issues/)
+- [Mastering Issues](https://guides.github.com/features/issues/)
 
 ## Credits
 

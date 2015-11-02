@@ -60,6 +60,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 - Functionality for merging JS libraries to reduce number of HTTP requests
 - Consistent coding style supported by [.editorconfig](http://editorconfig.org/)
 - JavaScript code linting with [JSHint](http://www.jshint.com/)
+- [Icomoon](http://icomoon.io) generation support
 - Optional [WordPress styles](http://codex.wordpress.org/CSS) for images and captions
 - WordPress development support
 

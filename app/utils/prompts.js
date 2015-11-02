@@ -83,6 +83,10 @@ module.exports = {
       value: 'useSprites',
       checked: false
     }, {
+      name: 'Icomoon',
+      value: 'useIcomoon',
+      checked: false
+    }, {
       name: 'Bootstrap',
       value: 'useBootstrap',
       checked: false

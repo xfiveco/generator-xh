@@ -8,7 +8,9 @@
    ========================================================================= */
 
 // Vendor Dependencies<% if (!features.useBootstrap) { %>
-@import (inline) "normalize.css/normalize.css";<% } %>
+@import (inline) "normalize.css/normalize.css";<% } %><% if (features.useBootstrap) { %>
+@import "vendor/bootstrap/variables";<% } %><% if (features.useIcomoon) { %>
+@import "vendor/icomoon";<% } %>
 
 // Authored Dependencies
 @import "setup/variables";

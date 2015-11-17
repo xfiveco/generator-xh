@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         clear: false,
         fontsPath: '<%%= xh.src %>/fonts',
         fontsRelativePath: '../fonts',
-        styleFile: '<%%= xh.src %>/<%= cssPreprocessor %>/vendor/_icomoon.<%= cssPreprocessor %>'
+        styleFile: '<%%= xh.src %>/<%= cssPreprocessor %>/vendor/<%= cssPrefix %>icomoon.<%= cssPreprocessor %>'
       },
       files: {
         '<%%= xh.src %>/icomoon': ['<%%= xh.src %>/icomoon.zip']

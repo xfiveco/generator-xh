@@ -43,6 +43,15 @@
     }
   ],
 
+  "icomoon": [
+    {
+      "dirname": "vendor",
+      "children": [
+        { "name": "_icomoon.{{type}}" }
+      ]
+    }
+  ],
+
   "bootstrap": [
     {
       "dirname": "vendor",

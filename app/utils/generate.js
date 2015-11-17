@@ -123,7 +123,7 @@ var generate = {
 
   wp: function () {
     this.fs.write(this.destinationPath(this.prompts.wpThemeFolder + '/.keep'), '');
-    helpers.copy.call(this, 'src/_wp.html', 'src/wp.' + this.prompts.extension);
+    helpers.copy.call(this, 'src/_wp.html', 'src/wp.' + this.prompts.extension, this.prompts);
 
     helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().wp, 'src/' + this.prompts.cssPreprocessor);
   },

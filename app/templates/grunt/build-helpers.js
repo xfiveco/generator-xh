@@ -30,20 +30,22 @@ module.exports = function(grunt) {
     'concat:generated',
     'uglify:generated',
     'usemin',
-  ]);
+  ]);<% if (features.useOptim || features.useSprites) { %>
 
-  grunt.registerTask('build-assets', [<% if (features.useOptim || features.useSprites) { %>
+  grunt.registerTask('build-images', [
     // optimze SVG & generate & optimize their fallbacks
     'newer:imagemin:svg',
     'newer:svg2png:dist',
     'newer:imagemin:svgfallbacks',
     // optimize non-SVG images (GIF, PNG, JPG)
-    'newer:imagemin:nosvg',<% } %><% if (features.useSprites) { %>
+    'newer:imagemin:nosvg'<% if (features.useSprites) { %>,
     // generate & optimize sprites
     'sprite:dist1x',
     'sprite:dist2x',
-    'newer:imagemin:sprites',<% } %>
-    // copy other assets
+    'newer:imagemin:sprites'<% } %>
+  ]);<% } %>
+
+  grunt.registerTask('build-assets', [
     'newer:copy:assets'
   ]);
 

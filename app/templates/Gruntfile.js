@@ -51,9 +51,9 @@ module.exports = function (grunt) {
     'build-usemin-min',
     'build-html',<% if (features.useModernizr) { %>
     'build-modernizr',<% } %>
-    'build-assets',
     'build-css',
     'build-js',
+    'build-assets',
     'build-beautify',<% if (isWP) { %>
 
     'copy:wp',<% } %>

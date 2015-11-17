@@ -30,6 +30,14 @@ describe('XH Generator with Icomoon support', function () {
     done();
   });
 
+  it('should generate Icomoon files', function (done) {
+    assert.file([
+      'src/scss/vendor/_icomoon.scss'
+    ]);
+
+    done();
+  });
+
   it('should generate icomoon style reference', function (done) {
     assert.fileContent('src/scss/main.scss', 'icomoon');
 

@@ -134,6 +134,13 @@ var XhGenerator = yeoman.generators.Base.extend({
       }
     },
 
+    // Icomoon
+    icomoon: function () {
+      if (this.prompts.features.useIcomoon) {
+        utils.generate.icomoon.bind(this)();
+      }
+    },
+
     // Browserify
     browserify: function () {
       if (this.prompts.features.useBrowserify) {

@@ -141,6 +141,10 @@ var generate = {
     helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().bootstrap, 'src/' + this.prompts.cssPreprocessor);
   },
 
+  icomoon: function () {
+    helpers.createStructure.bind(this)(helpers.getStructure.bind(this)().icomoon, 'src/' + this.prompts.cssPreprocessor);
+  },
+
   browserify: function () {
     helpers.copy.call(this, 'src/js/modules/_exampleFn.js', 'src/js/modules/exampleFn.js', this.prompts);
 

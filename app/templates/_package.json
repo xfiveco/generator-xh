@@ -37,8 +37,7 @@
     "grunt-newer": "^1.1.1",<% if (features.useOptim || features.useSprites) { %>
     "grunt-contrib-imagemin": "^1.0.0",
     "grunt-svg2png": "^0.2.7",<% } %><% if (features.useSprites) { %>
-    "grunt-spritesmith": "^5.2.0",
-    "pngsmith": "^0.1.5",<% } %>
+    "grunt-spritesmith": "^5.2.0",<% } %>
     "time-grunt": "^1.2.2",
     "jit-grunt": "^0.9.1",
     "lodash": "^3.10.1",

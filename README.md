@@ -410,7 +410,7 @@ Let’s say you want to add [Colorbox](http://www.jacklmoore.com/colorbox/) to y
 1. First, install it via Bower
 
     ```
-    bower install jquery-colorbox --save-dev
+    bower install jquery-colorbox --save
     ```
 
 2. Then link it in `src/includes/scripts.html`. This will ensure that the library will be added to `plugins.min.js` file

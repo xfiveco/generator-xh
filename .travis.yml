@@ -5,7 +5,6 @@ node_js:
   - '4.1'
   - '4.0'
   - '0.12'
-  - 'iojs'
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-xh' ]; then cd .. && eval "mv $currentfolder generator-xh" && cd generator-xh; fi

@@ -483,6 +483,11 @@ In `grunt/contrib-connect.js` file find `options` section and either remove `ope
 
 During setup, when you choose not to run development server (or are unable to run it), you will be asked about URL of the page you will work with. By default this is `localhost`, but you can change it to something like `project.dev` or anything you like. When running development (default) grunt task, BrowserSync will then set up proxy server (by default on port 3000), that will allow you to use live reloading while for example simultaneously serving pages via Apache (and using PHP).
 
+### Browserify
+
+With version 0.7 comes support for [Browserify](http://browserify.org/) module bundler (available as an option from additional features), so feel free to `require('module')` in your JS code. Example usage is provided in `main.js`. 
+Also be sure to check out [browserify-shim](https://github.com/thlorenz/browserify-shim) in case you need compatibility with some non-AMD, non-CommonJS packages (e.g. from `bower`) or with some jQuery plugins. Always use `npm` packages where possible.
+
 ## Changelog
 
 Check [Releases](https://github.com/xhtmlized/generator-xh/releases)

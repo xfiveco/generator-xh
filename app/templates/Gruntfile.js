@@ -50,7 +50,8 @@ module.exports = function (grunt) {
 
     'build-usemin-min',
     'build-html',<% if (features.useModernizr) { %>
-    'build-modernizr',<% } %>
+    'build-modernizr',<% } %><% if (features.useOptim || features.useSprites) { %>
+    'build-images',<% } %>
     'build-css',
     'build-js',
     'build-assets',

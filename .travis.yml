@@ -1,8 +1,10 @@
 sudo: false
 language: node_js
 node_js:
-  - '0.10'
+  - 'stable'
+  - '4.1'
+  - '4.0'
+  - '0.12'
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-xh' ]; then cd .. && eval "mv $currentfolder generator-xh" && cd generator-xh; fi
-

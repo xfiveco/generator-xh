@@ -33,10 +33,10 @@ describe('XH Generator with Less', function () {
   it('should generate Less files', function (done) {
     assert.file([
       'src/less/main.less',
-      'src/less/setup/_variables.less',
-      'src/less/setup/_mixins.less',
-      'src/less/common/_utilities.less',
-      'src/less/common/_layout.less',
+      'src/less/setup/variables.less',
+      'src/less/setup/mixins.less',
+      'src/less/common/utilities.less',
+      'src/less/common/layout.less',
       'src/less/components/.keep',
       'src/less/vendor/.keep'
     ]);

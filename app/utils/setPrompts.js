@@ -10,6 +10,7 @@ module.exports = function (answers) {
   this.prompts.reloader         = answers.reloader;
   this.prompts.devServer        = answers.devServer;
   this.prompts.cssPreprocessor  = answers.cssPreprocessor;
+  this.prompts.cssPrefix        = answers.cssPreprocessor === 'scss' ? '_' : '';
   this.prompts.ignoreDist       = answers.ignoreDist;
   this.prompts.isWP             = answers.isWP;
   this.prompts.extension        = answers.extension;

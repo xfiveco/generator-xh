@@ -41,7 +41,7 @@ var helpers = {
       } else {
         n = (base + '/' + item.name).replace('{{type}}', this.prompts.cssPreprocessor);
         tn = this.templatePath(n);
-        dn = this.destinationPath(n);
+        dn = this.destinationPath(n.replace('_', this.prompts.cssPrefix));
 
         if (item.raw) {
           this.fs.copy(tn, dn);

@@ -105,17 +105,17 @@ var PageGenerator = yeoman.generators.Base.extend({
    * @public
    */
   updateIndex: function () {
-    var pagesRegex = /(<!-- @@pages -->)((.|\n)*)(<!-- \/@@pages -->)/img;
+    var pagesRegex = /(<!-- @@pages -->)/img;
     var pagesList = '';
 
-    this.pages.forEach(function (pageName) {
+    this.newPages.forEach(function (pageName) {
       var fileName = _.kebabCase(pageName) + '.' + this.configuration.extension;
 
       pagesList += '<li><i class="fa fa-file-o"></i><a href="dist/' + fileName + '"><strong>' + pageName + '</strong> ' + fileName + '</a><i class="fa fa-check"></i></li>\n';
     }, this);
 
     // Write file
-    this.fs.write('index.html', this.fs.read('index.html').replace(pagesRegex, '$1' + pagesList + '$4'));
+    this.fs.write('index.html', this.fs.read('index.html').replace(pagesRegex, '$1' + pagesList));
   },
 
   /**

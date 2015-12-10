@@ -17,7 +17,7 @@ module.exports = function(grunt) {
       {
         from: '@@toc',
         to: function () {
-          var tmp = grunt.config.get('xh.tmp');
+          var tmp = grunt.config.get('<%%= xh.tmp %>');
 
           if (!grunt.file.exists(tmp + '/csstoc.json')) {
             return '';

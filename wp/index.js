@@ -100,7 +100,7 @@ var WPGenerator = yeoman.generators.Base.extend({
 
     if (this.prompts.features.installWPizedLight) {
       this.repositories.push({
-        username: 'xhtmlized',
+        username: 'xfiveco',
         repo: 'wpized-light',
         label: 'WPized Light Theme',
         destination: this.configuration.wpThemeFolder,

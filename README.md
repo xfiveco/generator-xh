@@ -325,7 +325,7 @@ yo xh:wp
 Several options are available:
 
 - database settings which are later inserted into `wp-config.php`
-- installation of [WPized Light base theme](https://github.com/xhtmlized/wpized-light).
+- installation of [WPized Light base theme](https://github.com/xfiveco/wpized-light).
 - installation of [Stream](https://wp-stream.com/) plugin
 - installation of [WP Sync DB](https://github.com/wp-sync-db/wp-sync-db) plugin
 
@@ -342,10 +342,10 @@ When running Grunt tasks the front-end `dist` files are automatically copied to 
 
 If you are joining an existing project which was set up using XH Generator, remember that the project was already generated with `yo xh` command so you don't have to generate it again. Assuming that you have all [prerequisites](#prerequisites) installed, all you need to do is to clone the existing repository and install Bower and npm dependencies.
 
-Let's imagine we have a project called Robot Magic here at the XHTMLized GitHub account. First, we will clone it locally:
+Let's imagine we have a project called Robot Magic here at the Xfive GitHub account. First, we will clone it locally:
 
 ```
-git clone git@github.com:xhtmlized/robot-magic.git
+git clone git@github.com:xfiveco/robot-magic.git
 ```
 
 Now change the directory to your newly cloned project:
@@ -399,7 +399,7 @@ The following approach is recommended when creating styles:
 2. Use variables and mixins files to store your variables and mixins.
 3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in `scss/components/_article.scss` file instead of ~~`scss/components/_text.scss`~~.
 4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
-5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
+5. Comment [main sections and subsections](https://github.com/xfiveco/css-coding-standards#comments) appropriately.
 6. If you want to avoid using preprocessors for certain reason (eg. your project is very simple), you can still use SCSS or Less files to write only regular CSS.
 7. By default [autoprefixer](https://github.com/postcss/autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
 
@@ -490,7 +490,7 @@ Also be sure to check out [browserify-shim](https://github.com/thlorenz/browseri
 
 ## Changelog
 
-Check [Releases](https://github.com/xhtmlized/generator-xh/releases)
+Check [Releases](https://github.com/xfiveco/generator-xh/releases)
 
 ## Contributing
 

@@ -11,15 +11,15 @@
     "modernizr",
     "bootstrap",
     "wordpress",
-    "xhtmlized"
+    "xfive"
   ],
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "xhtmlized/generator-xh",
+  "repository": "xfiveco/generator-xh",
   "author": {
-    "name": "XHTMLized",
-    "email": "hello@xhtmlized.com",
-    "url": "https://github.com/xhtmlized"
+    "name": "Xfive",
+    "email": "hello@xfive.co",
+    "url": "https://github.com/xfiveco"
   },
   "engines": {
     "node": ">=0.10.0"

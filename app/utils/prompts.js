@@ -4,7 +4,7 @@ module.exports = {
   generator: [{
     type: 'confirm',
     name: 'useBranding',
-    message: 'Do you want to use XHTMLized branding?',
+    message: 'Do you want to use Xfive branding?',
     default: true
   }, {
     when: function (response) {

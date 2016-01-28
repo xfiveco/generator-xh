@@ -1,7 +1,7 @@
 <%= projectName %>
 ==================
 
-<%= projectName %> is a Front-end <% if (isWP) { %>& WordPress <% } %>project created with [XH Generator](https://github.com/xhtmlized/generator-xh), a [Yeoman](http://yeoman.io) generator for scaffolding web projects.
+<%= projectName %> is a Front-end <% if (isWP) { %>& WordPress <% } %>project created with [XH Generator](https://github.com/xfiveco/generator-xh), a [Yeoman](http://yeoman.io) generator for scaffolding web projects.
 
 ## Table of contents
 
@@ -176,7 +176,7 @@ The following approach is recommended when creating styles:
 2. Use variables and mixins files to store your variables and mixins.
 3. Depending on your preferences for styles organization, you can organize them according modules & components (recommended, use **components** folder), or pages. A good practice is to name file the same as main class used for that component, for example if you create a component representing an article with `.article` as a main CSS class followed by `.article-title`, `.article-meta`, etc. and with `.article--featured` variant that will have slightly different color scheme, you will do everyone a favour by placing it in `<%= cssPreprocessor %>/components/_article.<%= cssPreprocessor %>` file instead of ~~`<%= cssPreprocessor %>/components/_text.<%= cssPreprocessor %>`~~.
 4. If you find yourself overwriting/replacing default library styles, put them into **vendor** folder. A good examples of that are replacing library custom select or lightbox styles with your own or overwriting some Bootstrap styles that were not configurable.
-5. Comment [main sections and subsections](https://github.com/xhtmlized/css-coding-standards#comments) appropriately.
+5. Comment [main sections and subsections](https://github.com/xfiveco/css-coding-standards#comments) appropriately.
 6. By default [autoprefixer](https://github.com/postcss/autoprefixer) is enabled in project, which mean that you don't need to write prefixes for the standard CSS3 properties. It uses [Can I Use](http://caniuse.com/) database. However, please note that some popular properties (like `-webkit-appearance` or `-webkit-font-smoothing` are not a part of standard and need to be written with prefixes by you).
 
 ### Adding 3rd-party Dependency via Bower

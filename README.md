@@ -1,4 +1,4 @@
-XH Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh.svg?branch=master)](https://travis-ci.org/xhtmlized/generator-xh) [![NPM version](https://badge.fury.io/js/generator-xh.svg)](http://badge.fury.io/js/generator-xh) [![NPM dependiencies](https://david-dm.org/xhtmlized/generator-xh.svg)](https://david-dm.org/xhtmlized/generator-xh)
+XH Generator [![Build Status](https://travis-ci.org/xfiveco/generator-xh.svg?branch=master)](https://travis-ci.org/xfiveco/generator-xh) [![NPM version](https://badge.fury.io/js/generator-xh.svg)](http://badge.fury.io/js/generator-xh) [![NPM dependiencies](https://david-dm.org/xfiveco/generator-xh.svg)](https://david-dm.org/xfiveco/generator-xh)
 ============
 
 > XH Generator is a [Yeoman](http://yeoman.io) generator for scaffolding web projects.

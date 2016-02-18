@@ -3,8 +3,8 @@
 var path = require('path');
 var async = require('async');
 var yeoman = require('yeoman-generator');
-var helpers = yeoman.test;
-var assert = yeoman.assert;
+var helpers = require('yeoman-test');
+var assert = require('yeoman-assert');
 
 describe('XH Generator with default options', function () {
   before(function (done) {

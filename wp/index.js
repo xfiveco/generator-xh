@@ -4,7 +4,7 @@ var chalk = require('chalk');
 var async = require('async');
 var _ = require('lodash');
 
-var WPGenerator = yeoman.generators.Base.extend({
+var WPGenerator = yeoman.Base.extend({
   initializing: function () {
     try {
       this.configuration = this.config.get('config');

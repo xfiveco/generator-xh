@@ -3,13 +3,13 @@
 var yeoman = require('yeoman-generator');
 var _ = require('lodash');
 
-var PageGenerator = yeoman.generators.Base.extend({
+var PageGenerator = yeoman.Base.extend({
   /**
    * Extends base Yeoman constructor
    * @public
    */
   constructor: function () {
-    yeoman.generators.Base.apply(this, arguments);
+    yeoman.Base.apply(this, arguments);
     this.sourceRoot(this.destinationRoot());
 
     this.option('skip-build', {

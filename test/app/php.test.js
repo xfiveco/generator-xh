@@ -2,8 +2,8 @@
 
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var helpers = yeoman.test;
-var assert = yeoman.assert;
+var helpers = require('yeoman-test');
+var assert = require('yeoman-assert');
 
 describe('XH Generator with PHP extension', function () {
   before(function (done) {

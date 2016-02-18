@@ -5,10 +5,10 @@ var chalk = require('chalk');
 var _ = require('lodash');
 var utils = require('./utils/index');
 
-var XhGenerator = yeoman.generators.Base.extend({
+var XhGenerator = yeoman.Base.extend({
 
   constructor: function () {
-    yeoman.generators.Base.apply(this, arguments);
+    yeoman.Base.apply(this, arguments);
 
     this.option('config', {
       desc: 'Path to configuration file',

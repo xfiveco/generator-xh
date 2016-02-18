@@ -14,7 +14,7 @@ XH Generator creates a project structure, files and Grunt tasks which support mo
 ## Table of contents
 
 - [Features](#features)
-- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
    - [Node.js](#1-nodejs)
    - [Grunt](#2-grunt)
    - [Bower](#3-bower)

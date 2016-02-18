@@ -35,6 +35,7 @@
     "string-length": "^1.0.1",
     "update-notifier": "^0.6.0",
     "yeoman-generator": "^0.22.5",
+    "yeoman-assert": "^2.1.1",
     "yeoman-test": "^1.1.0"
   },
   "devDependencies": {

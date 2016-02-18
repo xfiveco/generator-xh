@@ -63,13 +63,13 @@ var PageGenerator = yeoman.Base.extend({
      * @public
      */
     checkReservedNames: function () {
-      this.reservedNames = ['template', 'wp'];
-      this.isReserved = function (page) {
-        return _.includes(this.reservedNames, _.kebabCase(page));
+      var reservedNames = ['template', 'wp'];
+      var isReserved = function (page) {
+        return _.includes(reservedNames, _.kebabCase(page));
       };
 
-      if (_.some(this.pages, this.isReserved, this)) {
-        this.log('You cannot use those reserved words: ' + this.reservedNames.join(', ') + '.');
+      if (_.some(this.pages, isReserved, this)) {
+        this.log('You cannot use those reserved words: ' + reservedNames.join(', ') + '.');
         process.exit();
       }
     }

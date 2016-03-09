@@ -50,6 +50,11 @@ var WPGenerator = yeoman.Base.extend({
         message: 'Enter the database password',
         default: '$_SERVER[\'XTEAM_DB_PASSWORD\']'
       }, {
+        name: 'disableFileEdits',
+        message: 'Disable file editor and plugin installer from WordPress admin panel?',
+        type: 'confirm',
+        default: true
+      }, {
         type: 'checkbox',
         name: 'features',
         message: 'Choose additional features',
@@ -77,6 +82,7 @@ var WPGenerator = yeoman.Base.extend({
       this.prompts.databaseUser = answers.databaseUser;
       this.prompts.databasePassword = answers.databasePassword;
       this.prompts.features = {};
+      this.prompts.disableFileEdits = answers.disableFileEdits;
 
       for (var i in answers.features) {
         this.prompts.features[answers.features[i]] = true;
@@ -200,6 +206,10 @@ var WPGenerator = yeoman.Base.extend({
       .replace('\'username_here\'', this._getDbSetting('databaseUser'))
       .replace('\'password_here\'', this._getDbSetting('databasePassword'))
       .replace('wp_', prefix + '_');
+
+    if(this.prompts.disableFileEdits) {
+      contents = contents.replace('<?php', '<?php\ndefine(\'DISALLOW_FILE_EDIT\', true);\ndefine(\'DISALLOW_FILE_MODS\', true);');
+    }
 
     this.fs.write(this.configuration.wpFolder + '/wp-config.php', contents);
   },

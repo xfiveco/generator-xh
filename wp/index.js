@@ -98,6 +98,7 @@ var WPGenerator = yeoman.Base.extend({
       {
         username: 'WordPress',
         repo: 'WordPress',
+        branch: '4.4-branch',
         label: 'WordPress Core',
         destination: this.configuration.wpFolder,
         callback: this._createConfig
@@ -108,6 +109,7 @@ var WPGenerator = yeoman.Base.extend({
       this.repositories.push({
         username: 'xfiveco',
         repo: 'x5-theme',
+        branch: 'master',
         label: 'X5 Theme',
         destination: this.configuration.wpThemeFolder,
         callback: this._updateThemeStyles
@@ -118,11 +120,13 @@ var WPGenerator = yeoman.Base.extend({
       this.repositories.push({
         username: 'wp-sync-db',
         repo: 'wp-sync-db',
+        branch: 'master',
         label: 'WP Sync DB Plugin',
         destination: this.configuration.wpFolder + '/wp-content/plugins/wp-sync-db'
       }, {
         username: 'wp-sync-db',
         repo: 'wp-sync-db-media-files',
+        branch: 'master',
         label: 'WP Sync DB Media Files Plugin',
         destination: this.configuration.wpFolder + '/wp-content/plugins/wp-sync-db-media-files'
       });
@@ -132,6 +136,7 @@ var WPGenerator = yeoman.Base.extend({
       this.repositories.push({
         username: 'xwp',
         repo: 'stream',
+        branch: 'master',
         label: 'Stream Plugin',
         destination: this.configuration.wpFolder + '/wp-content/plugins/stream'
       });
@@ -148,7 +153,7 @@ var WPGenerator = yeoman.Base.extend({
         .info(chalk.yellow('This might take a few moments'));
 
       async.each(this.repositories, function (repository, callback) {
-        self.remote(repository.username, repository.repo, function (err, remote) {
+        self.remote(repository.username, repository.repo, repository.branch, function (err, remote) {
           if (err) {
             callback(err);
           }

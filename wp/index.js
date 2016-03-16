@@ -59,17 +59,17 @@ var WPGenerator = yeoman.Base.extend({
         name: 'features',
         message: 'Choose additional features',
         choices: [{
-            name: 'WPized Light Theme',
-            value: 'installWPizedLight',
+            name: 'X5 Theme',
+            value: 'installX5Theme',
             checked: true
         }, {
             name: 'WP Sync DB Plugin',
             value: 'installWpSyncDb',
             checked: true
         }, {
-            name: 'WP Stream Plugin',
-            value: 'installWpStream',
-            checked: false
+            name: 'Stream Plugin',
+            value: 'installStream',
+            checked: true
         }]
       }
     ];
@@ -104,11 +104,11 @@ var WPGenerator = yeoman.Base.extend({
       }
     ];
 
-    if (this.prompts.features.installWPizedLight) {
+    if (this.prompts.features.installX5Theme) {
       this.repositories.push({
         username: 'xfiveco',
-        repo: 'wpized-light',
-        label: 'WPized Light Theme',
+        repo: 'x5-theme',
+        label: 'X5 Theme',
         destination: this.configuration.wpThemeFolder,
         callback: this._updateThemeStyles
       });
@@ -128,12 +128,12 @@ var WPGenerator = yeoman.Base.extend({
       });
     }
 
-    if (this.prompts.features.installWpStream) {
+    if (this.prompts.features.installStream) {
       this.repositories.push({
-        username: 'x-team',
-        repo: 'wp-stream',
-        label: 'WP Stream Plugin',
-        destination: this.configuration.wpFolder + '/wp-content/plugins/wp-stream'
+        username: 'xwp',
+        repo: 'stream',
+        label: 'Stream Plugin',
+        destination: this.configuration.wpFolder + '/wp-content/plugins/stream'
       });
     }
   },

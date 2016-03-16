@@ -325,7 +325,7 @@ yo xh:wp
 Several options are available:
 
 - database settings which are later inserted into `wp-config.php`
-- installation of [WPized Light base theme](https://github.com/xfiveco/wpized-light).
+- installation of [X5 Theme](https://github.com/xfiveco/x5-theme).
 - installation of [Stream](https://wp-stream.com/) plugin
 - installation of [WP Sync DB](https://github.com/wp-sync-db/wp-sync-db) plugin
 

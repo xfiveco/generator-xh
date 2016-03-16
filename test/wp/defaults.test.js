@@ -32,7 +32,7 @@ describe('XH Generator with default options', function () {
             databaseName: '$_SERVER[\'XTEAM_DB_NAME\']',
             databaseUser: '$_SERVER[\'XTEAM_DB_USER\']',
             databasePassword: '$_SERVER[\'XTEAM_DB_PASSWORD\']',
-            features: ['installWPizedLight', 'installWpSyncDb', 'installWpStream'],
+            features: ['installX5Theme', 'installWpSyncDb', 'installStream'],
             disableFileEdits: true
           })
           .on('ready', function (generator) {
@@ -77,7 +77,7 @@ describe('XH Generator with default options', function () {
     });
 
     it('should generate WP Stream plugin', function (done) {
-      assert.file('wp/wp-content/plugins/wp-stream/');
+      assert.file('wp/wp-content/plugins/stream/');
 
       done();
     });
@@ -89,7 +89,7 @@ describe('XH Generator with default options', function () {
       done();
     });
 
-    it('should generate WPized Light theme', function (done) {
+    it('should generate X5 theme', function (done) {
       assert.file('wp/wp-content/themes/test-project/style.css');
 
       done();

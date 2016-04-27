@@ -36,19 +36,19 @@ var WPGenerator = yeoman.Base.extend({
     var prompts = [{
         name: 'databaseHost',
         message: 'Enter the database host',
-        default: '$_SERVER[\'XTEAM_DB_HOST\']'
+        default: '$_SERVER[\'XFIVE_DB_HOST\']'
       }, {
         name: 'databaseName',
         message: 'Enter the database name',
-        default: '$_SERVER[\'XTEAM_DB_NAME\']'
+        default: '$_SERVER[\'XFIVE_DB_NAME\']'
       }, {
         name: 'databaseUser',
         message: 'Enter the database user',
-        default: '$_SERVER[\'XTEAM_DB_USER\']'
+        default: '$_SERVER[\'XFIVE_DB_USER\']'
       }, {
         name: 'databasePassword',
         message: 'Enter the database password',
-        default: '$_SERVER[\'XTEAM_DB_PASSWORD\']'
+        default: '$_SERVER[\'XFIVE_DB_PASSWORD\']'
       }, {
         name: 'disableFileEdits',
         message: 'Disable file editor and plugin installer from WordPress admin panel?',

@@ -98,7 +98,7 @@ var WPGenerator = yeoman.Base.extend({
       {
         username: 'WordPress',
         repo: 'WordPress',
-        branch: '4.4-branch',
+        branch: '4.5-branch',
         label: 'WordPress Core',
         destination: this.configuration.wpFolder,
         callback: this._createConfig

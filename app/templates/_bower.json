@@ -12,7 +12,7 @@
   "dependencies": {<% if (features.useBootstrap && cssPreprocessor === 'scss') { %>
     "bootstrap-sass": "^3.3.5"<% } %><% if (features.useBootstrap && cssPreprocessor === 'less') { %>
     "bootstrap": "^3.3.5"<% } %><% if (!features.useBootstrap) { %>
-    "normalize.css": "^3.0.3"<% } %><% if (features.useJquery) { %>,
+    "normalize.css": "^4.1.1"<% } %><% if (features.useJquery) { %>,
     "jquery": "^2.1.4"<% } %>
   },
   "devDependencies": {}

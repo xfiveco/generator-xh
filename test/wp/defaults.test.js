@@ -32,8 +32,7 @@ describe('XH Generator with default options', function () {
             databaseName: '$_SERVER[\'XTEAM_DB_NAME\']',
             databaseUser: '$_SERVER[\'XTEAM_DB_USER\']',
             databasePassword: '$_SERVER[\'XTEAM_DB_PASSWORD\']',
-            features: ['installX5Theme', 'installWpSyncDb', 'installStream'],
-            disableFileEdits: true
+            features: ['installX5Theme', 'installWpSyncDb', 'installStream']
           })
           .on('ready', function (generator) {
             generator.conflicter.force = true;
@@ -64,8 +63,8 @@ describe('XH Generator with default options', function () {
     it('should generate customized WordPress config', function (done) {
       assert.file('wp/wp-config.php');
       assert.fileContent('wp/wp-config.php', '\'DB_NAME\', $_SERVER');
-      assert.fileContent('wp/wp-config.php', 'define(\'DISALLOW_FILE_MODS\', true);');
-      assert.fileContent('wp/wp-config.php', 'define(\'DISALLOW_FILE_EDIT\', true);');
+      assert.fileContent('wp/wp-config.php', 'define(\'DISALLOW_FILE_MODS\', !!$_SERVER[\'DISABLE_EDIT\']);');
+      assert.fileContent('wp/wp-config.php', 'define(\'DISALLOW_FILE_EDIT\', !!$_SERVER[\'DISABLE_EDIT\']);');
 
       done();
     });

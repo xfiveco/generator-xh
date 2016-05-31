@@ -33,13 +33,13 @@ nbproject
 .tmp
 node_modules
 bower_components<% if (ignoreDist) { %>
-/dist<% if (isWP) { %>
+/dist<% } %><% if (isWP) { %>
 wp/wp-content/themes/**/img
 wp/wp-content/themes/**/fonts
 wp/wp-content/themes/**/js
 wp/wp-content/themes/**/css
 wp/wp-content/themes/**/media
-wp/wp-content/uploads<% } %><% } %>
+wp/wp-content/uploads<% } %>
 
 # Other
 validation-report.json
